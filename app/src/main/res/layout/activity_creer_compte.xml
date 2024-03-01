@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#A6FFDCC4"
     tools:context=".CreerCompte">
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="579dp"
+        android:layout_width="0dp"
         android:layout_height="424dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,7 +19,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout8"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="554dp"
         android:background="@drawable/rectangle"
         android:backgroundTint="#FEDA95"

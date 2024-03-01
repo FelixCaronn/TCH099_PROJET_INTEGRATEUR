@@ -6,4 +6,13 @@
     </style>
 
     <style name="Theme.TCH099_PROJET_INTEGRATEUR" parent="Base.Theme.TCH099_PROJET_INTEGRATEUR" />
+
+    <style name="Theme.TCH099_PROJET_INTEGRATEUR.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.TCH099_PROJET_INTEGRATEUR.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.TCH099_PROJET_INTEGRATEUR.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -61,4 +61,25 @@
     <string name="nom">Nom :</string>
     <string name="prenom">Prenom :</string>
     <string name="crabe">crabe</string>
+    <string name="title_activity_demander_support">DemanderSupport</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="nav_deco">Déconnexion</string>
+    <string name="companie">Fish&amp;Fric</string>
+    <string name="transaction">Transaction</string>
+    <string name="d_p_t">Dépôt</string>
+    <string name="payer_une_facture">Payer une facture</string>
+    <string name="effectuer_un_virement">Effectuer un virement</string>
+    <string name="notifications">Notifications</string>
+    <string name="vers_un_client">Vers un client</string>
+    <string name="vers_un_compte">Vers un compte</string>
+    <string name="support_nautico">Support Nautico</string>
 </resources>

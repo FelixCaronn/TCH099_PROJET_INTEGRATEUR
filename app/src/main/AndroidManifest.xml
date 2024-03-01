@@ -13,32 +13,18 @@
         android:theme="@style/Theme.TCH099_PROJET_INTEGRATEUR"
         tools:targetApi="31">
         <activity
-            android:name=".DemanderSupport"
-            android:exported="false" />
-        <activity
-            android:name=".DeposerFond"
-            android:exported="false" />
-        <activity
-            android:name=".TransfertPersonne"
-            android:exported="false" />
-        <activity
-            android:name=".TransfertEntreCompte"
-            android:exported="false" />
-        <activity
-            android:name=".ConsulterCompte"
-            android:exported="false" />
-        <activity
             android:name=".PageAcceuil"
             android:exported="false" />
+        <activity
+            android:name=".PageConnection"
+            android:exported="false"
+            android:label="@string/title_activity_demander_support"
+            android:theme="@style/Theme.TCH099_PROJET_INTEGRATEUR.NoActionBar" />
         <activity
             android:name=".CreerCompte"
             android:exported="false" />
         <activity
-            android:name=".PagePrincipale"
-            android:exported="false"
-            android:theme="@style/Theme.TCH099_PROJET_INTEGRATEUR" />
-        <activity
-            android:name=".PageConnection"
+            android:name=".DemanderSupport"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menuDepot"
+        android:icon="@drawable/ic_cash"
+        android:title="@string/d_p_t"/>
+
+    <item android:id="@+id/menuFacture"
+        android:icon="@drawable/ic_carte"
+        android:title="@string/payer_une_facture"/>
+
+
+    <item android:id="@+id/menuNotification"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/notifications"/>
+
+    <item android:id="@+id/menuSupport"
+        android:icon="@drawable/ic_support"
+        android:title="@string/support_nautico" />
+
+    <item android:id="@+id/menuVirementPersonne"
+        android:icon="@drawable/ic_banque"
+        android:title="@string/effectuer_un_virement">
+        <menu>
+            <item android:id="@+id/client"
+                android:icon="@drawable/ic_face"
+                android:title="@string/vers_un_client"/>
+            <item android:id="@+id/compte"
+                android:icon="@drawable/ic_cash"
+                android:title="@string/vers_un_compte"
+                />
+        </menu>
+    </item>
+
+
+</menu>
