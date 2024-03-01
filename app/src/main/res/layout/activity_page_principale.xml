@@ -5,23 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DemanderSupport">
+    tools:context=".PagePrincipale">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorBody">
 
         <LinearLayout
             android:id="@+id/layoutToolBar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorHeader"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             app:layout_constraintTop_toTopOf="parent">
-            
+
             <ImageView
                 android:id="@+id/imageMenu"
                 android:layout_width="30dp"
@@ -29,18 +30,32 @@
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_menu"
                 app:tint="@color/colorWhite" />
-            
+
             <TextView
                 android:id="@+id/textTitle"
-                android:layout_width="match_parent"
+                android:layout_width="285dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:paddingEnd="10dp"
                 android:text="@string/companie"
+                android:textAlignment="viewEnd"
                 android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:fontFamily="@font/montserrat_bold"/>
+                android:textSize="18sp" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/logoCompagnie"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_oval="true" />
+
 
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
