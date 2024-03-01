@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#344BC4"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="882dp"
+        android:layout_height="388dp"
+        android:layout_marginTop="344dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/diver"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_ret"
+        android:layout_width="257dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="304dp"
+        android:radius="15dp"
+        android:text="@string/retour"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:backgroundTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="257dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="28dp"
+        android:text="@string/d_poserr"
+        android:textColor="#000000"
+        android:textStyle="bold"
+
+        app:backgroundTint="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btn_ret"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="163dp"
+        android:layout_height="83dp"
+        android:foreground="@drawable/rectangle2"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="72dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recto"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="107dp"
+        tools:layout_editor_absoluteY="127dp"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="83dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="240dp"
+        android:foreground="@drawable/ch_que"
+        app:backgroundTint="@android:color/white"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="163dp"
+        android:layout_height="83dp"
+        android:foreground="@drawable/rectangle2"
+        tools:layout_editor_absoluteX="239dp"
+        tools:layout_editor_absoluteY="70dp"
+        tools:ignore="DuplicateIds,MissingConstraints" />
+
+    <View
+        android:id="@+id/view3"
+
+        android:layout_width="83dp"
+        android:layout_height="37dp"
+        android:foreground="@drawable/ch_que"
+
+        app:icon="@drawable/ch_que"
+        tools:layout_editor_absoluteX="286dp"
+        tools:layout_editor_absoluteY="80dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/verso"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="308dp"
+        tools:layout_editor_absoluteY="127dp"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="393dp"
+        android:layout_height="83dp"
+        android:foreground="@drawable/rectangle2"
+        tools:layout_editor_absoluteX="9dp"
+        tools:layout_editor_absoluteY="177dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="169dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="28dp"
+        android:lineSpacingExtra="8sp"
+        android:text="@string/montant_du_ch_que"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        tools:ignore="MissingConstraints,TextSizeCheck"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:layout_constraintVertical_bias="0.721"
+        tools:ignore="LabelFor,MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="185dp" />
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="235dp"
+        android:layout_height="52dp"
+        android:foreground="@drawable/rectangle2"
+        tools:layout_editor_absoluteX="99dp"
+        tools:layout_editor_absoluteY="7dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="164dp"
+        android:layout_height="32dp"
+        android:text="@string/d_pot_photo_ch_que"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints,TextSizeCheck"
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <View
+        android:id="@+id/viewClickRecto"
+        android:layout_width="159dp"
+        android:layout_height="87dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="43dp"
+        tools:layout_editor_absoluteY="71dp" />
+
+    <View
+        android:id="@+id/viewClickVerso"
+        android:layout_width="157dp"
+        android:layout_height="85dp"
+        tools:layout_editor_absoluteX="242dp"
+        tools:layout_editor_absoluteY="68dp"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
