@@ -19,8 +19,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout8"
-        android:layout_width="0dp"
-        android:layout_height="554dp"
+        android:layout_width="413dp"
+        android:layout_height="541dp"
         android:background="@drawable/rectangle"
         android:backgroundTint="#FEDA95"
         app:layout_constraintBottom_toBottomOf="parent"
