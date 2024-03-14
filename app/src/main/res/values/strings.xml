@@ -99,4 +99,5 @@
     <string name="message">Message</string>
     <string name="titre">Titre</string>
     <string name="baleinesupport">BaleineSupport</string>
+    <string name="title_activity_depot_cheque">DepotCheque</string>
 </resources>

@@ -13,6 +13,9 @@
         android:theme="@style/Theme.TCH099_PROJET_INTEGRATEUR"
         tools:targetApi="31">
         <activity
+            android:name=".ConsulterCompte"
+            android:exported="false" />
+        <activity
             android:name=".SupportNautico"
             android:exported="false" />
         <activity
@@ -30,7 +33,7 @@
             android:name=".CreerCompte"
             android:exported="false" />
         <activity
-            android:name=".ConsulterCompte"
+            android:name=".DepotCheque"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
