@@ -9,5 +9,6 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorHeader">#050856</color>
     <color name="colorBody">#ddf0fd</color>
+    <color name="colorSupport">#F3F2F2</color>
 
 </resources>

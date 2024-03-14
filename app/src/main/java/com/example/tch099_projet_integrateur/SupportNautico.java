@@ -7,12 +7,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.os.Bundle;
 import android.view.View;
 
-public class ConsulterCompte extends AppCompatActivity {
+public class SupportNautico extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consulter_compte);
+        setContentView(R.layout.activity_support_nautico);
 
         DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
