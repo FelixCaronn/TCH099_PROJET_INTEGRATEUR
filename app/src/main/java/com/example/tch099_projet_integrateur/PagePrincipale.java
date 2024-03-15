@@ -26,7 +26,7 @@ public class PagePrincipale extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home,settings,share,about,logout;
+    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +34,16 @@ public class PagePrincipale extends AppCompatActivity {
         setContentView(R.layout.activity_page_principale);
 
         drawerLayout = findViewById(R.id.drawerLayout);
+
         menu = findViewById(R.id.menu);
-        //home = findViewById(R.id.home);
-        about = findViewById(R.id.about);
-        logout = findViewById(R.id.logout);
-        //settings = findViewById(R.id.settings);
-        share = findViewById(R.id.share);
+
+        home = findViewById(R.id.home);
+        depot = findViewById(R.id.depot);
+        facture = findViewById(R.id.facture);
+        notification = findViewById(R.id.notification);
+        support = findViewById(R.id.support);
+        transfertClient = findViewById(R.id.transfertClient);
+        transfertCompte = findViewById(R.id.transfertCompte);
 
 
         menu.setOnClickListener(new View.OnClickListener() {
@@ -54,18 +58,50 @@ public class PagePrincipale extends AppCompatActivity {
                 recreate();
             }
         });
-        settings.setOnClickListener(new View.OnClickListener() {
+
+        depot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //redirectActivity(MainActivity.this, SettingsActivity.class);
+                redirectActivity(PagePrincipale.this, DepotCheque.class);
             }
         });
-        share.setOnClickListener(new View.OnClickListener() {
+
+//        facture.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                redirectActivity(PagePrincipale.this, );
+//            }
+//        });
+
+//        notification.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
+        support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //redirectActivity(MainActivity.this, ShareActivity.class);
+                redirectActivity(PagePrincipale.this, SupportNautico.class);
             }
         });
+
+//        transfertClient.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
+//        transfertCompte.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
+
 
     }
 

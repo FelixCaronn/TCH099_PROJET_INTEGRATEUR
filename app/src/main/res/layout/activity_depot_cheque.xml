@@ -1,194 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PagePrincipale">
+    android:id="@+id/drawerLayout"
+    tools:context=".PagePrincipale"
+    android:background="@color/colorBody">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBody">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/layoutToolBar"
+        <include
+            android:id="@+id/nav_bar"
+            layout="@layout/nav_header" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/colorHeader"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtDepot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@string/d_poser_un_ch_que"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.012" />
+
+            <TextView
+                android:id="@+id/txtRecto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="RECTO DU CHEQUE"
+                app:layout_constraintBottom_toTopOf="@+id/imgRecto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.062"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDepot"
+                app:layout_constraintVertical_bias="1.0" />
 
             <ImageView
-                android:id="@+id/imageMenu"
-                android:layout_width="46dp"
-                android:layout_height="37dp"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_menu"
-                app:tint="@color/colorWhite" />
+                android:id="@+id/imgRecto"
+                android:layout_width="376dp"
+                android:layout_height="148dp"
+                android:background="@drawable/rectangle_boutton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.542"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDepot"
+                app:layout_constraintVertical_bias="0.056"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/txtVerso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="1dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="VERSO DU CHEQUE"
+                app:layout_constraintBottom_toTopOf="@+id/imageView5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.03"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgRecto"
+                app:layout_constraintVertical_bias="0.7" />
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/logoCompagnie"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/logo"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:riv_oval="true" />
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="376dp"
+                android:layout_height="148dp"
+                android:background="@drawable/rectangle_boutton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.457"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgRecto"
+                app:layout_constraintVertical_bias="0.081"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
 
-                <TextView
-                    android:id="@+id/textTitle"
-                    android:layout_width="168dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="48dp"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:paddingEnd="10dp"
-                    android:text="@string/companie"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/logoCompagnie"
-                    app:layout_constraintEnd_toEndOf="@+id/logoCompagnie"
-                    app:layout_constraintHorizontal_bias="0.983"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.8" />
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="374dp"
+                android:layout_height="210dp"
+                android:background="@drawable/rectangle_blanc"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.432"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView5"
+                app:layout_constraintVertical_bias="0.238">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="112dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/txtMontant"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:paddingStart="5sp"
+                        android:text="Montant :"
+                        android:textSize="16sp" />
 
-        </LinearLayout>
+                    <EditText
+                        android:id="@+id/editTextText3"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@color/colorWhite"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:paddingLeft="10sp"
+                        android:text="0$" />
 
-        <TextView
-            android:id="@+id/txtDepot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="Déposer un chèque"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutToolBar"
-            app:layout_constraintVertical_bias="0.035" />
-
-        <ImageView
-            android:id="@+id/imgRecto"
-            android:layout_width="376dp"
-            android:layout_height="148dp"
-            android:background="@drawable/rectangle_boutton"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtDepot"
-            app:layout_constraintVertical_bias="0.107"
-            app:srcCompat="@android:drawable/ic_menu_camera" />
-
-        <TextView
-            android:id="@+id/txtRecto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="RECTO DU CHEQUE"
-            app:layout_constraintBottom_toTopOf="@+id/imgRecto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.062"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtDepot"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="376dp"
-            android:layout_height="148dp"
-            android:background="@drawable/rectangle_boutton"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.457"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgRecto"
-            app:layout_constraintVertical_bias="0.081"
-            app:srcCompat="@android:drawable/ic_menu_camera" />
-
-        <TextView
-            android:id="@+id/txtVerso"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="1dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="VERSO DU CHEQUE"
-            app:layout_constraintBottom_toTopOf="@+id/imageView5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.03"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgRecto"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="374dp"
-            android:layout_height="225dp"
-            android:background="@drawable/rectangle_blanc"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.432"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5"
-            app:layout_constraintVertical_bias="0.238">
+                </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="112dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtMontant"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:paddingStart="5sp"
-                    android:text="Montant :"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/editTextText3"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="@color/colorWhite"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:paddingLeft="10sp"
-                    android:text="0$" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -206,29 +151,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown" />
+
+
+
             </LinearLayout>
-        </LinearLayout>
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="303dp"
-            android:layout_height="48dp"
-            android:backgroundTint="@color/colorHeader"
-            android:text="Déposer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+            </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="303dp"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/colorHeader"
+                android:text="Déposer"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="wrap_content"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_drawer"
-        app:menu="@menu/navigation" />
+        android:background="@color/colorWhite"
+        android:layout_gravity="start">
+
+        <include
+            layout="@layout/nav_drawer"/>
+
+    </RelativeLayout>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
-

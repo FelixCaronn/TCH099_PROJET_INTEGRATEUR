@@ -11,17 +11,15 @@
         android:id="@+id/btnCreer"
         android:layout_width="330dp"
         android:layout_height="48dp"
-        android:layout_marginTop="112dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="32dp"
         android:backgroundTint="#FFBC42"
         android:fontFamily="@font/montserrat_bold"
         android:shadowColor="@color/black"
         android:text="@string/cr_er_un_compte"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnConnexion"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imgRequin"
@@ -72,15 +70,13 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="37dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/vous_n_avez_pas_de_compte"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/btnCreer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintHorizontal_bias="0.196"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnConnexion"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.707" />
 </androidx.constraintlayout.widget.ConstraintLayout>

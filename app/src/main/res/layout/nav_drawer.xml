@@ -45,6 +45,26 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/home"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Comptes"
+            android:textSize="18sp"
+            android:fontFamily="@font/montserrat_bold"
+            android:drawableLeft="@drawable/baseline_home_filled_24"
+            android:drawablePadding="8dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/depot"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
@@ -86,7 +106,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/share"
+        android:id="@+id/notification"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal">
@@ -106,7 +126,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/about"
+        android:id="@+id/support"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal">
@@ -141,7 +161,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/logout"
+        android:id="@+id/transfertClient"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal">
@@ -161,7 +181,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/logout"
+        android:id="@+id/transfertCompte"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal">
