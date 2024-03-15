@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -44,6 +45,7 @@ public class DepotCheque extends AppCompatActivity {
             }
         });
 
+
         depot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +56,14 @@ public class DepotCheque extends AppCompatActivity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(DepotCheque.this, PagePrincipale.class);
+                PagePrincipale.redirectActivity(DepotCheque.this, PagePrincipale.class);
+            }
+        });
+
+        support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PagePrincipale.redirectActivity(DepotCheque.this, SupportNautico.class);
             }
         });
 

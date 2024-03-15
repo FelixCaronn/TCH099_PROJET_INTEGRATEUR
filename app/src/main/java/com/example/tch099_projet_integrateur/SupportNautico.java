@@ -42,5 +42,20 @@ public class SupportNautico extends AppCompatActivity {
                 openDrawer(drawerLayout);
             }
         });
+
+        depot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PagePrincipale.redirectActivity(SupportNautico.this, DepotCheque.class);
+            }
+        });
+
+        support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recreate();
+            }
+        });
+
     }
 }
