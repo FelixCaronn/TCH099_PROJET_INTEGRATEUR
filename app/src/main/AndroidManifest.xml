@@ -20,7 +20,7 @@
             android:name=".SupportNautico"
             android:exported="false" />
         <activity
-            android:name=".PagePrincipale"
+            android:name=".PageAcceuil"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PageAcceuil"
+            android:name=".PagePrincipale"
             android:exported="false" />
         <activity
             android:name=".PageConnection"

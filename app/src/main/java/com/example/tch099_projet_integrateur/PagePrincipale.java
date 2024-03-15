@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class PagePrincipale extends AppCompatActivity {
@@ -31,6 +33,10 @@ public class PagePrincipale extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
         setContentView(R.layout.activity_page_principale);
 
         drawerLayout = findViewById(R.id.drawerLayout);

@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "TCH099_PROJET_INTEGRATEUR"
 include(":app")
- 
