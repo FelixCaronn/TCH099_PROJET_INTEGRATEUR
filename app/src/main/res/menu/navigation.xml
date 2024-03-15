@@ -22,13 +22,14 @@
         android:icon="@drawable/ic_banque"
         android:title="@string/effectuer_un_virement">
         <menu>
-            <item android:id="@+id/client"
+            <item
+                android:id="@+id/client"
                 android:icon="@drawable/ic_face"
-                android:title="@string/vers_un_client"/>
-            <item android:id="@+id/compte"
+                android:title="@string/vers_un_client" />
+            <item
+                android:id="@+id/compte"
                 android:icon="@drawable/ic_cash"
-                android:title="@string/vers_un_compte"
-                />
+                android:title="@string/vers_un_compte" />
         </menu>
     </item>
 

@@ -10,5 +10,6 @@
     <color name="colorHeader">#050856</color>
     <color name="colorBody">#ddf0fd</color>
     <color name="colorSupport">#F3F2F2</color>
+    <color name="jaune">#FFE491</color>
 
 </resources>

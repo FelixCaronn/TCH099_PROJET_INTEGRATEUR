@@ -7,6 +7,7 @@ import androidx.core.app.TaskStackBuilder;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -15,61 +16,78 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.util.Objects;
 
 public class PagePrincipale extends AppCompatActivity {
 
 
+    DrawerLayout drawerLayout;
+    ImageView menu;
+    LinearLayout home,settings,share,about,logout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page_principale);
 
+        drawerLayout = findViewById(R.id.drawerLayout);
+        menu = findViewById(R.id.menu);
+        //home = findViewById(R.id.home);
+        about = findViewById(R.id.about);
+        logout = findViewById(R.id.logout);
+        //settings = findViewById(R.id.settings);
+        share = findViewById(R.id.share);
 
-        //Active la barre de navigation
-        DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
-
-        findViewById(R.id.imageMenu).setOnClickListener(new View.OnClickListener() {
+        menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
+                openDrawer(drawerLayout);
+            }
+        });
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recreate();
+            }
+        });
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //redirectActivity(MainActivity.this, SettingsActivity.class);
+            }
+        });
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //redirectActivity(MainActivity.this, ShareActivity.class);
             }
         });
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.navigation, menu);
-
-        MenuItem support = menu.findItem(R.id.menuSupport);
-
-        MenuItem virementCompte = findViewById(R.id.compte);
-        MenuItem depot = findViewById(R.id.menuDepot);
-        MenuItem facture = findViewById(R.id.menuFacture);
-        MenuItem notification = findViewById(R.id.menuNotification);
-
-
-        return true;
+    public static void openDrawer(DrawerLayout drawerLayout){
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+    public static void closeDrawer(DrawerLayout drawerLayout){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+    }
+    public static void redirectActivity(Activity activity, Class secondActivity){
+        Intent intent = new Intent(activity, secondActivity);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
+        activity.finish();
     }
 
-
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        Log.i("MesMessages", "YUP");
-
-        if (item.getItemId() == R.id.menuSupport) {
-            Intent s = new Intent(this, SupportNautico.class);
-            startActivity(s);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-
+    protected void onPause() {
+        super.onPause();
+        closeDrawer(drawerLayout);
     }
 
 

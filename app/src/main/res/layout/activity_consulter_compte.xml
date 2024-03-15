@@ -304,7 +304,7 @@
         android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/layout_navigation_header"
+        app:headerLayout="@layout/nav_drawer"
         app:menu="@menu/navigation" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
