@@ -1,6 +1,5 @@
 package com.example.tch099_projet_integrateur;
 
-<<<<<<< Updated upstream
 import static com.example.tch099_projet_integrateur.PagePrincipale.openDrawer;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,9 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Intent;
-=======
 import androidx.appcompat.app.AppCompatActivity;
->>>>>>> Stashed changes
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -42,17 +39,13 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import java.io.FileNotFoundException;
 
 public class DepotCheque extends AppCompatActivity {
-
-<<<<<<< Updated upstream
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
 
-=======
     Uri textTargetUri;
     ImageView targetImage;
     ImageView verso;
->>>>>>> Stashed changes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
