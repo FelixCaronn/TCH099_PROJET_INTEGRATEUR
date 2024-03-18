@@ -33,26 +33,21 @@ import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import java.io.FileNotFoundException;
 
-public class DepotCheque extends AppCompatActivity implements View.OnClickListener {
+public class DepotCheque extends AppCompatActivity{
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
     ImageView recto, verso;
     EditText montantDepot;
     Button deposer;
-    Uri uriRecto = null;
-    Uri uriVerso = null;
-    @Override
-    public void onClick(View v){
-        if (uriRecto!=null && uriVerso!=null && montantDepot.getText().toString()!=""){
-            deposer.setEnabled(true);
-        }
-    }
+    Uri uriRecto;
+    Uri uriVerso;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_depot_cheque);
-
+        uriRecto = null;
+        uriVerso =null;
         montantDepot = findViewById(R.id.editTextMontantDepot);
         drawerLayout = findViewById(R.id.drawerLayout);
         menu = findViewById(R.id.menu);
@@ -66,7 +61,6 @@ public class DepotCheque extends AppCompatActivity implements View.OnClickListen
         recto = findViewById(R.id.imgRecto);
         verso = findViewById(R.id.imgVerso);
         deposer = findViewById(R.id.buttonDepot);
-        deposer.setEnabled(false);
         recto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,43 +97,83 @@ public class DepotCheque extends AppCompatActivity implements View.OnClickListen
                 redirectActivity(DepotCheque.this, PagePrincipale.class);
             }
         });
+        montantDepot.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    if (uriRecto!=null && uriVerso!=null && montantDepot.getText().toString().trim().length()>0){
+                        deposer.setEnabled(true);
+                    }
+                    else{
+                        deposer.setEnabled(false);
+                    }
+                }
+            }
+        });
+
         deposer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uriRecto));
-                    Bitmap resizedBmp = Bitmap.createBitmap(bitmap, 1780, 350, 230, 70);
-                    InputImage image = InputImage.fromBitmap(resizedBmp, 0);
-                    TextRecognizer recognizer;
-                    recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
-                    //Bitmap resizedBmp = Bitmap.createBitmap(bitmap,(int)(0.81315*bitmap.getWidth()),(int)(0.35389*bitmap.getHeight()),(int)(0.1050708*bitmap.getWidth()),(int)(0.07077*bitmap.getHeight()));
-                    //dimension image = 2189x989
-                    Task<Text> result =
-                            recognizer.process(image)
-                                    .addOnSuccessListener(new OnSuccessListener<Text>() {
-                                        @Override
-                                        public void onSuccess(Text visionText) {
-                                            // Task completed successfully
-                                            // ...
-                                            String resultText = visionText.getText();
-                                            if (Double.parseDouble(resultText) == Double.parseDouble(montantDepot.getText().toString())){
-                                                Toast.makeText(DepotCheque.this, "Dépot approuvé!", Toast.LENGTH_LONG).show();
-                                            }
-                                            else{
-                                                Toast.makeText(DepotCheque.this, "Le montant inscris ne coïncide pas avec celui sur le chèque!", Toast.LENGTH_LONG).show();
-                                            }
-                                        }
-                                    })
-                                    .addOnFailureListener(
-                                            new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(DepotCheque.this, "Photo invalide", Toast.LENGTH_LONG).show();
+                boolean ok = true;
+                String messageErreur="";
+                if (uriRecto == null) {
+                    ok = false;
+                    messageErreur+= getResources().getString(R.string.recto);
+                }
+                if (uriVerso == null) {
+                    ok = false;
+                    messageErreur+=getResources().getString(R.string.verso);
+                }
+                if (montantDepot.getText().toString().trim().length() == 0) {
+                    ok = false;
+                    messageErreur+= getResources().getString(R.string.montantManquant);
+                }
+                if (!ok){
+                    Toast.makeText(DepotCheque.this, messageErreur, Toast.LENGTH_LONG).show();
+                }
+                else {
+                    try {
+                        Bitmap resizedBmp;
+                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uriRecto));
+                        //attention, hardcode pour la photo du cheque...
+                        //Bitmap resizedBmp = Bitmap.createBitmap(bitmap,(int)(0.81315*bitmap.getWidth()),(int)(0.35389*bitmap.getHeight()),(int)(0.1050708*bitmap.getWidth()),(int)(0.07077*bitmap.getHeight()));
+                        //dimension image = 2189x989
+                        if (bitmap.getWidth()==2189 && bitmap.getHeight()==989){
+                            resizedBmp = Bitmap.createBitmap(bitmap, 1780, 350, 230, 70);
+                        }
+                        else{
+                            resizedBmp = bitmap;
+                        }
+                        InputImage image = InputImage.fromBitmap(resizedBmp, 0);
+                        TextRecognizer recognizer;
+                        recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
+                        Task<Text> result =
+                                recognizer.process(image)
+                                        .addOnSuccessListener(new OnSuccessListener<Text>() {
+                                            @Override
+                                            public void onSuccess(Text visionText) {
+                                                String resultText = visionText.getText();
+                                                if (resultText.trim().length() == 0 || !isNumeric(resultText)){
+                                                    Toast.makeText(DepotCheque.this, getResources().getString(R.string.photoInv), Toast.LENGTH_LONG).show();
                                                 }
-                                            });
-                }catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                                                else if (Double.parseDouble(resultText) == Double.parseDouble(montantDepot.getText().toString())) {
+                                                    Toast.makeText(DepotCheque.this, getResources().getString(R.string.depotSucces), Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    Toast.makeText(DepotCheque.this, getResources().getString(R.string.montantInv), Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        })
+                                        .addOnFailureListener(
+                                                new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(DepotCheque.this, getResources().getString(R.string.photoInv), Toast.LENGTH_LONG).show();
+                                                    }
+                                                });
+                    } catch (FileNotFoundException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -165,7 +199,6 @@ public class DepotCheque extends AppCompatActivity implements View.OnClickListen
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 69){
@@ -175,10 +208,7 @@ public class DepotCheque extends AppCompatActivity implements View.OnClickListen
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uriRecto));
                     recto.setImageBitmap(bitmap);
-                } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                } catch (FileNotFoundException e) {e.printStackTrace();}
             }
         }
         else if (requestCode == 70){
@@ -189,11 +219,17 @@ public class DepotCheque extends AppCompatActivity implements View.OnClickListen
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uriVerso));
                     verso.setImageBitmap(bitmap);
                 }
-                catch (FileNotFoundException e){}
+                catch (FileNotFoundException e){e.printStackTrace();}
             }
         }
     }
-
-
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
 
 }
