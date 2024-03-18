@@ -1,5 +1,7 @@
 package com.example.tch099_projet_integrateur;
 
+import static com.example.tch099_projet_integrateur.PagePrincipale.openDrawer;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,10 +21,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.util.Objects;
-
-public class PagePrincipale extends AppCompatActivity {
-
+public class virementEntreComptes extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
@@ -31,8 +30,7 @@ public class PagePrincipale extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_page_principale);
-
+        setContentView(R.layout.activity_virement_entre_comptes);
         drawerLayout = findViewById(R.id.drawerLayout);
 
         menu = findViewById(R.id.menu);
@@ -52,7 +50,7 @@ public class PagePrincipale extends AppCompatActivity {
                 openDrawer(drawerLayout);
             }
         });
-        home.setOnClickListener(new View.OnClickListener() {
+        transfertCompte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recreate();
@@ -62,63 +60,27 @@ public class PagePrincipale extends AppCompatActivity {
         depot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(PagePrincipale.this, DepotCheque.class);
+                redirectActivity(virementEntreComptes.this, DepotCheque.class);
             }
         });
-
-        transfertCompte.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                redirectActivity(PagePrincipale.this, virementEntreComptes.class);
-            }
-        });
-
-//        facture.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                redirectActivity(PagePrincipale.this, );
-//            }
-//        });
-
-//        notification.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
 
         support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(PagePrincipale.this, SupportNautico.class);
+                redirectActivity(virementEntreComptes.this, SupportNautico.class);
             }
         });
 
-//        transfertClient.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
-//        transfertCompte.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PagePrincipale.redirectActivity(virementEntreComptes.this, PagePrincipale.class);
+            }
+        });
 
 
 
-    }
 
-    public static void openDrawer(DrawerLayout drawerLayout){
-        drawerLayout.openDrawer(GravityCompat.START);
-    }
-    public static void closeDrawer(DrawerLayout drawerLayout){
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
     }
     public static void redirectActivity(Activity activity, Class secondActivity){
         Intent intent = new Intent(activity, secondActivity);
@@ -126,12 +88,5 @@ public class PagePrincipale extends AppCompatActivity {
         activity.startActivity(intent);
         activity.finish();
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        closeDrawer(drawerLayout);
-    }
-
 
 }
