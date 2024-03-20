@@ -1,14 +1,15 @@
 package com.example.tch099_projet_integrateur;
+import com.example.tch099_projet_integrateur.info_user.*;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Build;
 
-import android.util.JsonReader;
 import android.util.Log;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,12 +17,11 @@ import org.json.JSONObject;
 
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.HashMap;
 
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -41,13 +41,17 @@ public class ConnexionBD extends Thread{
 
     private ListView listView;
 
-    private static final String apiPathVerifLogin = "http://192.168.68.116/TCH099_Projet_Int/Site_web/Connexion/page_connexion.php";
+    private static final String apiPathVerifLogin = "http://192.168.68.111/TCH099_Projet_Int/Site_web/Connexion/page_connexion.php";
 
 
 
-    public static void verifLogin(String username, String mdp) {
 
-        (new Thread()
+    public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
+
+
+        RecuLogin verifLog = new RecuLogin();
+
+        Thread p = new Thread()
         {
 
             @Override
@@ -77,38 +81,90 @@ public class ConnexionBD extends Thread{
                         .post(postBody)
                         .build();
 
-                client.newCall(post).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        Log.e("TAG",e.getMessage());
+
+                try(Response response = client.newCall(post).execute())
+                {
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+                    ResponseBody responseBody = response.body();
+                    String reponse;
+                    ObjectMapper mapper = new ObjectMapper();
+                    try{
+
+                        JsonNode json = mapper.readTree(responseBody.string());
+                        reponse = json.get("reponse").asText();
+                        String codeRes = json.get("code").asText();
+                        int code = Integer.parseInt(codeRes);
+                        verifLog.setCode(code);
+                        verifLog.setReponse(reponse);
+
+
+
+                    }catch (Exception e){
+                        Log.e("TAG", "JSON MARCHE PAS");
                     }
 
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
 
-                        try(ResponseBody responseBody = response.body()){
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
-                            if(!response.isSuccessful()) throw new IOException("Code inattendu" + response);
-
-
-
-
-                        }catch (Exception e)
-                        {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                });
-
+//                client.newCall(post).enqueue(new Callback() {
+//                    @Override
+//                    public void onFailure(Call call, IOException e) {
+//                        Log.e("TAG",e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onResponse(Call call, Response response) throws IOException {
+//
+//                        try(ResponseBody responseBody = response.body()){
+//
+//                            if(!response.isSuccessful()) throw new IOException("Code inattendu :" + response.code());
+//
+//                            String reponse;
+//                            int code = response.code();
+//                            ObjectMapper mapper = new ObjectMapper();
+//                            try{
+//                                JsonNode json = mapper.readTree(responseBody.string());
+//                                reponse = json.get("reponse").asText();
+//                                String codeRes = json.get("code").asText();
+//                                elementsResulat.put("reponse", reponse);
+//                                elementsResulat.put("code", codeRes);
+//
+//                            }catch (Exception e){
+//                                Log.e("TAG", "JSON MARCHE PAS");
+//                            }
+//
+//                            if(code == 200)
+//                            {
+//                                return code;
+//                            }
+//
+//
+//
+//
+//                        }catch (Exception e)
+//                        {
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//
+//
+//
+//                });
+                currentThread().interrupt();
 
             }
-        }).start();
+        };
+
+        p.start();
+        p.join();
 
 
 
-
+        return verifLog;
 
     }
 

@@ -1,4 +1,6 @@
 package com.example.tch099_projet_integrateur;
+import com.example.tch099_projet_integrateur.enumerations.*;
+import com.example.tch099_projet_integrateur.info_user.RecuLogin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -62,20 +64,25 @@ public class PageConnection extends AppCompatActivity implements View.OnClickLis
         String mail = courriel.getText().toString();
         String mdp = motdepasse.getText().toString();
 
+        RecuLogin resultat;
         try {
-            ConnexionBD.verifLogin(mail,mdp);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            resultat = ConnexionBD.verifLogin(mail,mdp);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
-        PagePrincipale.redirectActivity(this, PagePrincipale.class);
+        if(resultat.getCode() == 200)
+        {
+            Toast.makeText(this, resultat.getReponse(), Toast.LENGTH_SHORT).show();
+            PagePrincipale.redirectActivity(this, PagePrincipale.class);
+        }
+        else
+        {
+            Toast.makeText(this, resultat.getReponse(), Toast.LENGTH_SHORT).show();
+            recreate();
+        }
 
     }
 
-    public boolean testEgaliteMdp(String mdp, String mdpSql)
-    {
-        return mdp.equals(mdpSql);
-
-    }
 
 }

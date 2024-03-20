@@ -42,8 +42,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.annotation:annotation:1.6.0")
-    implementation(files("libs\\mariadb-java-client-3.3.3.jar"))
+    implementation("androidx.annotation:annotation:1.7.1")
+    implementation(files("libs/mariadb-java-client-3.3.3.jar"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -59,7 +59,8 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
     //Fichier JSON
-    implementation ("com.google.code.gson:gson:2.10")
+    implementation ("com.google.code.gson:gson:2.10.1")
+    implementation ("com.fasterxml.jackson.core:jackson-databind:2.16.1")
 
     //OkHttp
     implementation ("com.squareup.okhttp3:okhttp:3.12.0")
