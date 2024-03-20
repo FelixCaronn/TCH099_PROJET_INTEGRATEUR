@@ -116,8 +116,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
+        <EditText
+            android:id="@+id/editTextMdp"
             android:layout_width="308dp"
             android:layout_height="37dp"
             android:background="@drawable/input"
@@ -128,10 +128,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </EditText>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+        <EditText
+            android:id="@+id/editTextCourriel"
             android:layout_width="308dp"
             android:layout_height="37dp"
             android:background="@drawable/input"
@@ -143,7 +143,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.25">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </EditText>
 
         <TextView
             android:id="@+id/labelCourriel"
@@ -168,11 +168,11 @@
             android:text="@string/mot_de_passe"
             android:textColor="#8A8787"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+            app:layout_constraintBottom_toTopOf="@+id/editTextMdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.112"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCourriel"
             app:layout_constraintVertical_bias="0.692" />
 
         <CheckBox

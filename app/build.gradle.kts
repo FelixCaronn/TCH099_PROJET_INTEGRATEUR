@@ -58,5 +58,11 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
+    //Fichier JSON
+    implementation ("com.google.code.gson:gson:2.10")
+
+    //OkHttp
+    implementation ("com.squareup.okhttp3:okhttp:3.12.0")
+
 
 }

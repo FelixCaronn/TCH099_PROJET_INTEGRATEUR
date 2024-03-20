@@ -1,28 +1,282 @@
 package com.example.tch099_projet_integrateur;
 
-import android.os.StrictMode;
+import android.app.ProgressDialog;
+import android.os.Build;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import android.util.JsonReader;
+import android.util.Log;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+import java.io.IOException;
+import java.io.InputStream;
+
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class ConnexionBD extends Thread{
 
-    public static boolean connexion(){
-        Thread thread = new Thread(new Runnable() {
+    private ProgressDialog processDialog;
+
+
+
+
+    private JSONArray resultJson;
+    private int success=0;
+
+    private ListView listView;
+
+    private static final String apiPathVerifLogin = "http://192.168.68.116/TCH099_Projet_Int/Site_web/Connexion/page_connexion.php";
+
+
+
+    public static void verifLogin(String username, String mdp) {
+
+        (new Thread()
+        {
+
             @Override
             public void run() {
-                try {
-                    DriverManager.getConnection("jdbc:mysql://localhost:3306/application", "admin", "admin");
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+
+
+                OkHttpClient client = new OkHttpClient();
+
+
+                JSONObject postData = new JSONObject();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        postData.append("courriel", username);
+                        postData.append("password", mdp);
+                        postData.append("mobile", 1);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 }
+
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody postBody = RequestBody.create(JSON, postData.toString());
+                Request post = new Request.Builder()
+                        .url(apiPathVerifLogin)
+                        .post(postBody)
+                        .build();
+
+                client.newCall(post).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.e("TAG",e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+                        try(ResponseBody responseBody = response.body()){
+
+                            if(!response.isSuccessful()) throw new IOException("Code inattendu" + response);
+
+
+
+
+                        }catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                });
+
+
             }
-        });
-        thread.start();
-        return true;
+        }).start();
+
+
+
+
+
     }
 
+    public static void creationCompte(String nom, String prenom, String courriel,String mdp, String confirmationMdp)  {
+
+        (new Thread(){
+
+            String apiPathCreationCompte = "http://localhost:1234/Creer_un_compte/creerCompte.php";
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+
+                JSONObject postData = new JSONObject();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        postData.append("nom", nom);
+                        postData.append("prenom", prenom);
+                        postData.append("courriel", courriel);
+                        postData.append("password", mdp);
+                        postData.append("conf_password", confirmationMdp);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
 
 
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody postBody = RequestBody.create(JSON, postData.toString());
+                Request post = new Request.Builder()
+                        .url(apiPathCreationCompte)
+                        .post(postBody)
+                        .build();
+
+                client.newCall(post).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+                        try{
+                            ResponseBody responseBody = response.body();
+                            if(!response.isSuccessful())
+                            {
+                                throw new IOException("Erreur HTTP code : " + response);
+                            }
+                            Log.i("data", responseBody.string());
+                        }catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                });
+
+            }
+        }).start();
+
+    }
+
+    public static int getUserId(String mail)
+    {
+        (new Thread(){
+
+            String apiPathGetId = "http://localhost:1234/Connexion/getUserId.php";
+
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+
+                JSONObject getData = new JSONObject();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        getData.append("courriel", mail);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody getBody = RequestBody.create(JSON, getData.toString());
+                Request get = new Request.Builder()
+                        .url(apiPathGetId)
+                        .post(getBody)
+                        .build();
+
+                Call call = client.newCall(get);
+                Response reponse = null;
+                try {
+                    reponse = call.execute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                assert(reponse.code() == 200);
+
+            }
+        }).start();
+
+        return 3;
+    }
+
+    public static void getComptes(String courriel)
+    {
+        (new Thread(){
+
+            int userID = getUserId(courriel);
+
+            String apiPathGetComptes = "http://localhost:1234/Connexion/afficherComptes.php";
+
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+
+                JSONObject getData = new JSONObject();
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+                    try{
+
+                        getData.append("utilisateur", userID);
+
+                    }catch(Exception e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
+                }
+
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody getBody = RequestBody.create(JSON, getData.toString());
+                Request get = new Request.Builder()
+                        .url(apiPathGetComptes)
+                        .build();
+
+                Call call = client.newCall(get);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+
+
+                    }
+                });
+                Response reponse = null;
+                try {
+                    reponse = call.execute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+
+                assert(reponse.code() == 200);
+
+            }
+        }).start();
+    }
 
 }
