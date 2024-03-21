@@ -41,7 +41,7 @@ public class ConnexionBD extends Thread{
 
     private ListView listView;
 
-    private static final String apiPathVerifLogin = "http://192.168.68.111/TCH099_Projet_Int/Site_web/Connexion/page_connexion.php";
+    private static final String apiPathVerifLogin = "http://192.168.68.111/TCH099_Projet_Int/Site_web/Connexion/API/apiConnexion.php";
 
 
 
@@ -68,6 +68,7 @@ public class ConnexionBD extends Thread{
                         postData.append("courriel", username);
                         postData.append("password", mdp);
                         postData.append("mobile", 1);
+                        postData.append("checked",false);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -87,73 +88,25 @@ public class ConnexionBD extends Thread{
                     if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
                     ResponseBody responseBody = response.body();
-                    String reponse;
                     ObjectMapper mapper = new ObjectMapper();
-                    try{
-
-                        JsonNode json = mapper.readTree(responseBody.string());
-                        reponse = json.get("reponse").asText();
-                        String codeRes = json.get("code").asText();
-                        int code = Integer.parseInt(codeRes);
-                        verifLog.setCode(code);
-                        verifLog.setReponse(reponse);
 
 
+                    JsonNode json = mapper.readTree(responseBody.string());
+                    String reponse = json.get("reponse").asText();
+                    String codeRes = json.get("code").asText();
+                    int code = Integer.parseInt(codeRes);
+                    verifLog.setCode(code);
+                    verifLog.setReponse(reponse);
 
-                    }catch (Exception e){
-                        Log.e("TAG", "JSON MARCHE PAS");
-                    }
+
+
+
 
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
 
-//                client.newCall(post).enqueue(new Callback() {
-//                    @Override
-//                    public void onFailure(Call call, IOException e) {
-//                        Log.e("TAG",e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onResponse(Call call, Response response) throws IOException {
-//
-//                        try(ResponseBody responseBody = response.body()){
-//
-//                            if(!response.isSuccessful()) throw new IOException("Code inattendu :" + response.code());
-//
-//                            String reponse;
-//                            int code = response.code();
-//                            ObjectMapper mapper = new ObjectMapper();
-//                            try{
-//                                JsonNode json = mapper.readTree(responseBody.string());
-//                                reponse = json.get("reponse").asText();
-//                                String codeRes = json.get("code").asText();
-//                                elementsResulat.put("reponse", reponse);
-//                                elementsResulat.put("code", codeRes);
-//
-//                            }catch (Exception e){
-//                                Log.e("TAG", "JSON MARCHE PAS");
-//                            }
-//
-//                            if(code == 200)
-//                            {
-//                                return code;
-//                            }
-//
-//
-//
-//
-//                        }catch (Exception e)
-//                        {
-//                            e.printStackTrace();
-//                        }
-//
-//                    }
-//
-//
-//
-//                });
                 currentThread().interrupt();
 
             }
