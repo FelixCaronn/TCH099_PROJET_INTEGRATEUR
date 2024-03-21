@@ -101,4 +101,13 @@
     <string name="baleinesupport">BaleineSupport</string>
     <string name="title_activity_depot_cheque">DepotCheque</string>
     <string name="d_poser_un_ch_que">Déposer un chèque</string>
+
+    <!--Pour l'activite de deposer un cheque-->
+    <string name="recto">Recto manquant\n</string>
+    <string name="verso">Verso manquant\n</string>
+    <string name="photoInv">Photo Invalide</string>
+    <string name="montantManquant">Montant manquant</string>
+    <string name="montantInv">Les montants ne correspondent pas</string>
+    <string name="depotSucces">Depot approuve!</string>
+
 </resources>
