@@ -33,7 +33,7 @@ import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import java.io.FileNotFoundException;
 
-public class DepotCheque extends AppCompatActivity{
+public class DepotCheque extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
