@@ -1,21 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/drawerLayout"
-    tools:context=".PagePrincipale"
-    android:background="@color/colorBody">
+    android:background="@color/colorBody"
+    tools:context=".PagePrincipale">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/nav_header"/>
+        <include layout="@layout/nav_header" />
+
+        <TextView
+            android:id="@+id/bonjourUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Bonjour User"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/lvComptes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnNautico"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="#ff4747"
+            android:text="Assistance Nautico"
+            android:textSize="20dp" />
 
 
     </LinearLayout>
@@ -23,11 +46,10 @@
     <RelativeLayout
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        android:background="@color/colorWhite">
 
-        <include
-            layout="@layout/nav_drawer"/>
+        <include layout="@layout/nav_drawer" />
 
     </RelativeLayout>
 
