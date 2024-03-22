@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -37,6 +38,7 @@ public class PagePrincipale extends AppCompatActivity {
     private List<CompteBancaire> lesComptes;
     private ComptesDao dao;
     private ListView lvComptes;
+    private Button btnNautico;
     private CompteAdapter adaptateur;
     DrawerLayout drawerLayout;
     ImageView menu;
@@ -120,6 +122,7 @@ public class PagePrincipale extends AppCompatActivity {
 
 
         lvComptes = findViewById(R.id.lvComptes);
+        btnNautico = findViewById(R.id.btnNautico);
 
         lvComptes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -133,6 +136,14 @@ public class PagePrincipale extends AppCompatActivity {
                 iDetailCompte.putExtra("NUM_COMPTE", num);
                 iDetailCompte.putExtra("SOLDE_COMPTE", solde);
                 startActivity(iDetailCompte);
+            }
+        });
+
+        btnNautico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Assistance = new Intent(getApplicationContext(), SupportNautico.class);
+                startActivity(Assistance);
             }
         });
     }
@@ -150,6 +161,13 @@ public class PagePrincipale extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
         activity.finish();
+    }
+
+    public void onClick(View v) {
+        if (v == btnNautico) {
+            Intent intention = new Intent(this, SupportNautico.class);
+            startActivity(intention);
+        }
     }
 
     @Override
