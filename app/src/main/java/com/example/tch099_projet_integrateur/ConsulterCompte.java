@@ -1,10 +1,11 @@
 package com.example.tch099_projet_integrateur;
 import com.example.tch099_projet_integrateur.enumerations.*;
+import com.example.tch099_projet_integrateur.info_user.TransactionBancaire;
 
 import static com.example.tch099_projet_integrateur.PagePrincipale.openDrawer;
+import static com.example.tch099_projet_integrateur.PagePrincipale.redirectActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
@@ -12,22 +13,35 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConsulterCompte extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
-    TextView typeCompte, numCompte;
+    TextView typeCompte, numCompte, soldeCompte;
     Button btnTransfert, btnVirement, btnFacture, btnCheque;
     ListView listeHisto;
+    int numeroCompte;
+    double solde;
+    typeCompte typeDuCompte;
+    List<TransactionBancaire> historique;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulter_compte);
+        /*Intent intent = this.getIntent();
+        numeroCompte = intent.getIntExtra("NUM_COMPTE",0);
+        solde = intent.getDoubleExtra("SOLDE_COMPTE",0);
+        typeDuCompte = (typeCompte) intent.getSerializableExtra("TYPE_COMPTE");*/
         drawerLayout = findViewById(R.id.drawerLayout);
         menu = findViewById(R.id.menu);
         home = findViewById(R.id.home);
@@ -44,19 +58,52 @@ public class ConsulterCompte extends AppCompatActivity {
             }
         });
         btnCheque = findViewById(R.id.btnDeposerCheque);
+        btnCheque.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(ConsulterCompte.this,DepotCheque.class);
+            }
+        });
         btnFacture = findViewById(R.id.btnPayerFacture);
+        btnFacture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*a updater quand les activites existent*/////////////////////////////
+                //redirectActivity(ConsulterCompte.this,);
+            }
+        });
         btnTransfert = findViewById(R.id.btnTransfert);
+        btnTransfert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*a updater quand les activites existent*/////////////////////////////
+                //redirectActivity(ConsulterCompte.this,);
+            }
+        });
         btnVirement = findViewById(R.id.btnEnvoyer);
+        btnVirement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*a updater quand les activites existent*/////////////////////////////
+                //redirectActivity(ConsulterCompte.this,);
+            }
+        });
         listeHisto = findViewById(R.id.listeHistorique);
         typeCompte = findViewById(R.id.typeCompte);
-        typeCompte.setText("");
+        //typeCompte.setText(typeDuCompte.toString());
         numCompte = findViewById(R.id.numCompte);
-        numCompte.setText("");
-
-
-
-
-
-
+        //numCompte.setText(Integer.toString(numeroCompte));
+        soldeCompte = findViewById(R.id.txtMontantCompte);
+        //soldeCompte.setText(Double.toString(solde) + "$");
+        historique = new ArrayList<TransactionBancaire>();
+        TransactionBancaire transact;
+        for (int i = 0; i < 10; i++) {
+            transact = new TransactionBancaire("1","2024/03/11",
+                    100,typeTransaction.PAIEMENTFACTURE,"allo");
+            historique.add(transact);
+        }
+        Toast.makeText(this, Integer.toString(historique.size()), Toast.LENGTH_LONG).show();
+        ListAdapter adapter = new historiqueAdapter(this,R.layout.historique_layout,historique);
+        listeHisto.setAdapter(adapter);
     }
 }

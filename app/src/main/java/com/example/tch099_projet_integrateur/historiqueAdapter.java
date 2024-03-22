@@ -6,10 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
+import com.example.tch099_projet_integrateur.enumerations.typeTransaction;
 import com.example.tch099_projet_integrateur.info_user.TransactionBancaire;
 
 import java.util.List;
@@ -39,11 +40,25 @@ public class historiqueAdapter extends ArrayAdapter<TransactionBancaire> {
         }
         final TransactionBancaire transaction = this.historique.get(position);
         if (transaction!=null){
-            
+            final TextView montantTransaction = (TextView) view.findViewById(R.id.montantTransaction);
+            montantTransaction.setText(Double.toString(transaction.getMontant()));
+            final TextView descriptionHistorique = (TextView) view.findViewById(R.id.descriptionHistorique);
+            ////a changer si on veux plus de detail pour la transaction
+            typeTransaction type = transaction.getType();
+            switch (type){
+                case PAIEMENTFACTURE:
+                    descriptionHistorique.setText("Paiement de facture");
+                    break;
+                case VIREMENT:
+                    descriptionHistorique.setText("Virement a une autre personne");
+                    break;
+                case TRANSFERT:
+                    descriptionHistorique.setText("Transfert entre vos comptes");
+                    break;
+            }
+            final TextView date = (TextView) view.findViewById(R.id.date);
+            date.setText(transaction.getDateDeTransaction());
         }
-
-
-
         return view;
     }
 }
