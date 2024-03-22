@@ -19,7 +19,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="766dp">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -56,9 +56,10 @@
                 android:paddingBottom="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titreNautico"
-                app:layout_constraintVertical_bias="0.448">
+                app:layout_constraintVertical_bias="0.225">
 
                 <TextView
                     android:id="@+id/txtTitreSupport"
@@ -133,6 +134,15 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btnAnnuler"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="#ff6b6b"
+            android:text="Annuler"
+            android:textSize="15dp" />
 
 
     </LinearLayout>
