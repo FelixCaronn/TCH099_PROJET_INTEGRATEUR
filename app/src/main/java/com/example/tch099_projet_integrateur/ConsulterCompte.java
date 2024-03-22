@@ -1,6 +1,9 @@
 package com.example.tch099_projet_integrateur;
 import com.example.tch099_projet_integrateur.enumerations.*;
 import com.example.tch099_projet_integrateur.info_user.TransactionBancaire;
+import com.example.tch099_projet_integrateur.info_user.CompteBancaire;
+import com.example.tch099_projet_integrateur.info_user.ComptesDao;
+import com.example.tch099_projet_integrateur.info_user.DaoSingleton;
 
 import static com.example.tch099_projet_integrateur.PagePrincipale.openDrawer;
 import static com.example.tch099_projet_integrateur.PagePrincipale.redirectActivity;
@@ -8,11 +11,13 @@ import static com.example.tch099_projet_integrateur.PagePrincipale.redirectActiv
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +38,11 @@ public class ConsulterCompte extends AppCompatActivity {
     double solde;
     typeCompte typeDuCompte;
     List<TransactionBancaire> historique;
+
+
+    private TextView txtNum, txtSolde, txtType;
+    private Button btnRetour;
+    private CompteBancaire compte;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,5 +115,31 @@ public class ConsulterCompte extends AppCompatActivity {
         Toast.makeText(this, Integer.toString(historique.size()), Toast.LENGTH_LONG).show();
         ListAdapter adapter = new historiqueAdapter(this,R.layout.historique_layout,historique);
         listeHisto.setAdapter(adapter);
+
+        txtNum = findViewById(R.id.txtnumeroCompte);
+        txtSolde = findViewById(R.id.txtMontantCompte);
+        txtType = findViewById(R.id.typeCompte);
+
+        btnRetour = findViewById(R.id.btnRetour);
+
+        btnRetour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_CANCELED);
+                finish();
+            }
+        });
+
+        Intent intent = getIntent();
+
+        typeCompte typeCompte = (typeCompte) intent.getSerializableExtra("TYPE_COMPTE");
+        int numCompte = intent.getIntExtra("NUM_COMPTE", 0);
+        double soldeCompte = intent.getDoubleExtra("SOLDE_COMPTE", 0.0);
+
+        ComptesDao dao = DaoSingleton.getDaoInstance();
+        compte = dao.getCompteParNum(String.valueOf(numCompte));
+        txtType.setText(String.valueOf(typeCompte));
+        txtNum.setText(String.valueOf(numCompte));
+        txtSolde.setText(String.valueOf(soldeCompte));
     }
 }
