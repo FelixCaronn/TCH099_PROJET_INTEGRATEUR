@@ -18,7 +18,6 @@
         <activity
             android:name=".ConsulterCompte"
             android:exported="false" />
-
         <activity
             android:name=".SupportNautico"
             android:exported="false" />
