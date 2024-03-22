@@ -43,104 +43,103 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="Comptes"
-            android:textSize="18sp"
-            android:fontFamily="@font/montserrat_bold"
             android:drawableLeft="@drawable/baseline_home_filled_24"
-            android:drawablePadding="8dp"/>
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Comptes"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/depot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="Dépot"
-            android:textSize="18sp"
-            android:fontFamily="@font/montserrat_bold"
             android:drawableLeft="@drawable/ic_cash"
-            android:drawablePadding="8dp"/>
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Dépot"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/facture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="@string/payer_une_facture"
-            android:fontFamily="@font/montserrat_bold"
-            android:textSize="18sp"
             android:drawableLeft="@drawable/ic_carte"
             android:drawablePadding="8dp"
-            />
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/payer_une_facture"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="@string/notifications"
-            android:textSize="18sp"
-            android:fontFamily="@font/montserrat_bold"
             android:drawableLeft="@drawable/ic_notification"
-            android:drawablePadding="8dp"/>
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/notifications"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/support"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="@string/support_nautico"
-            android:textSize="18sp"
-            android:fontFamily="@font/montserrat_bold"
             android:drawableLeft="@drawable/ic_support"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/support_nautico"
+            android:textColor="@color/black"
 
-            android:drawablePadding="8dp"/>
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -159,42 +158,42 @@
         android:textSize="18sp"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/transfertClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="@string/vers_un_client"
-            android:textSize="18sp"
-            android:fontFamily="@font/montserrat_bold"
             android:drawableLeft="@drawable/ic_face"
-            android:drawablePadding="8dp"/>
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/vers_un_client"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/transfertCompte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="@string/vers_un_compte"
-            android:textSize="18sp"
-            android:fontFamily="@font/montserrat_bold"
             android:drawableLeft="@drawable/ic_cash"
-            android:drawablePadding="8dp"/>
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/vers_un_compte"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
