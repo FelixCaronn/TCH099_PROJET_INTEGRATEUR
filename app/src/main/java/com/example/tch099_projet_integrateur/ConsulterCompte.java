@@ -71,31 +71,28 @@ public class ConsulterCompte extends AppCompatActivity {
         btnCheque.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(ConsulterCompte.this,DepotCheque.class);
+                redirectActivity(ConsulterCompte.this, DepotCheque.class);
             }
         });
         btnFacture = findViewById(R.id.btnPayerFacture);
         btnFacture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*a updater quand les activites existent*/////////////////////////////
-                //redirectActivity(ConsulterCompte.this,);
+                redirectActivity(ConsulterCompte.this, paiementFacture.class);
             }
         });
         btnTransfert = findViewById(R.id.btnTransfert);
         btnTransfert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*a updater quand les activites existent*/////////////////////////////
-                //redirectActivity(ConsulterCompte.this,);
+                redirectActivity(ConsulterCompte.this, virementEntreCompte.class);
             }
         });
         btnVirement = findViewById(R.id.btnEnvoyer);
         btnVirement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*a updater quand les activites existent*/////////////////////////////
-                //redirectActivity(ConsulterCompte.this,);
+                redirectActivity(ConsulterCompte.this, virementEntreUtilisateurs.class);
             }
         });
         listeHisto = findViewById(R.id.listeHistorique);
