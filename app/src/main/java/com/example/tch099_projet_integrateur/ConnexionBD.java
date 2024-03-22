@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.cfg.MapperBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +42,9 @@ public class ConnexionBD extends Thread{
 
     private ListView listView;
 
-    private static final String apiPathVerifLogin = "http://192.168.68.111/TCH099_Projet_Int/Site_web/Connexion/API/apiConnexion.php";
+
+    private static final String apiPathVerifLogin = "http://34.127.103.229/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
+    private static final String apiPathCreationCompte = "http://34.127.103.229/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
 
 
 
@@ -121,11 +124,12 @@ public class ConnexionBD extends Thread{
 
     }
 
-    public static void creationCompte(String nom, String prenom, String courriel,String mdp, String confirmationMdp)  {
+    public static RecuLogin creationCompte(String nom, String prenom, String courriel,String mdp, String confirmationMdp) throws InterruptedException {
 
-        (new Thread(){
+        RecuLogin recu = new RecuLogin();
+        Thread p = new Thread(){
 
-            String apiPathCreationCompte = "http://localhost:1234/Creer_un_compte/creerCompte.php";
+
             @Override
             public void run() {
 
@@ -139,6 +143,7 @@ public class ConnexionBD extends Thread{
                         postData.append("courriel", courriel);
                         postData.append("password", mdp);
                         postData.append("conf_password", confirmationMdp);
+                        postData.append("mobile", true);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -153,34 +158,34 @@ public class ConnexionBD extends Thread{
                         .post(postBody)
                         .build();
 
-                client.newCall(post).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        e.printStackTrace();
-                    }
+                try(Response response = client.newCall(post).execute()){
 
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-                        try{
-                            ResponseBody responseBody = response.body();
-                            if(!response.isSuccessful())
-                            {
-                                throw new IOException("Erreur HTTP code : " + response);
-                            }
-                            Log.i("data", responseBody.string());
-                        }catch (Exception e)
-                        {
-                            e.printStackTrace();
-                        }
+                    ResponseBody responseBody = response.body();
+                    ObjectMapper mapper = new ObjectMapper();
 
-                    }
+                    //Recuperer resultat requete API
+                    JsonNode json = mapper.readTree(responseBody.string());
+                    String reponse = json.get("reponse").asText();
+                    String codeRes = json.get("code").asText();
+                    int code = Integer.parseInt(codeRes);
+                    recu.setCode(code);
+                    recu.setReponse(reponse);
 
-                });
+
+                }catch (Exception e)
+                {
+                    Log.e("TAG", "Error calling API code : 404");
+                }
 
             }
-        }).start();
+        };
 
+        p.start();
+        p.join();
+
+        return recu;
     }
 
     public static int getUserId(String mail)
