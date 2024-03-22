@@ -48,10 +48,10 @@ public class ConsulterCompte extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulter_compte);
-        /*Intent intent = this.getIntent();
+        Intent intent = this.getIntent();
         numeroCompte = intent.getIntExtra("NUM_COMPTE",0);
         solde = intent.getDoubleExtra("SOLDE_COMPTE",0);
-        typeDuCompte = (typeCompte) intent.getSerializableExtra("TYPE_COMPTE");*/
+        typeDuCompte = (typeCompte) intent.getSerializableExtra("TYPE_COMPTE");
         drawerLayout = findViewById(R.id.drawerLayout);
         menu = findViewById(R.id.menu);
         home = findViewById(R.id.home);
@@ -100,11 +100,11 @@ public class ConsulterCompte extends AppCompatActivity {
         });
         listeHisto = findViewById(R.id.listeHistorique);
         typeCompte = findViewById(R.id.typeCompte);
-        //typeCompte.setText(typeDuCompte.toString());
+        typeCompte.setText(typeDuCompte.toString());
         numCompte = findViewById(R.id.numCompte);
-        //numCompte.setText(Integer.toString(numeroCompte));
+        numCompte.setText(Integer.toString(numeroCompte));
         soldeCompte = findViewById(R.id.txtMontantCompte);
-        //soldeCompte.setText(Double.toString(solde) + "$");
+        soldeCompte.setText(Double.toString(solde) + "$");
         historique = new ArrayList<TransactionBancaire>();
         TransactionBancaire transact;
         for (int i = 0; i < 10; i++) {
@@ -112,13 +112,9 @@ public class ConsulterCompte extends AppCompatActivity {
                     100,typeTransaction.PAIEMENTFACTURE,"allo");
             historique.add(transact);
         }
-        Toast.makeText(this, Integer.toString(historique.size()), Toast.LENGTH_LONG).show();
         ListAdapter adapter = new historiqueAdapter(this,R.layout.historique_layout,historique);
         listeHisto.setAdapter(adapter);
 
-        txtNum = findViewById(R.id.txtnumeroCompte);
-        txtSolde = findViewById(R.id.txtMontantCompte);
-        txtType = findViewById(R.id.typeCompte);
 
         btnRetour = findViewById(R.id.btnRetour);
 
@@ -129,17 +125,7 @@ public class ConsulterCompte extends AppCompatActivity {
                 finish();
             }
         });
-
-        Intent intent = getIntent();
-
-        typeCompte typeCompte = (typeCompte) intent.getSerializableExtra("TYPE_COMPTE");
-        int numCompte = intent.getIntExtra("NUM_COMPTE", 0);
-        double soldeCompte = intent.getDoubleExtra("SOLDE_COMPTE", 0.0);
-
         ComptesDao dao = DaoSingleton.getDaoInstance();
         compte = dao.getCompteParNum(String.valueOf(numCompte));
-        txtType.setText(String.valueOf(typeCompte));
-        txtNum.setText(String.valueOf(numCompte));
-        txtSolde.setText(String.valueOf(soldeCompte));
     }
 }
