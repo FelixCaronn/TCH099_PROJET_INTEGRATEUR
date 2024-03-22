@@ -52,7 +52,8 @@ dependencies {
     implementation("com.makeramen:roundedimageview:2.3.0")
 
     //OCR
-    implementation("com.google.mlkit:text-recognition:16.0.0")
+
+    implementation ("com.google.mlkit:text-recognition:16.0.0")
     
     //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")

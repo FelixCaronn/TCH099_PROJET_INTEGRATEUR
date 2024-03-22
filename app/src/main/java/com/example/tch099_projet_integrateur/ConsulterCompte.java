@@ -117,6 +117,11 @@ public class ConsulterCompte extends AppCompatActivity {
         listeHisto.setAdapter(adapter);
         ////
 
+
+
+
+
+
         btnRetour = findViewById(R.id.btnRetour);
         btnRetour.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,5 +132,6 @@ public class ConsulterCompte extends AppCompatActivity {
         });
         ComptesDao dao = DaoSingleton.getDaoInstance();
         compte = dao.getCompteParNum(String.valueOf(numCompte));
+
     }
 }

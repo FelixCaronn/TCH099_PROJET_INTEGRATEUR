@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+
+  
+
+
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,8 +18,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TCH099_PROJET_INTEGRATEUR"
+
+        tools:targetApi="31">
+        <activity
+            android:name=".virementEntreCompte"
+            android:exported="false" />
+        <activity
+            android:name=".virementEntreCompte"
+            android:exported="false" />
+        <activity
+            android:name=".virementEntreUtilisateurs"
+            android:exported="false" />
+        <activity
+            android:name=".virementEntreComptes"
+            android:exported="false" />
+        <activity
+            android:name=".activity_paiement_facture"
+            android:exported="false" />
+        <activity
+            android:name=".activity_virement_entre_utilisateur"
+            android:exported="false" />
+        <activity
+            android:name=".activity_virement_entre_compte"
+            android:exported="false" />
+
         tools:targetApi="31"
         android:networkSecurityConfig="@xml/network_security_config">
+
 
         <activity
             android:name=".ConsulterCompte"
@@ -27,7 +58,7 @@
 
         <activity
             android:name=".PagePrincipale"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,8 +75,7 @@
             android:exported="false" />
         <activity
             android:name=".DepotCheque"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

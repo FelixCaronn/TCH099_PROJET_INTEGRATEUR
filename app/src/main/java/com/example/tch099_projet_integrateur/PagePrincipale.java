@@ -85,6 +85,13 @@ public class PagePrincipale extends AppCompatActivity {
             }
         });
 
+        transfertCompte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(PagePrincipale.this, virementEntreCompte.class);
+            }
+        });
+
 //        facture.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -106,19 +113,21 @@ public class PagePrincipale extends AppCompatActivity {
             }
         });
 
-//        transfertClient.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        transfertClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(PagePrincipale.this, virementEntreUtilisateurs.class);
+            }
+        });
 
-//        transfertCompte.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+              transfertCompte.setOnClickListener(new View.OnClickListener() {
+                @Override
+                  public void onClick(View v) {
+
+                    redirectActivity(PagePrincipale.this, virementEntreCompte.class);
+
+                 }
+              });
 
 
         lvComptes = findViewById(R.id.lvComptes);
