@@ -1,17 +1,10 @@
 package com.example.tch099_projet_integrateur;
 
-import com.example.tch099_projet_integrateur.enumerations.*;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import org.mariadb.jdbc.Driver;
-
-import java.sql.*;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class PageAcceuil extends AppCompatActivity {
 
