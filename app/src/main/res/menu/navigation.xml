@@ -27,7 +27,7 @@
                 android:icon="@drawable/ic_face"
                 android:title="@string/vers_un_client" />
             <item
-                android:id="@+id/compte"
+                android:id="@+id/menu_transfer"
                 android:icon="@drawable/ic_cash"
                 android:title="@string/vers_un_compte" />
         </menu>

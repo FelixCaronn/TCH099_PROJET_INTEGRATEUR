@@ -69,7 +69,7 @@ public class PagePrincipale extends AppCompatActivity {
         transfertCompte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(PagePrincipale.this, virementEntreComptes.class);
+                redirectActivity(PagePrincipale.this, virementEntreCompte.class);
             }
         });
 
@@ -94,19 +94,21 @@ public class PagePrincipale extends AppCompatActivity {
             }
         });
 
-//        transfertClient.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        transfertClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(PagePrincipale.this, virementEntreUtilisateurs.class);
+            }
+        });
 
-//        transfertCompte.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+              transfertCompte.setOnClickListener(new View.OnClickListener() {
+                @Override
+                  public void onClick(View v) {
+
+                    redirectActivity(PagePrincipale.this, virementEntreCompte.class);
+
+                 }
+              });
 
 
 

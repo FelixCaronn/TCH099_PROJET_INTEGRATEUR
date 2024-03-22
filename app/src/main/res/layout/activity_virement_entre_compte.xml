@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawerLayout"
-    tools:context=".virementEntreUtilisateurs"
+    tools:context=".virementEntreCompte"
     android:background="@color/colorBody">
 
     <LinearLayout
@@ -37,9 +37,61 @@
                 app:layout_constraintHorizontal_bias="0.41"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.465"
-                tools:ignore="TextSizeCheck">
+                app:layout_constraintVertical_bias="0.465">
 
+
+                <RadioGroup
+                    android:id="@+id/radioGroup_transfer"
+                    android:layout_width="158dp"
+                    android:layout_height="137dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.891"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.395"
+                    tools:ignore="TextSizeCheck">
+
+                    <RadioButton
+                        android:id="@+id/chq_re"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="@string/compte_ch_que" />
+
+                    <RadioButton
+                        android:id="@+id/epar_re"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="@string/compte_pargne" />
+
+                    <RadioButton
+                        android:id="@+id/requi_re"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:minHeight="48dp"
+                        android:text="@string/carte_requin"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/montant_transfert"
+                    android:layout_width="157dp"
+                    android:layout_height="49dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.414"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.866"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck"
+                    android:autofillHints="" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -50,33 +102,18 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.049"
+                    app:layout_constraintHorizontal_bias="0.077"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.693"
+                    app:layout_constraintVertical_bias="0.87"
                     tools:ignore="TextSizeCheck" />
-
-                <EditText
-                    android:id="@+id/montant_virement"
-                    android:layout_width="110dp"
-                    android:layout_height="48dp"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:inputType="number"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.326"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.71"
-                    tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="@string/compte"
+                    android:text="@string/de"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -90,15 +127,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Destinataire"
+                    android:text="@string/vers"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.735"
+                    app:layout_constraintHorizontal_bias="0.611"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.106"
-                    tools:ignore="HardcodedText" />
+                    app:layout_constraintVertical_bias="0.106" />
 
                 <RadioGroup
                     android:id="@+id/radioGroup_re"
@@ -132,59 +168,6 @@
 
                 </RadioGroup>
 
-                <EditText
-                    android:id="@+id/Question"
-                    android:layout_width="170dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="16dp"
-                    android:ems="10"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:inputType="text"
-                    android:text="@string/question"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.912"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/email"
-                    tools:ignore="LabelFor"
-                    android:autofillHints="" />
-
-                <EditText
-                    android:id="@+id/Réponse"
-                    android:layout_width="170dp"
-                    android:layout_height="48dp"
-                    android:ems="10"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:inputType="text"
-                    android:text="@string/r_ponse"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.916"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Question"
-                    app:layout_constraintVertical_bias="0.202"
-                    tools:ignore="LabelFor"
-                    android:autofillHints="" />
-
-                <EditText
-                    android:id="@+id/email"
-                    android:layout_width="170dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="64dp"
-                    android:ems="10"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:inputType="text"
-                    android:text="@string/courriel"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.912"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="LabelFor,TextFields"
-                    android:autofillHints="" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -204,10 +187,9 @@
                     android:layout_height="55dp"
                     android:layout_marginTop="2dp"
                     android:backgroundTint="#FFFFFF"
-                    android:rotation="-29"
                     android:textColorHighlight="#FFFFFF"
                     android:textColorLink="#FFFFFF"
-                    app:icon="@drawable/ic_send"
+                    app:icon="@drawable/ic_transfert"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
                     app:iconSize="22dp"
@@ -257,10 +239,10 @@
 
                 <TextView
                     android:id="@+id/textView10"
-                    android:layout_width="338dp"
-                    android:layout_height="49dp"
+                    android:layout_width="306dp"
+                    android:layout_height="47dp"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="@string/virement_entre_particulier"
+                    android:text="@string/transfert_entre_comptes"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
