@@ -247,10 +247,16 @@
                     app:layout_constraintTop_toBottomOf="@+id/txtHistorique"
                     app:layout_constraintVertical_bias="0.0">
 
-                    <ListView
-                        android:id="@+id/listeHistorique"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ListView
+                            android:id="@+id/listeHistorique"
+                            android:layout_width="match_parent"
+                            android:layout_height="355dp" />
+                    </LinearLayout>
                 </ScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

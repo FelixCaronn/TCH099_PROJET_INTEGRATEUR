@@ -4,6 +4,7 @@ import com.example.tch099_projet_integrateur.info_user.TransactionBancaire;
 import com.example.tch099_projet_integrateur.info_user.CompteBancaire;
 import com.example.tch099_projet_integrateur.info_user.ComptesDao;
 import com.example.tch099_projet_integrateur.info_user.DaoSingleton;
+import com.example.tch099_projet_integrateur.info_user.historiqueAdapter;
 
 import static com.example.tch099_projet_integrateur.PagePrincipale.openDrawer;
 import static com.example.tch099_projet_integrateur.PagePrincipale.redirectActivity;
@@ -21,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,18 +106,18 @@ public class ConsulterCompte extends AppCompatActivity {
         soldeCompte = findViewById(R.id.txtMontantCompte);
         soldeCompte.setText(Double.toString(solde) + "$");
         historique = new ArrayList<TransactionBancaire>();
+        //test pour le scrollview, a remplacer par le vrai historique
         TransactionBancaire transact;
         for (int i = 0; i < 10; i++) {
             transact = new TransactionBancaire("1","2024/03/11",
                     100,typeTransaction.PAIEMENTFACTURE,"allo");
             historique.add(transact);
         }
-        ListAdapter adapter = new historiqueAdapter(this,R.layout.historique_layout,historique);
+        historiqueAdapter adapter = new historiqueAdapter(this,R.layout.historique_layout,historique);
         listeHisto.setAdapter(adapter);
-
+        ////
 
         btnRetour = findViewById(R.id.btnRetour);
-
         btnRetour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

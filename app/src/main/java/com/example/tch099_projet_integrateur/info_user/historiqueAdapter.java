@@ -1,4 +1,4 @@
-package com.example.tch099_projet_integrateur;
+package com.example.tch099_projet_integrateur.info_user;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ListAdapter;
+
+import com.example.tch099_projet_integrateur.R;
 import com.example.tch099_projet_integrateur.enumerations.typeTransaction;
 import com.example.tch099_projet_integrateur.info_user.TransactionBancaire;
 
