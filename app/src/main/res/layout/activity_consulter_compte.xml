@@ -19,7 +19,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -54,7 +54,7 @@
                     app:layout_constraintVertical_bias="0.133" />
 
                 <TextView
-                    android:id="@+id/txt1"
+                    android:id="@+id/numCompte"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
@@ -63,10 +63,10 @@
                     android:textColor="#8E8E8E"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.068"
+                    app:layout_constraintHorizontal_bias="0.078"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/typeCompte"
-                    app:layout_constraintVertical_bias="0.038" />
+                    app:layout_constraintVertical_bias="0.382" />
 
                 <TextView
                     android:id="@+id/txtnumeroCompte"
@@ -77,22 +77,25 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/txt1"
+                    app:layout_constraintStart_toEndOf="@+id/numCompte"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.419" />
 
                 <TextView
                     android:id="@+id/txtMontantCompte"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="175dp"
+                    android:layout_height="50dp"
                     android:fontFamily="@font/montserrat_bold"
-                    android:textStyle="italic"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.907"
+                    app:layout_constraintHorizontal_bias="0.928"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.803" />
+                    tools:text="1000000.00$" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -110,7 +113,6 @@
                     android:id="@+id/btnTrans"
                     android:layout_width="50dp"
                     android:layout_height="55dp"
-                    android:layout_marginStart="54dp"
                     android:layout_marginTop="2dp"
                     android:backgroundTint="#FFFFFF"
                     android:rotation="-27"
@@ -123,10 +125,30 @@
                     app:iconTint="#000000"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btnTransfert"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_bias="0.096"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.466" />
+                    app:layout_constraintVertical_bias="0.444" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDeposerCheque"
+                    android:layout_width="50dp"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="2dp"
+                    android:backgroundTint="#FFFFFF"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textColorLink="#FFFFFF"
+                    app:icon="@drawable/ch_que"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="22dp"
+                    app:iconTint="#000000"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.342"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.444" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnTransfert"
@@ -144,16 +166,16 @@
                     app:iconTint="#000000"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.622"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.466" />
+                    app:layout_constraintVertical_bias="0.444" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnPayerFacture"
                     android:layout_width="50dp"
                     android:layout_height="55dp"
                     android:layout_marginTop="2dp"
-                    android:layout_marginEnd="54dp"
                     android:backgroundTint="#FFFFFF"
                     android:rotation="0"
                     android:textColorHighlight="#FFFFFF"
@@ -165,17 +187,17 @@
                     app:iconTint="#000000"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.673"
                     app:layout_constraintStart_toEndOf="@+id/btnTransfert"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.466" />
+                    app:layout_constraintVertical_bias="0.444" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/historiqueTransaction"
-                android:layout_width="354dp"
-                android:layout_height="300dp"
+                android:layout_width="375dp"
+                android:layout_height="400dp"
                 android:background="@drawable/rectangle2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -220,20 +242,35 @@
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.333"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtHistorique">
+                    app:layout_constraintTop_toBottomOf="@+id/txtHistorique"
+                    app:layout_constraintVertical_bias="0.0">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
 
+                        <ListView
+                            android:id="@+id/listeHistorique"
+                            android:layout_width="match_parent"
+                            android:layout_height="355dp" />
                     </LinearLayout>
                 </ScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btnRetour"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="#005a80"
+            android:text="Retour"
+            android:textSize="20dp" />
 
 
     </LinearLayout>

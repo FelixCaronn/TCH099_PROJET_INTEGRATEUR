@@ -101,6 +101,7 @@
     <string name="baleinesupport">BaleineSupport</string>
     <string name="title_activity_depot_cheque">DepotCheque</string>
     <string name="d_poser_un_ch_que">Déposer un chèque</string>
+
     <string name="compte_pargne">compte épargne</string>
     <string name="compte_ch_que">Compte chèque</string>
     <string name="carte_requin">Carte requin</string>
@@ -115,4 +116,15 @@
     <string name="num_ro_de_r_f_rence">Numéro de référence</string>
     <string name="paiement_de_facture">Paiement de facture</string>
     <string name="destinataire">Destinataire</string>
+
+
+    <!--Pour l'activite de deposer un cheque-->
+    <string name="recto">Recto manquant\n</string>
+    <string name="verso">Verso manquant\n</string>
+    <string name="photoInv">Photo Invalide</string>
+    <string name="montantManquant">Montant manquant</string>
+    <string name="montantInv">Les montants ne correspondent pas</string>
+    <string name="depotSucces">Depot approuve!</string>
+
+
 </resources>

@@ -16,14 +16,30 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
+import com.example.tch099_projet_integrateur.enumerations.typeCompte;
+import com.example.tch099_projet_integrateur.info_user.CompteAdapter;
+import com.example.tch099_projet_integrateur.info_user.CompteBancaire;
+import com.example.tch099_projet_integrateur.info_user.ComptesDao;
+import com.example.tch099_projet_integrateur.info_user.DaoSingleton;
+
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 
 public class PagePrincipale extends AppCompatActivity {
 
-
+    private List<CompteBancaire> lesComptes;
+    private ComptesDao dao;
+    private ListView lvComptes;
+    private Button btnNautico;
+    private CompteAdapter adaptateur;
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
@@ -31,6 +47,10 @@ public class PagePrincipale extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
         setContentView(R.layout.activity_page_principale);
 
         drawerLayout = findViewById(R.id.drawerLayout);
@@ -44,7 +64,6 @@ public class PagePrincipale extends AppCompatActivity {
         support = findViewById(R.id.support);
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
-
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +130,31 @@ public class PagePrincipale extends AppCompatActivity {
               });
 
 
+        lvComptes = findViewById(R.id.lvComptes);
+        btnNautico = findViewById(R.id.btnNautico);
 
+        lvComptes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent iDetailCompte = new Intent(getApplicationContext(), ConsulterCompte.class);
+                CompteBancaire compteSelectionnee = (CompteBancaire) parent.getAdapter().getItem(position);
+                typeCompte typeCompte = compteSelectionnee.getTypeCompte();
+                int num = compteSelectionnee.getNumCompte();
+                double solde = compteSelectionnee.getSolde();
+                iDetailCompte.putExtra("TYPE_COMPTE", typeCompte);
+                iDetailCompte.putExtra("NUM_COMPTE", num);
+                iDetailCompte.putExtra("SOLDE_COMPTE", solde);
+                startActivity(iDetailCompte);
+            }
+        });
+
+        btnNautico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Assistance = new Intent(getApplicationContext(), SupportNautico.class);
+                startActivity(Assistance);
+            }
+        });
     }
 
     public static void openDrawer(DrawerLayout drawerLayout){
@@ -129,11 +172,25 @@ public class PagePrincipale extends AppCompatActivity {
         activity.finish();
     }
 
+    public void onClick(View v) {
+        if (v == btnNautico) {
+            Intent intention = new Intent(this, SupportNautico.class);
+            startActivity(intention);
+        }
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
         closeDrawer(drawerLayout);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dao = DaoSingleton.getDaoInstance();
+        lesComptes = dao.getComptes();
+        adaptateur = new CompteAdapter(this, R.layout.layout_compte, lesComptes);
+        lvComptes.setAdapter(adaptateur);
+    }
 }

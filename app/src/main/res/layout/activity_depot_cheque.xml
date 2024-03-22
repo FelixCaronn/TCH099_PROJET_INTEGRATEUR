@@ -71,7 +71,7 @@
                 android:layout_marginBottom="1dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="VERSO DU CHEQUE"
-                app:layout_constraintBottom_toTopOf="@+id/imageView5"
+                app:layout_constraintBottom_toTopOf="@+id/imgVerso"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.03"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +79,7 @@
                 app:layout_constraintVertical_bias="0.7" />
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/imgVerso"
                 android:layout_width="376dp"
                 android:layout_height="148dp"
                 android:background="@drawable/rectangle_boutton"
@@ -94,14 +94,14 @@
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="374dp"
-                android:layout_height="210dp"
+                android:layout_height="130dp"
                 android:background="@drawable/rectangle_blanc"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.432"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/imgVerso"
                 app:layout_constraintVertical_bias="0.238">
 
                 <LinearLayout
@@ -120,46 +120,27 @@
                         android:textSize="16sp" />
 
                     <EditText
-                        android:id="@+id/editTextText3"
+                        android:id="@+id/editTextMontantDepot"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="@color/colorWhite"
                         android:ems="10"
-                        android:inputType="text"
-                        android:paddingLeft="10sp"
-                        android:text="0$" />
+                        android:hint="0.00$"
+                        android:inputType="number|numberDecimal"
+                        android:paddingLeft="10sp" />
 
                 </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtCompte"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:paddingStart="5sp"
-                    android:text="Déposer dans :" />
-
-                <Spinner
-                    android:id="@+id/spinner"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown" />
-
-
-
-            </LinearLayout>
+                    android:gravity="center"
+                    android:orientation="vertical" />
 
             </LinearLayout>
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/buttonDepot"
                 android:layout_width="303dp"
                 android:layout_height="48dp"
                 android:backgroundTint="@color/colorHeader"
