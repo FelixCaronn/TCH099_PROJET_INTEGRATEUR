@@ -18,11 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TCH099_PROJET_INTEGRATEUR"
+        tools:targetApi="31"
+        android:networkSecurityConfig="@xml/network_security_config">
 
-        tools:targetApi="31">
-        <activity
-            android:name=".virementEntreCompte"
-            android:exported="false" />
         <activity
             android:name=".virementEntreCompte"
             android:exported="false" />
@@ -30,21 +28,8 @@
             android:name=".virementEntreUtilisateurs"
             android:exported="false" />
         <activity
-            android:name=".virementEntreComptes"
+            android:name=".paiementFacture"
             android:exported="false" />
-        <activity
-            android:name=".activity_paiement_facture"
-            android:exported="false" />
-        <activity
-            android:name=".activity_virement_entre_utilisateur"
-            android:exported="false" />
-        <activity
-            android:name=".activity_virement_entre_compte"
-            android:exported="false" />
-
-        tools:targetApi="31"
-        android:networkSecurityConfig="@xml/network_security_config">
-
 
         <activity
             android:name=".ConsulterCompte"
@@ -54,10 +39,6 @@
             android:exported="false" />
         <activity
             android:name=".PageAcceuil"
-            android:exported="false" />
-
-        <activity
-            android:name=".PagePrincipale"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,6 +46,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".PagePrincipale"
+            android:exported="false" />
         <activity
             android:name=".PageConnection"
             android:exported="false"
