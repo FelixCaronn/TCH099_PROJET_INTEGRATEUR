@@ -1,6 +1,7 @@
 package com.example.tch099_projet_integrateur.info_user;
 
 import com.example.tch099_projet_integrateur.enumerations.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 
@@ -8,7 +9,6 @@ public class CompteBancaire {
     private int num_compte;
     private double solde;
     private typeCompte typeCompte;
-    private ArrayList transactions;
 
     public CompteBancaire() {
 
@@ -18,8 +18,6 @@ public class CompteBancaire {
         this.num_compte = _num_compte;
         this.solde = _solde;
         this.typeCompte = _typeCompte;
-
-        transactions = new ArrayList<>();
     }
 
     public void setNumCompte(int n)

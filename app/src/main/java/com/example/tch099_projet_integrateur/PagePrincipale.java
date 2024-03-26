@@ -27,14 +27,17 @@ import com.example.tch099_projet_integrateur.info_user.CompteAdapter;
 import com.example.tch099_projet_integrateur.info_user.CompteBancaire;
 import com.example.tch099_projet_integrateur.info_user.ComptesDao;
 import com.example.tch099_projet_integrateur.info_user.DaoSingleton;
+import com.example.tch099_projet_integrateur.info_user.Utilisateur;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class PagePrincipale extends AppCompatActivity {
 
+    public static Utilisateur user = new Utilisateur();
     private List<CompteBancaire> lesComptes;
     private ComptesDao dao;
     private ListView lvComptes;
@@ -44,10 +47,20 @@ public class PagePrincipale extends AppCompatActivity {
     ImageView menu;
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
+        try {
+            ArrayList<CompteBancaire> liste = ConnexionBD.getComptes(user.getId());
+            user.setListeComptes(liste);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
 
 
@@ -133,6 +146,10 @@ public class PagePrincipale extends AppCompatActivity {
         lvComptes = findViewById(R.id.lvComptes);
         btnNautico = findViewById(R.id.btnNautico);
 
+        lesComptes = user.getListeComptes();
+        adaptateur = new CompteAdapter(this, R.layout.layout_compte, lesComptes);
+        lvComptes.setAdapter(adaptateur);
+
         lvComptes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -188,8 +205,7 @@ public class PagePrincipale extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        dao = DaoSingleton.getDaoInstance();
-        lesComptes = dao.getComptes();
+        lesComptes = user.getListeComptes();
         adaptateur = new CompteAdapter(this, R.layout.layout_compte, lesComptes);
         lvComptes.setAdapter(adaptateur);
     }

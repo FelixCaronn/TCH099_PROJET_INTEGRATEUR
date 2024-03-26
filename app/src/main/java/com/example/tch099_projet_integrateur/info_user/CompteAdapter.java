@@ -47,7 +47,7 @@ public class CompteAdapter extends ArrayAdapter<CompteBancaire> {
             final TextView tv_MontantCompte = (TextView) view.findViewById(R.id.item_MontantCompte);
 
             tv_TypeCompte.setText(compte.getTypeCompte().name());
-            tv_NumCompte.setText(String.format("%d", compte.getNumCompte()));
+            tv_NumCompte.setText(String.format("%d",compte.getNumCompte()));
             tv_MontantCompte.setText(String.format("%.2f", compte.getSolde()));
         }
 

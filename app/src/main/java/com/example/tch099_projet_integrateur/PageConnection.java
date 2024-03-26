@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -75,6 +76,8 @@ public class PageConnection extends AppCompatActivity implements View.OnClickLis
         {
             Toast.makeText(this, resultat.getReponse(), Toast.LENGTH_SHORT).show();
             PagePrincipale.redirectActivity(this, PagePrincipale.class);
+            PagePrincipale.user.setNom(resultat.getNom());
+            PagePrincipale.user.setId(resultat.getId());
         }
         else
         {
