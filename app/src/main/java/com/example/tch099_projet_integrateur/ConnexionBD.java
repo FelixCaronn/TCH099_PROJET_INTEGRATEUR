@@ -114,13 +114,18 @@ public class ConnexionBD extends Thread{
                     JsonNode json = mapper.readTree(responseBody.string());
                     String reponse = json.get("reponse").asText();
                     String codeRes = json.get("code").asText();
-                    String userNom = json.get("nom").asText();
-                    int userId = json.get("id").asInt();
+                    if(codeRes.equals("200") || codeRes.equals("201"))
+                    {
+                        String userNom = json.get("nom").asText();
+                        int userId = json.get("id").asInt();
+                        verifLog.setId(userId);
+                        verifLog.setNom(userNom);
+                    }
+
                     int code = Integer.parseInt(codeRes);
                     verifLog.setCode(code);
                     verifLog.setReponse(reponse);
-                    verifLog.setNom(userNom);
-                    verifLog.setId(userId);
+
 
 
                 } catch (IOException e) {
