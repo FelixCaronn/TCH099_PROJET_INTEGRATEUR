@@ -9,6 +9,7 @@ import android.os.Build;
 
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -528,6 +529,8 @@ public class ConnexionBD extends Thread{
                     }
 
                 }
+
+               
 
                 final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
                 RequestBody postBody = RequestBody.create(JSON, postData.toString());
