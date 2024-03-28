@@ -95,6 +95,7 @@ public class PagePrincipale extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 redirectActivity(PagePrincipale.this, DepotCheque.class);
+                DepotCheque.user.setId(user.getId());
             }
         });
 

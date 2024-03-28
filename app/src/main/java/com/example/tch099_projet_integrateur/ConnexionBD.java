@@ -49,12 +49,11 @@ public class ConnexionBD extends Thread{
 
     private ListView listView;
 
-
+    //Adresses des API du site web qu'on utilise pour get/post nos données
     private static final String apiPathVerifLogin = "http://35.233.243.199/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
     private static final String apiPathCreationCompte = "http://35.233.243.199/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
-
     private static final String apiPathListeComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
-
+    private static final String apiPathDepotMobile = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
 
@@ -129,6 +128,8 @@ public class ConnexionBD extends Thread{
 
     }
 
+    //***************************** REQUÊTE CRÉER COMPTE UTILISATEUR *******************************//
+
     public static RecuLogin creationCompte(String nom, String prenom, String courriel,String mdp, String confirmationMdp) throws InterruptedException {
 
         RecuLogin recu = new RecuLogin();
@@ -193,6 +194,7 @@ public class ConnexionBD extends Thread{
         return recu;
     }
 
+//******************************** REQUÊTE GET COMPTES ***********************************//
 
     public static ArrayList<CompteBancaire> getComptes(int id) throws InterruptedException {
 
@@ -284,4 +286,69 @@ public class ConnexionBD extends Thread{
         return u.getListeComptes();
     }
 
+    //******************************** REQUÊTE DÉPÔT MOBILE ***********************************//
+
+    public static RecuLogin depotMobile(int idUtilisateur, double montant) throws InterruptedException {
+
+        RecuLogin recu = new RecuLogin();
+        Thread p = new Thread(){
+
+
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+
+                Log.e("ID ET MONTANT DANS LA FCT", String.valueOf(idUtilisateur + montant));
+
+                //Ajouter les données pour le dépôt
+                JSONObject postData = new JSONObject();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        postData.append("idUtilisateur", idUtilisateur);
+                        postData.append("montant", montant);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                //Faire la requête
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody postBody = RequestBody.create(JSON, postData.toString());
+                Request put = new Request.Builder()
+                        .url(apiPathDepotMobile)
+                        .put(postBody)
+                        .build();
+
+                try(Response response = client.newCall(put).execute()){
+                    //Lancer une exception s'il y a une erreur
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+                    //Sinon, get nos données
+                    ResponseBody responseBody = response.body();
+                    ObjectMapper mapper = new ObjectMapper();
+
+                    //Recuperer resultat requete API
+                    JsonNode json = mapper.readTree(responseBody.string());
+                    String reponse = json.get("reponse").asText();
+                    String codeRes = json.get("code").asText();
+                    int code = Integer.parseInt(codeRes);
+                    recu.setCode(code);
+                    recu.setReponse(reponse);
+
+
+                }catch (Exception e)
+                {
+                    Log.e("TAG", e.getMessage());
+                    Log.e("TAG", "Error calling API code : 404");
+                }
+
+            }
+        };
+
+        p.start();
+        p.join();
+
+        return recu;
+    }
 }
