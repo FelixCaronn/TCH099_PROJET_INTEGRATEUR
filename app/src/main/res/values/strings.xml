@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TCH099_PROJET_INTEGRATEUR</string>
+    <string name="app_name">FishFric</string>
     <string name="title_activity_page_acceuil">PageAcceuil</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

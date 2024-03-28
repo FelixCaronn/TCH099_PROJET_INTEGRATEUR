@@ -46,6 +46,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/compte"
                     android:textSize="16sp"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.057"
@@ -90,6 +91,7 @@
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.928"
@@ -110,7 +112,7 @@
                 app:layout_constraintVertical_bias="0.041">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnTrans"
+                    android:id="@+id/btnEnvoyer"
                     android:layout_width="50dp"
                     android:layout_height="55dp"
                     android:layout_marginTop="2dp"
@@ -210,11 +212,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:fontFamily="@font/montserrat_bold"
-                    android:gravity="center"
                     android:paddingLeft="10sp"
                     android:text="@string/historique_des_transactions"
                     android:textAlignment="textStart"
                     android:textSize="16sp"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -255,7 +257,8 @@
                         <ListView
                             android:id="@+id/listeHistorique"
                             android:layout_width="match_parent"
-                            android:layout_height="355dp" />
+                            android:layout_height="355dp"
+                            android:textColor="@color/black"/>
                     </LinearLayout>
                 </ScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>

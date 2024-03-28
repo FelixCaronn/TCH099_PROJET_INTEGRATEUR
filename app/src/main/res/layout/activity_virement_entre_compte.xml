@@ -58,14 +58,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="@string/compte_ch_que" />
+                        android:text="@string/compte_ch_que"
+                        android:textColor="@color/black"/>
 
                     <RadioButton
                         android:id="@+id/epar_re"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="@string/compte_pargne" />
+                        android:text="@string/compte_pargne"
+                        android:textColor="@color/black"/>
 
                     <RadioButton
                         android:id="@+id/requi_re"
@@ -74,6 +76,7 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:minHeight="48dp"
                         android:text="@string/carte_requin"
+                        android:textColor="@color/black"
                         tools:ignore="TouchTargetSizeCheck" />
 
                 </RadioGroup>
@@ -84,6 +87,7 @@
                     android:layout_height="49dp"
                     android:ems="10"
                     android:inputType="number"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.414"
@@ -100,6 +104,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/montant"
                     android:textSize="16sp"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.077"
@@ -115,6 +120,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/de"
                     android:textStyle="bold"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.058"
@@ -129,6 +135,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/vers"
                     android:textStyle="bold"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.611"
@@ -156,6 +163,7 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:minHeight="48dp"
                         android:text="@string/compte_ch_que"
+                        android:textColor="@color/black"
                         tools:ignore="DuplicateSpeakableTextCheck" />
 
                     <RadioButton
@@ -164,6 +172,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
                         android:text="@string/compte_pargne"
+                        android:textColor="@color/black"
                         tools:ignore="DuplicateSpeakableTextCheck" />
 
                 </RadioGroup>
@@ -244,6 +253,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/transfert_entre_comptes"
                     android:textSize="24sp"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

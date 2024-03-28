@@ -2,6 +2,7 @@ package com.example.tch099_projet_integrateur;
 import com.example.tch099_projet_integrateur.enumerations.*;
 
 import static com.example.tch099_projet_integrateur.PagePrincipale.openDrawer;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -24,6 +25,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.tch099_projet_integrateur.info_user.RecuLogin;
+import com.example.tch099_projet_integrateur.info_user.Utilisateur;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -44,6 +48,9 @@ public class DepotCheque extends AppCompatActivity {
     Button deposer;
     Uri uriRecto;
     Uri uriVerso;
+
+    public static Utilisateur user = new Utilisateur();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,7 +146,7 @@ public class DepotCheque extends AppCompatActivity {
                     messageErreur+= getResources().getString(R.string.montantManquant);
                 }
                 if (!ok){
-                    Toast.makeText(DepotCheque.this, messageErreur, Toast.LENGTH_LONG).show();
+                    Toast.makeText(DepotCheque.this, messageErreur, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     try {
@@ -164,12 +171,36 @@ public class DepotCheque extends AppCompatActivity {
                                             public void onSuccess(Text visionText) {
                                                 String resultText = visionText.getText();
                                                 if (resultText.trim().length() == 0 || !isNumeric(resultText)){
-                                                    Toast.makeText(DepotCheque.this, getResources().getString(R.string.photoInv), Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(DepotCheque.this, getResources().getString(R.string.photoInv), Toast.LENGTH_SHORT).show();
                                                 }
                                                 else if (Double.parseDouble(resultText) == Double.parseDouble(montantDepot.getText().toString())) {
-                                                    Toast.makeText(DepotCheque.this, getResources().getString(R.string.depotSucces), Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(DepotCheque.this, getResources().getString(R.string.depotSucces), Toast.LENGTH_SHORT).show();
+
+                                                    //FAIRE LA REQUÊTE POUR LE DÉPÔT
+                                                    double montant = Double.parseDouble(montantDepot.getText().toString());
+
+                                                    RecuLogin resultat;
+
+                                                    try {
+                                                        resultat = ConnexionBD.depotMobile(user.getId(), montant);
+                                                    } catch (InterruptedException e) {
+                                                        throw new RuntimeException(e);
+                                                    }
+
+                                                    //Afficher le résultat du dépôt
+                                                    if(resultat.getCode() == 201)
+                                                    {
+                                                        Toast.makeText(getApplicationContext(), resultat.getReponse(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    else
+                                                    {
+                                                        Toast.makeText(getApplicationContext(), "erreur dépot code: " + resultat.getCode(), Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplicationContext(), "ID USER:" + user.getId(), Toast.LENGTH_SHORT).show();
+                                                    }
+
+
                                                 } else {
-                                                    Toast.makeText(DepotCheque.this, getResources().getString(R.string.montantInv), Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(DepotCheque.this, getResources().getString(R.string.montantInv), Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         })
@@ -177,7 +208,7 @@ public class DepotCheque extends AppCompatActivity {
                                                 new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
-                                                        Toast.makeText(DepotCheque.this, getResources().getString(R.string.photoInv), Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(DepotCheque.this, getResources().getString(R.string.photoInv), Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
                     } catch (FileNotFoundException e) {
