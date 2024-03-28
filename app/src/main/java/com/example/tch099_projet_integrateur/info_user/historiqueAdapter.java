@@ -58,6 +58,12 @@ public class historiqueAdapter extends ArrayAdapter<TransactionBancaire> {
                 case TRANSFERT:
                     descriptionHistorique.setText("Transfert entre vos comptes");
                     break;
+                case DEPOT:
+                    descriptionHistorique.setText("Dépot");
+                    break;
+                default:
+                    descriptionHistorique.setText("interet ou wtv");
+                    break;
             }
             final TextView date = (TextView) view.findViewById(R.id.date);
             date.setText(transaction.getDateDeTransaction());

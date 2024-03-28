@@ -10,7 +10,11 @@ public class CompteBancaire {
     private double solde;
     private typeCompte typeCompte;
 
+    private ArrayList<TransactionBancaire> listeTransactions;
+
     public CompteBancaire() {
+
+        this.listeTransactions = new ArrayList<>();
 
     }
     public CompteBancaire(int _num_compte, double _solde, typeCompte _typeCompte)
@@ -18,6 +22,19 @@ public class CompteBancaire {
         this.num_compte = _num_compte;
         this.solde = _solde;
         this.typeCompte = _typeCompte;
+    }
+
+    public ArrayList<TransactionBancaire> getListeTransactions() {
+        return listeTransactions;
+    }
+
+    public void setListeTransactions(ArrayList<TransactionBancaire> listeTransactions) {
+        this.listeTransactions = listeTransactions;
+    }
+
+    public void addTransaction(TransactionBancaire transaction)
+    {
+        this.listeTransactions.add(transaction);
     }
 
     public void setNumCompte(int n)

@@ -1,5 +1,6 @@
 package com.example.tch099_projet_integrateur;
 import com.example.tch099_projet_integrateur.enumerations.typeCompte;
+import com.example.tch099_projet_integrateur.enumerations.typeTransaction;
 import com.example.tch099_projet_integrateur.info_user.*;
 
 import android.app.ProgressDialog;
@@ -54,6 +55,7 @@ public class ConnexionBD extends Thread{
     private static final String apiPathCreationCompte = "http://35.233.243.199/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
     private static final String apiPathListeComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
     private static final String apiPathDepotMobile = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
+    private static final String apiPathListeTransaction = "http://35.233.243.199/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
 
@@ -94,7 +96,7 @@ public class ConnexionBD extends Thread{
 
                 try(Response response = client.newCall(post).execute())
                 {
-                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response.code());
 
                     ResponseBody responseBody = response.body();
                     ObjectMapper mapper = new ObjectMapper();
@@ -240,6 +242,8 @@ public class ConnexionBD extends Thread{
                     JSONArray jsonArray = obj.getJSONArray("comptes");
 
 
+
+
                     for(int i = 0; i < jsonArray.length(); i++)
                     {
                         JSONObject tmp = jsonArray.getJSONObject(i);
@@ -264,8 +268,8 @@ public class ConnexionBD extends Thread{
                         }
                         CompteBancaire tmp1 = new CompteBancaire(tmp.getInt("id"), tmp.getDouble("solde"), type);
                         u.addCompte(tmp1);
-                        Log.e("TAG", "Num:"+tmp1.getNumCompte()
-                        +"\n"+"Solde :"+tmp1.getSolde() + "\n" + "Type: " + tmp1.getTypeCompte());
+                        //Log.e("TAG", "Num:"+tmp1.getNumCompte()
+                        //+"\n"+"Solde :"+tmp1.getSolde() + "\n" + "Type: " + tmp1.getTypeCompte());
 
 
                     }
@@ -286,7 +290,7 @@ public class ConnexionBD extends Thread{
         return u.getListeComptes();
     }
 
-    //******************************** REQUÊTE DÉPÔT MOBILE ***********************************//
+//******************************** REQUÊTE DÉPÔT MOBILE ***********************************//
 
     public static RecuLogin depotMobile(int idUtilisateur, double montant) throws InterruptedException {
 
@@ -298,7 +302,6 @@ public class ConnexionBD extends Thread{
             public void run() {
 
                 OkHttpClient client = new OkHttpClient();
-
                 Log.e("ID ET MONTANT DANS LA FCT", String.valueOf(idUtilisateur + montant));
 
                 //Ajouter les données pour le dépôt
@@ -335,12 +338,12 @@ public class ConnexionBD extends Thread{
                     int code = Integer.parseInt(codeRes);
                     recu.setCode(code);
                     recu.setReponse(reponse);
-
-
-                }catch (Exception e)
-                {
+                }
+                
+                catch (Exception e) {
                     Log.e("TAG", e.getMessage());
                     Log.e("TAG", "Error calling API code : 404");
+
                 }
 
             }
@@ -348,7 +351,132 @@ public class ConnexionBD extends Thread{
 
         p.start();
         p.join();
-
         return recu;
     }
+
+
+
+    public static ArrayList<TransactionBancaire> getTransaction(int id_compte) throws InterruptedException {
+        CompteBancaire cpt = new CompteBancaire();
+
+        Thread p = new Thread(){
+
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+
+                JSONObject getData = new JSONObject();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+                    try{
+
+                        getData.append("compteId", id_compte);
+
+                    }catch(Exception e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
+                }
+
+
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody getBody = RequestBody.create(JSON, getData.toString());
+                Request get = new Request.Builder()
+                        .url(apiPathListeTransaction)
+                        .post(getBody)
+                        .build();
+
+                try(Response response = client.newCall(get).execute())
+                {
+
+                    if(!response.isSuccessful()) throw new IOException("Erreur inattendue code: " + response.code());
+
+                    final ObjectMapper mapper = new ObjectMapper();
+
+
+                    JSONObject obj = new JSONObject(response.body().string());
+
+                    JSONArray jsonArray = obj.getJSONArray("transactions");
+
+
+
+                    for(int i = 0; i < jsonArray.length(); i++)
+                    {
+                        JSONObject tmp = jsonArray.getJSONObject(i);
+                        typeTransaction type=null;
+
+                        switch (tmp.getString("typeTransaction"))
+                        {
+                            case "Transfert":
+                                type = typeTransaction.TRANSFERT;
+                                break;
+                            case "Virement":
+                                type = typeTransaction.VIREMENT;
+                                break;
+                            case "Virement refusé":
+                                type = typeTransaction.VIREMENT_REFUSE;
+                                break;
+                            case "Paiement de facture":
+                                type = typeTransaction.PAIEMENTFACTURE;
+                                break;
+                            case "Dépôt mobile":
+                                type = typeTransaction.DEPOT;
+                                break;
+                        }
+
+                        TransactionBancaire transactionTemp;
+
+                        if(type == typeTransaction.TRANSFERT)
+                        {
+                            transactionTemp = new TransactionBancaire(type, tmp.getString("idCompteBancaireProvenant"), tmp.getString("dateTransaction"), tmp.getDouble("montant"));
+                        }
+                        else if(type == typeTransaction.DEPOT)
+                        {
+                            transactionTemp = new TransactionBancaire(type, tmp.getString("dateTransaction"), tmp.getDouble("montant"));
+                        }
+                        else if(type == typeTransaction.PAIEMENTFACTURE)
+                        {
+                            transactionTemp = new TransactionBancaire(type, tmp.getString("nomEtablissement"), tmp.getString("dateTransaction"), tmp.getDouble("montant"));
+                        }
+                        //Virement
+                        else
+                        {
+                            if(PagePrincipale.user.getId() == tmp.getInt("idCompteBancaireProvenant"))
+                            {
+                                transactionTemp = new TransactionBancaire(type, tmp.getString("nomEtablissement"));
+                                transactionTemp.setMontant(tmp.getDouble("montant"));
+                                transactionTemp.setIdCompteRecevant(tmp.getInt("idCompteBancaireRecevant"));
+                            }
+                            else
+                            {
+                                transactionTemp = new TransactionBancaire(type, tmp.getString("nomEtablissement"));
+                                transactionTemp.setMontant(tmp.getDouble("montant"));
+                                transactionTemp.setCompteProvenance(tmp.getInt("idCompteBancaireProvenant"));
+                            }
+
+                        }
+
+
+                        cpt.addTransaction(transactionTemp);
+
+                    }
+
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                Log.e("TAG", cpt.getListeTransactions().size() + "");
+
+                currentThread().interrupt();
+            }
+
+        };
+
+        p.start();
+        p.join();
+
+
+        return cpt.getListeTransactions();
+    }   
 }
