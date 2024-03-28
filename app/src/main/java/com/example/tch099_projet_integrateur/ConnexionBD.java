@@ -50,10 +50,10 @@ public class ConnexionBD extends Thread{
     private ListView listView;
 
 
-    private static final String apiPathVerifLogin = "http://34.127.103.229/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
-    private static final String apiPathCreationCompte = "http://34.127.103.229/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
+    private static final String apiPathVerifLogin = "http://35.233.243.199/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
+    private static final String apiPathCreationCompte = "http://35.233.243.199/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
 
-    private static final String apiPathListeComptes = "http://34.127.103.229/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
+    private static final String apiPathListeComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
 
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
