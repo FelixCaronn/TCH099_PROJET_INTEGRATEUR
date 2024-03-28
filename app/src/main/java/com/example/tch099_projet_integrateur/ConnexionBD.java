@@ -493,15 +493,24 @@ public class ConnexionBD extends Thread{
 
 
 
-        public static RecuLogin transfertEntreComptes(int id_comptes_envoie, int id_compte_recois, double  montant) throws InterruptedException {
+
+
+
+
+
+
+
+        return cpt.getListeTransactions();
+    }
+
+
+    public static RecuLogin transfertEntreComptes(int id_comptes_envoie, int id_compte_recois, double  montant) throws InterruptedException {
         RecuLogin verifLog = new RecuLogin();
 
-        Thread n = new Thread()
-        {
+        Thread p = new Thread() {
 
             @Override
             public void run() {
-
 
 
                 OkHttpClient client = new OkHttpClient();
@@ -528,9 +537,9 @@ public class ConnexionBD extends Thread{
                         .build();
 
 
-                try(Response response = client.newCall(post).execute())
-                {
-                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                try (Response response = client.newCall(post).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
 
                     ResponseBody responseBody = response.body();
                     ObjectMapper mapper = new ObjectMapper();
@@ -540,7 +549,6 @@ public class ConnexionBD extends Thread{
                     String reponse = json.get("reponse").asText();
 
                     verifLog.setReponse(reponse);
-
 
 
                 } catch (IOException e) {
@@ -557,13 +565,7 @@ public class ConnexionBD extends Thread{
 
         return verifLog;
 
+     }
+
+
     }
-
-
-
-
-
-        return cpt.getListeTransactions();
-    }   
-
-}
