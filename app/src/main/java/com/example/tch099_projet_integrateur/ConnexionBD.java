@@ -48,6 +48,8 @@ public class ConnexionBD extends Thread{
 
 
 
+    private static final String apiPathTransfert_comptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfert.php/compte";
+
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
 
@@ -292,5 +294,76 @@ public class ConnexionBD extends Thread{
             }
         }).start();
     }
+
+    public static RecuLogin transfertEntreComptes(int id_comptes_envoie, int id_compte_recois, double montant) throws InterruptedException {
+
+
+        RecuLogin verifLog = new RecuLogin();
+
+        Thread p = new Thread()
+        {
+
+            @Override
+            public void run() {
+
+
+
+                OkHttpClient client = new OkHttpClient();
+
+
+                JSONObject postData = new JSONObject();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        postData.append("idCompteBancaireProvenant", id_comptes_envoie);
+                        postData.append("idCompteBancaireRecevant", id_compte_recois);
+                        postData.append("montant", montant);
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody postBody = RequestBody.create(JSON, postData.toString());
+                Request post = new Request.Builder()
+                        .url(apiPathTransfert_comptes)
+                        .post(postBody)
+                        .build();
+
+
+                try(Response response = client.newCall(post).execute())
+                {
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+                    ResponseBody responseBody = response.body();
+                    ObjectMapper mapper = new ObjectMapper();
+
+
+                    JsonNode json = mapper.readTree(responseBody.string());
+                    String reponse = json.get("reponse").asText();
+
+                    verifLog.setReponse(reponse);
+
+
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                currentThread().interrupt();
+
+            }
+        };
+
+        p.start();
+        p.join();
+
+        return verifLog;
+
+    }
+
+
+
 
 }
