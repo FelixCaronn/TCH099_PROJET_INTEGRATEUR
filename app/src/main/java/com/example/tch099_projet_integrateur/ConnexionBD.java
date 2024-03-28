@@ -486,12 +486,12 @@ public class ConnexionBD extends Thread{
         p.join();
 
 
-    public static RecuLogin transfertEntreComptes(int id_comptes_envoie, int id_compte_recois, double montant) throws InterruptedException {
 
 
+        public static RecuLogin transfertEntreComptes(int id_comptes_envoie, int id_compte_recois, double  montant) throws InterruptedException {
         RecuLogin verifLog = new RecuLogin();
 
-        Thread p = new Thread()
+        Thread n = new Thread()
         {
 
             @Override
