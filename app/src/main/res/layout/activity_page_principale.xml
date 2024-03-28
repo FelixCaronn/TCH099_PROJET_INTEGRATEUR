@@ -21,10 +21,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:text="Bonjour User"
+            android:textColor="@color/black"
             android:textSize="40dp"
-            android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/lvComptes"

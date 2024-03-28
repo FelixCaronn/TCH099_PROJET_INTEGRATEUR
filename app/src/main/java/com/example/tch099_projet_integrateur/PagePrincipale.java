@@ -1,45 +1,33 @@
 package com.example.tch099_projet_integrateur;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.TaskStackBuilder;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.tch099_projet_integrateur.enumerations.typeCompte;
 import com.example.tch099_projet_integrateur.info_user.CompteAdapter;
 import com.example.tch099_projet_integrateur.info_user.CompteBancaire;
-import com.example.tch099_projet_integrateur.info_user.ComptesDao;
-import com.example.tch099_projet_integrateur.info_user.DaoSingleton;
 import com.example.tch099_projet_integrateur.info_user.Utilisateur;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class PagePrincipale extends AppCompatActivity {
 
     public static Utilisateur user = new Utilisateur();
     private List<CompteBancaire> lesComptes;
-    private ComptesDao dao;
+    private TextView bjrTxt;
     private ListView lvComptes;
     private Button btnNautico;
     private CompteAdapter adaptateur;
@@ -62,7 +50,14 @@ public class PagePrincipale extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-
+//        Intent intention = getIntent();
+//        user.setNom(intention.getStringExtra("nom"));
+//        user.setId(intention.getIntExtra("id", -1));
+//
+//        bjrTxt = findViewById(R.id.bonjourUser);
+//
+//        String bjr = "Bonjour " + user.getNom();
+//        bjrTxt.setText(bjr);
 
         setContentView(R.layout.activity_page_principale);
 
@@ -77,6 +72,8 @@ public class PagePrincipale extends AppCompatActivity {
         support = findViewById(R.id.support);
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
+
+
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override

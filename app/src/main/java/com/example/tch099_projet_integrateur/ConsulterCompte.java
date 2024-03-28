@@ -2,8 +2,6 @@ package com.example.tch099_projet_integrateur;
 import com.example.tch099_projet_integrateur.enumerations.*;
 import com.example.tch099_projet_integrateur.info_user.TransactionBancaire;
 import com.example.tch099_projet_integrateur.info_user.CompteBancaire;
-import com.example.tch099_projet_integrateur.info_user.ComptesDao;
-import com.example.tch099_projet_integrateur.info_user.DaoSingleton;
 import com.example.tch099_projet_integrateur.info_user.historiqueAdapter;
 
 import static com.example.tch099_projet_integrateur.PagePrincipale.openDrawer;
@@ -14,12 +12,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -52,6 +50,15 @@ public class ConsulterCompte extends AppCompatActivity {
         numeroCompte = intent.getIntExtra("NUM_COMPTE",0);
         solde = intent.getDoubleExtra("SOLDE_COMPTE",0);
         typeDuCompte = (typeCompte) intent.getSerializableExtra("TYPE_COMPTE");
+
+        try{
+             historique = ConnexionBD.getTransaction(numeroCompte);
+        }catch (Exception e)
+        {
+            Log.e("TAG", "MARCHE PAS");
+            e.printStackTrace();
+        }
+
         drawerLayout = findViewById(R.id.drawerLayout);
         menu = findViewById(R.id.menu);
         home = findViewById(R.id.home);
@@ -102,14 +109,14 @@ public class ConsulterCompte extends AppCompatActivity {
         numCompte.setText(Integer.toString(numeroCompte));
         soldeCompte = findViewById(R.id.txtMontantCompte);
         soldeCompte.setText(Double.toString(solde) + "$");
-        historique = new ArrayList<TransactionBancaire>();
+//        historique = new ArrayList<TransactionBancaire>();
         //test pour le scrollview, a remplacer par le vrai historique
-        TransactionBancaire transact;
-        for (int i = 0; i < 10; i++) {
-            transact = new TransactionBancaire("1","2024/03/11",
-                    100,typeTransaction.PAIEMENTFACTURE,"allo");
-            historique.add(transact);
-        }
+//        TransactionBancaire transact;
+//        for (int i = 0; i < 10; i++) {
+//            transact = new TransactionBancaire(1,"2024/03/11",
+//                    100,typeTransaction.PAIEMENTFACTURE,"allo");
+//            historique.add(transact);
+//        }
         historiqueAdapter adapter = new historiqueAdapter(this,R.layout.historique_layout,historique);
         listeHisto.setAdapter(adapter);
         ////
@@ -127,8 +134,7 @@ public class ConsulterCompte extends AppCompatActivity {
                 finish();
             }
         });
-        ComptesDao dao = DaoSingleton.getDaoInstance();
-        compte = dao.getCompteParNum(String.valueOf(numCompte));
+
 
     }
 }
