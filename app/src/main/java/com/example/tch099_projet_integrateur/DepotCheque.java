@@ -174,7 +174,6 @@ public class DepotCheque extends AppCompatActivity {
                                                     Toast.makeText(DepotCheque.this, getResources().getString(R.string.photoInv), Toast.LENGTH_SHORT).show();
                                                 }
                                                 else if (Double.parseDouble(resultText) == Double.parseDouble(montantDepot.getText().toString())) {
-                                                    Toast.makeText(DepotCheque.this, getResources().getString(R.string.depotSucces), Toast.LENGTH_SHORT).show();
 
                                                     //FAIRE LA REQUÊTE POUR LE DÉPÔT
                                                     double montant = Double.parseDouble(montantDepot.getText().toString());
@@ -194,8 +193,7 @@ public class DepotCheque extends AppCompatActivity {
                                                     }
                                                     else
                                                     {
-                                                        Toast.makeText(getApplicationContext(), "erreur dépot code: " + resultat.getCode(), Toast.LENGTH_SHORT).show();
-                                                        Toast.makeText(getApplicationContext(), "ID USER:" + user.getId(), Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplicationContext(), "Erreur du dépot" + resultat.getCode(), Toast.LENGTH_SHORT).show();
                                                     }
 
 

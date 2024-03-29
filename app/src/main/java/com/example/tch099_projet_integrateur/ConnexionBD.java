@@ -401,7 +401,7 @@ public class ConnexionBD extends Thread{
 
 
 
-                    for(int i = 0; i < jsonArray.length(); i++)
+                    for(int i = jsonArray.length()-1; i >= 0; i--)
                     {
                         JSONObject tmp = jsonArray.getJSONObject(i);
                         typeTransaction type=null;
@@ -430,36 +430,53 @@ public class ConnexionBD extends Thread{
                         if(type == typeTransaction.TRANSFERT)
                         {
                             transactionTemp = new TransactionBancaire(type, tmp.getString("idCompteBancaireProvenant"), tmp.getString("dateTransaction"), tmp.getDouble("montant"));
+
+                            //Si l'ID de notre compte est le même que le compte provenant dans la transaction, le transfert sort de ce compte
+                            if(id_compte == tmp.getInt("idCompteBancaireProvenant")) {
+                                transactionTemp.setMontant(-1 * tmp.getDouble("montant"));
+                                transactionTemp.setIdCompteRecevant(tmp.getInt("idCompteBancaireRecevant"));
+                            }
+
+                            //Sinon, c'est de l'argent rentrant
+                            else {
+                                transactionTemp.setMontant(tmp.getDouble("montant"));
+                                transactionTemp.setCompteProvenance(tmp.getInt("idCompteBancaireProvenant"));
+                            }
                         }
+
                         else if(type == typeTransaction.DEPOT)
                         {
                             transactionTemp = new TransactionBancaire(type, tmp.getString("dateTransaction"), tmp.getDouble("montant"));
                         }
+
+
                         else if(type == typeTransaction.PAIEMENTFACTURE)
                         {
                             transactionTemp = new TransactionBancaire(type, tmp.getString("nomEtablissement"), tmp.getString("dateTransaction"), tmp.getDouble("montant"));
+                            transactionTemp.setMontant(-1*tmp.getDouble("montant"));
                         }
+
                         //Virement
                         else
                         {
-                            if(PagePrincipale.user.getId() == tmp.getInt("idCompteBancaireProvenant"))
+                            if(id_compte == tmp.getInt("idCompteBancaireProvenant"))
                             {
                                 transactionTemp = new TransactionBancaire(type, tmp.getString("nomEtablissement"));
-                                transactionTemp.setMontant(tmp.getDouble("montant"));
+                                transactionTemp.setMontant(-1*tmp.getDouble("montant"));
+                                transactionTemp.setDateDeTransaction(tmp.getString("dateTransaction"));
                                 transactionTemp.setIdCompteRecevant(tmp.getInt("idCompteBancaireRecevant"));
                             }
                             else
                             {
                                 transactionTemp = new TransactionBancaire(type, tmp.getString("nomEtablissement"));
                                 transactionTemp.setMontant(tmp.getDouble("montant"));
+                                transactionTemp.setProvenance(tmp.getString("courrielProvenant"));
+                                transactionTemp.setDateDeTransaction(tmp.getString("dateTransaction"));
                                 transactionTemp.setCompteProvenance(tmp.getInt("idCompteBancaireProvenant"));
                             }
-
                         }
 
-
                         cpt.addTransaction(transactionTemp);
-
                     }
 
                 }catch (Exception e) {

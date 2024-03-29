@@ -93,6 +93,10 @@ public class TransactionBancaire {
         this.compteProvenance = compteProvenance;
     }
 
+    public void setDateDeTransaction(String date) {
+        this.dateDeTransaction = date;
+    }
+
     public void setIdCompteRecevant(int idCompteRecevant) {
         this.idCompteRecevant = idCompteRecevant;
     }

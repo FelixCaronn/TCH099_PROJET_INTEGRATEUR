@@ -2,6 +2,7 @@ package com.example.tch099_projet_integrateur.info_user;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,24 +46,45 @@ public class historiqueAdapter extends ArrayAdapter<TransactionBancaire> {
         if (transaction!=null){
             final TextView montantTransaction = (TextView) view.findViewById(R.id.montantTransaction);
             montantTransaction.setText(Double.toString(transaction.getMontant()));
+
+            //Mettre la couleur selon le virement sortant ou entrant
+            if(transaction.getMontant() < 0)
+                montantTransaction.setTextColor(Color.parseColor("#ef233c"));
+            else
+                montantTransaction.setTextColor(Color.parseColor("#55a630"));
+
             final TextView descriptionHistorique = (TextView) view.findViewById(R.id.descriptionHistorique);
             ////a changer si on veux plus de detail pour la transaction
             typeTransaction type = transaction.getType();
             switch (type){
                 case PAIEMENTFACTURE:
-                    descriptionHistorique.setText("Paiement de facture");
+                    descriptionHistorique.setText("Paiement de facture / " + transaction.getNomEtablissement());
                     break;
                 case VIREMENT:
-                    descriptionHistorique.setText("Virement a une autre personne");
+                    //Si le virement vient de nous, on met le nom du destinataire
+                    if(transaction.getMontant() < 0)
+                        descriptionHistorique.setText("Virement / " + transaction.getNomEtablissement());
+
+                    //Sinon, on met le courriel de la personne qui nous a envoyé le virement
+                    else
+                        descriptionHistorique.setText("Virement / " + transaction.getProvenance());
+
                     break;
                 case TRANSFERT:
-                    descriptionHistorique.setText("Transfert entre vos comptes");
+                    //Si le transfert vient du compte dans lequel on est maintenant
+                    if(transaction.getMontant() < 0)
+                        descriptionHistorique.setText("Transfert entre comptes / " + transaction.getIdCompteRecevant());
+
+                        //Sinon, on met le courriel de la personne qui nous a envoyé le virement
+                    else
+                        descriptionHistorique.setText("Transfert entre comptes / " + transaction.getCompteProvenance());
+
                     break;
                 case DEPOT:
-                    descriptionHistorique.setText("Dépot");
+                    descriptionHistorique.setText("Dépot mobile");
                     break;
                 default:
-                    descriptionHistorique.setText("interet ou wtv");
+                    descriptionHistorique.setText("autre");
                     break;
             }
             final TextView date = (TextView) view.findViewById(R.id.date);
