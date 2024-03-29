@@ -29,7 +29,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/menu_transfer"
-                android:layout_width="375dp"
+                android:layout_width="160pt"
                 android:layout_height="100dp"
                 android:background="@drawable/rectangle2"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -45,8 +45,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/compte"
-                    android:textSize="16sp"
                     android:textColor="@color/black"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.057"
@@ -85,17 +85,15 @@
                 <TextView
                     android:id="@+id/txtMontantCompte"
                     android:layout_width="175dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:gravity="center"
-                    android:textAlignment="center"
+                    android:textAlignment="textEnd"
+                    android:paddingEnd="20dp"
+                    android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.928"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="1000000.00$" />
 
@@ -103,7 +101,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/virement"
-                android:layout_width="365dp"
+                android:layout_width="160pt"
                 android:layout_height="75dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -198,7 +196,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/historiqueTransaction"
-                android:layout_width="375dp"
+                android:layout_width="160pt"
                 android:layout_height="400dp"
                 android:background="@drawable/rectangle2"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -212,11 +210,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:fontFamily="@font/montserrat_bold"
-                    android:paddingLeft="10sp"
                     android:text="@string/historique_des_transactions"
-                    android:textAlignment="textStart"
+                    android:textAlignment="center"
                     android:textSize="16sp"
                     android:textColor="@color/black"
+                    android:gravity="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

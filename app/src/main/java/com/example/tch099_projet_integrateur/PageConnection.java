@@ -75,6 +75,8 @@ public class PageConnection extends AppCompatActivity implements View.OnClickLis
         if(resultat.getCode() == 200)
         {
             Toast.makeText(this, resultat.getReponse(), Toast.LENGTH_SHORT).show();
+
+
             PagePrincipale.user.setNom(resultat.getNom());
             PagePrincipale.user.setId(resultat.getId());
             PagePrincipale.redirectActivity(this, PagePrincipale.class);

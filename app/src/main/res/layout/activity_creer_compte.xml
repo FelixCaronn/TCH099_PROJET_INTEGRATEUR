@@ -10,17 +10,19 @@
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="0dp"
-        android:layout_height="424dp"
+        android:layout_height="200pt"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.348"
         app:srcCompat="@drawable/crab" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout8"
-        android:layout_width="413dp"
-        android:layout_height="541dp"
+        android:layout_width="match_parent"
+        android:layout_height="210pt"
         android:background="@drawable/rectangle"
         android:backgroundTint="#FEDA95"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,12 +38,13 @@
             android:fontFamily="@font/montserrat_bold"
             android:text="@string/confirmer_mot_de_passe"
             android:textSize="20sp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.258"
+            app:layout_constraintHorizontal_bias="0.103"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout5"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textViewMdp"
@@ -51,12 +54,13 @@
             android:fontFamily="@font/montserrat_bold"
             android:text="@string/mot_de_passe"
             android:textSize="20sp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.149"
+            app:layout_constraintHorizontal_bias="0.059"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textViewCourriel"
@@ -65,9 +69,10 @@
             android:fontFamily="@font/montserrat_bold"
             android:text="@string/courriel"
             android:textSize="20sp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.121"
+            app:layout_constraintHorizontal_bias="0.048"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
             app:layout_constraintVertical_bias="1.0" />
@@ -79,9 +84,10 @@
             android:fontFamily="@font/montserrat_bold"
             android:text="@string/nom"
             android:textSize="20sp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout7"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.113"
+            app:layout_constraintHorizontal_bias="0.045"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
@@ -94,17 +100,18 @@
             android:fontFamily="@font/montserrat_bold"
             android:text="@string/prenom"
             android:textSize="20sp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.125"
+            app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout7"
             app:layout_constraintVertical_bias="1.0" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout7"
-            android:layout_width="336dp"
-            android:layout_height="48dp"
+            android:layout_width="160pt"
+            android:layout_height="15pt"
             android:background="@drawable/input"
             android:backgroundTint="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
@@ -114,8 +121,8 @@
 
             <EditText
                 android:id="@+id/editTextNomCreer"
-                android:layout_width="336dp"
-                android:layout_height="48dp"
+                android:layout_width="160pt"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:ems="10"
                 android:inputType="text"
@@ -128,8 +135,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout3"
-            android:layout_width="336dp"
-            android:layout_height="48dp"
+            android:layout_width="160pt"
+            android:layout_height="15pt"
             android:background="@drawable/input"
             android:backgroundTint="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
@@ -141,8 +148,8 @@
 
             <EditText
                 android:id="@+id/editTextPrenomCreer"
-                android:layout_width="336dp"
-                android:layout_height="48dp"
+                android:layout_width="160pt"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:ems="10"
                 android:inputType="text"
@@ -155,8 +162,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout4"
-            android:layout_width="336dp"
-            android:layout_height="48dp"
+            android:layout_width="160pt"
+            android:layout_height="15pt"
             android:layout_marginBottom="20dp"
             android:background="@drawable/input"
             android:backgroundTint="#FFFFFF"
@@ -169,8 +176,8 @@
 
             <EditText
                 android:id="@+id/editTextCourrielCreer"
-                android:layout_width="336dp"
-                android:layout_height="48dp"
+                android:layout_width="160pt"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:ems="10"
                 android:inputType="textEmailAddress"
@@ -183,8 +190,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout5"
-            android:layout_width="336dp"
-            android:layout_height="48dp"
+            android:layout_width="160pt"
+            android:layout_height="15pt"
             android:background="@drawable/input"
             android:backgroundTint="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
@@ -196,8 +203,8 @@
 
             <EditText
                 android:id="@+id/editTextMdpCreer"
-                android:layout_width="336dp"
-                android:layout_height="48dp"
+                android:layout_width="160pt"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:ems="10"
                 android:inputType="textPassword"
@@ -210,8 +217,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout6"
-            android:layout_width="336dp"
-            android:layout_height="48dp"
+            android:layout_width="160pt"
+            android:layout_height="15pt"
             android:background="@drawable/input"
             android:backgroundTint="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/btnCreationCompte"
@@ -223,8 +230,8 @@
 
             <EditText
                 android:id="@+id/editTextMdpConfirmation"
-                android:layout_width="336dp"
-                android:layout_height="48dp"
+                android:layout_width="160pt"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:ems="10"
                 android:inputType="textPassword"
@@ -247,9 +254,10 @@
             android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.951" />
+            app:layout_constraintVertical_bias="0.963" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

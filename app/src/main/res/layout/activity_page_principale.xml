@@ -28,13 +28,14 @@
         <ListView
             android:id="@+id/lvComptes"
             android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="160pt"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
 
         <Button
             android:id="@+id/btnNautico"
-            android:layout_width="250dp"
-            android:layout_height="60dp"
+            android:layout_width="120pt"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
             android:backgroundTint="#ff4747"
