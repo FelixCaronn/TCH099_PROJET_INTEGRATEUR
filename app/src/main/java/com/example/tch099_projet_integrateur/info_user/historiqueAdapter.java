@@ -81,10 +81,10 @@ public class historiqueAdapter extends ArrayAdapter<TransactionBancaire> {
 
                     break;
                 case DEPOT:
-                    descriptionHistorique.setText("Dépot mobile");
+                    descriptionHistorique.setText("Dépôt mobile");
                     break;
                 default:
-                    descriptionHistorique.setText("autre");
+                    descriptionHistorique.setText("Autre");
                     break;
             }
             final TextView date = (TextView) view.findViewById(R.id.date);

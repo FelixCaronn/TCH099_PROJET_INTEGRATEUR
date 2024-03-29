@@ -20,6 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -29,7 +30,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/menu_transfer"
-                android:layout_width="398dp"
+                android:layout_width="match_parent"
                 android:layout_height="304dp"
                 android:background="@drawable/rectangle2"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -181,7 +182,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/virement"
-                android:layout_width="365dp"
+                android:layout_width="match_parent"
                 android:layout_height="75dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -236,7 +237,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/Background_transfert"
-                android:layout_width="388dp"
+                android:layout_width="match_parent"
                 android:layout_height="106dp"
                 android:background="@drawable/rectangle2"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -248,8 +249,8 @@
 
                 <TextView
                     android:id="@+id/textView10"
-                    android:layout_width="306dp"
-                    android:layout_height="47dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/transfert_entre_comptes"
                     android:textSize="24sp"

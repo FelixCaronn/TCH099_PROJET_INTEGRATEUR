@@ -111,7 +111,7 @@
     <string name="vers">Vers:</string>
     <string name="question">Question</string>
     <string name="r_ponse">Réponse</string>
-    <string name="virement_entre_particulier">Virement entre particulier</string>
+    <string name="virement_entre_particulier">Virement entre particuliers</string>
     <string name="tablissement">Établissement</string>
     <string name="num_ro_de_r_f_rence">Numéro de référence</string>
     <string name="paiement_de_facture">Paiement de facture</string>

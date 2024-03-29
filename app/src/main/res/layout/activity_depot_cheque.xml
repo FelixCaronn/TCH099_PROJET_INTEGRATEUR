@@ -20,7 +20,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingHorizontal="10dp">
 
             <TextView
                 android:id="@+id/txtDepot"
@@ -29,6 +30,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:text="@string/d_poser_un_ch_que"
                 android:textSize="20sp"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
@@ -42,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="RECTO DU CHEQUE"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/imgRecto"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.062"
@@ -51,7 +54,7 @@
 
             <ImageView
                 android:id="@+id/imgRecto"
-                android:layout_width="376dp"
+                android:layout_width="match_parent"
                 android:layout_height="148dp"
                 android:background="@drawable/rectangle_boutton"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -64,13 +67,14 @@
 
             <TextView
                 android:id="@+id/txtVerso"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="1dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="VERSO DU CHEQUE"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/imgVerso"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.03"
@@ -80,7 +84,7 @@
 
             <ImageView
                 android:id="@+id/imgVerso"
-                android:layout_width="376dp"
+                android:layout_width="match_parent"
                 android:layout_height="148dp"
                 android:background="@drawable/rectangle_boutton"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -93,7 +97,7 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
-                android:layout_width="374dp"
+                android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:background="@drawable/rectangle_blanc"
                 android:orientation="vertical"
@@ -117,6 +121,7 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:paddingStart="5sp"
                         android:text="Montant :"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                     <EditText
@@ -126,6 +131,7 @@
                         android:background="@color/colorWhite"
                         android:ems="10"
                         android:hint="0.00$"
+                        android:textColor="@color/black"
                         android:inputType="number|numberDecimal"
                         android:paddingLeft="10sp" />
 
@@ -145,6 +151,7 @@
                 android:layout_height="48dp"
                 android:backgroundTint="@color/colorHeader"
                 android:text="Déposer"
+                android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

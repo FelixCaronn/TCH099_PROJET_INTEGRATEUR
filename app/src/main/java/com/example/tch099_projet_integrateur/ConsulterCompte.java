@@ -105,7 +105,7 @@ public class ConsulterCompte extends AppCompatActivity {
         listeHisto = findViewById(R.id.listeHistorique);
         typeCompte = findViewById(R.id.typeCompte);
         typeCompte.setText(typeDuCompte.toString());
-        numCompte = findViewById(R.id.numCompte);
+        numCompte = findViewById(R.id.txtnumeroCompte);
         numCompte.setText(Integer.toString(numeroCompte));
         soldeCompte = findViewById(R.id.txtMontantCompte);
         soldeCompte.setText(Double.toString(solde) + "$");

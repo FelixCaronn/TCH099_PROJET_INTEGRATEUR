@@ -6,31 +6,32 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="375dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:paddingHorizontal="10dp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="47dp">
 
         <TextView
             android:id="@+id/montantTransaction"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center"
             android:text="3.00$"
             android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/descriptionHistorique"
-            android:layout_width="0dp"
+            android:layout_width="300dp"
             android:layout_height="40dp"
             android:textColor="@color/black"
             android:text="Transfert provenant de Jonathan Mongrain allvdgvdfgvdd"
