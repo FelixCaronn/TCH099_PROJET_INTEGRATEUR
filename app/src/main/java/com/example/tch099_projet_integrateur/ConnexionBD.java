@@ -9,6 +9,7 @@ import android.os.Build;
 
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -50,12 +51,21 @@ public class ConnexionBD extends Thread{
 
     private ListView listView;
 
+
+
+
+
+    
+
+
     //Adresses des API du site web qu'on utilise pour get/post nos données
     private static final String apiPathVerifLogin = "http://35.233.243.199/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
     private static final String apiPathCreationCompte = "http://35.233.243.199/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
     private static final String apiPathListeComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
     private static final String apiPathDepotMobile = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
     private static final String apiPathListeTransaction = "http://35.233.243.199/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
+     private static final String apiPathTransfert_comptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfert.php/compte";
+
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
 
@@ -105,13 +115,18 @@ public class ConnexionBD extends Thread{
                     JsonNode json = mapper.readTree(responseBody.string());
                     String reponse = json.get("reponse").asText();
                     String codeRes = json.get("code").asText();
-                    String userNom = json.get("nom").asText();
-                    int userId = json.get("id").asInt();
+                    if(codeRes.equals("200") || codeRes.equals("201"))
+                    {
+                        String userNom = json.get("nom").asText();
+                        int userId = json.get("id").asInt();
+                        verifLog.setId(userId);
+                        verifLog.setNom(userNom);
+                    }
+
                     int code = Integer.parseInt(codeRes);
                     verifLog.setCode(code);
                     verifLog.setReponse(reponse);
-                    verifLog.setNom(userNom);
-                    verifLog.setId(userId);
+
 
 
                 } catch (IOException e) {
@@ -494,6 +509,83 @@ public class ConnexionBD extends Thread{
         p.join();
 
 
+
+
+
+
+
+
+
+
+
         return cpt.getListeTransactions();
-    }   
-}
+    }
+
+
+    public static RecuLogin transfertEntreComptes(int id_comptes_envoie, int id_compte_recois, double  montant) throws InterruptedException {
+        RecuLogin verifLog = new RecuLogin();
+
+        Thread p = new Thread() {
+
+            @Override
+            public void run() {
+
+
+                OkHttpClient client = new OkHttpClient();
+
+
+                JSONObject postData = new JSONObject();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        postData.append("idCompteBancaireProvenant", id_comptes_envoie);
+                        postData.append("idCompteBancaireRecevant", id_compte_recois);
+                        postData.append("montant", montant);
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+
+               
+
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody postBody = RequestBody.create(JSON, postData.toString());
+                Request post = new Request.Builder()
+                        .url(apiPathTransfert_comptes)
+                        .post(postBody)
+                        .build();
+
+
+                try (Response response = client.newCall(post).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
+
+                    ResponseBody responseBody = response.body();
+                    ObjectMapper mapper = new ObjectMapper();
+
+
+                    JsonNode json = mapper.readTree(responseBody.string());
+                    String reponse = json.get("reponse").asText();
+
+                    verifLog.setReponse(reponse);
+
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                currentThread().interrupt();
+
+            }
+        };
+
+        p.start();
+        p.join();
+
+        return verifLog;
+
+     }
+
+
+    }
