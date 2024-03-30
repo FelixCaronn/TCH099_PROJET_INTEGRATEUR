@@ -64,8 +64,9 @@ public class ConnexionBD extends Thread{
     private static final String apiPathListeComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
     private static final String apiPathDepotMobile = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
     private static final String apiPathListeTransaction = "http://35.233.243.199/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
-     private static final String apiPathTransfert_comptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfert.php/compte";
+    private static final String apiPathTransfert_comptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfert.php/compte";
 
+    private static final String apiPathPayerFacture = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
 
@@ -508,16 +509,6 @@ public class ConnexionBD extends Thread{
         p.start();
         p.join();
 
-
-
-
-
-
-
-
-
-
-
         return cpt.getListeTransactions();
     }
 
@@ -529,7 +520,6 @@ public class ConnexionBD extends Thread{
 
             @Override
             public void run() {
-
 
                 OkHttpClient client = new OkHttpClient();
 
@@ -547,7 +537,6 @@ public class ConnexionBD extends Thread{
 
                 }
 
-               
 
                 final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
                 RequestBody postBody = RequestBody.create(JSON, postData.toString());
@@ -558,6 +547,7 @@ public class ConnexionBD extends Thread{
 
 
                 try (Response response = client.newCall(post).execute()) {
+
                     if (!response.isSuccessful())
                         throw new IOException("Unexpected code " + response);
 
@@ -571,11 +561,9 @@ public class ConnexionBD extends Thread{
                     verifLog.setReponse(reponse);
 
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (Exception e) {
+                    Log.e("TAG", "Error calling API: " + e.getMessage());
                 }
-
-                currentThread().interrupt();
 
             }
         };
@@ -584,8 +572,57 @@ public class ConnexionBD extends Thread{
         p.join();
 
         return verifLog;
-
-     }
-
-
     }
+
+    public static RecuLogin effectuerPaiement ( int idUtilisateur, String id_compte, String etab, String num, String montant) throws InterruptedException {
+
+        RecuLogin recu = new RecuLogin();
+
+        Thread p = new Thread() {
+
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+
+                JSONObject paiementData = new JSONObject();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        paiementData.append("idUtilisateur", idUtilisateur);
+                        paiementData.append("idCompteBancaireProvenant", id_compte);
+                        paiementData.append("nomEtablissement", etab);
+                        paiementData.append("raison", num);
+                        paiementData.append("montant", montant);
+
+                    } catch (JSONException e) {
+
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                RequestBody putBody = RequestBody.create(JSON, paiementData.toString());
+                Request put = new Request.Builder()
+                        .url(apiPathPayerFacture)
+                        .put(putBody)
+                        .build();
+
+
+                try (Response response = client.newCall(put).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                currentThread().interrupt();
+            }
+        };
+
+        p.start();
+        p.join();
+
+        return recu;
+    }
+}
