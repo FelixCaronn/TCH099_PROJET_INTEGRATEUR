@@ -64,8 +64,7 @@ public class ConnexionBD extends Thread{
     private static final String apiPathListeComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
     private static final String apiPathDepotMobile = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
     private static final String apiPathListeTransaction = "http://35.233.243.199/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
-    private static final String apiPathTransfert_comptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfert.php/compte";
-
+    private static final String apiPathTransfertComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/compte";
     private static final String apiPathPayerFacture = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
@@ -513,7 +512,8 @@ public class ConnexionBD extends Thread{
     }
 
 
-    public static RecuLogin transfertEntreComptes(int id_comptes_envoie, int id_compte_recois, double  montant) throws InterruptedException {
+    public static RecuLogin transfertEntreComptes(int idUtilisateur, int id_comptes_envoie, int id_compte_reception, double montant) throws InterruptedException {
+
         RecuLogin verifLog = new RecuLogin();
 
         Thread p = new Thread() {
@@ -523,26 +523,25 @@ public class ConnexionBD extends Thread{
 
                 OkHttpClient client = new OkHttpClient();
 
-
-                JSONObject postData = new JSONObject();
+                JSONObject putData = new JSONObject();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     try {
-                        postData.append("idCompteBancaireProvenant", id_comptes_envoie);
-                        postData.append("idCompteBancaireRecevant", id_compte_recois);
-                        postData.append("montant", montant);
+                        putData.append("idUtilisateur", idUtilisateur);
+                        putData.append("idCompteBancaireProvenant", id_comptes_envoie);
+                        putData.append("idCompteBancaireRecevant", id_compte_reception);
+                        putData.append("montant", montant);
 
                     } catch (JSONException e) {
+
                         throw new RuntimeException(e);
                     }
-
                 }
 
-
                 final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
-                RequestBody postBody = RequestBody.create(JSON, postData.toString());
+                RequestBody putBody = RequestBody.create(JSON, putData.toString());
                 Request post = new Request.Builder()
-                        .url(apiPathTransfert_comptes)
-                        .post(postBody)
+                        .url(apiPathTransfertComptes)
+                        .put(putBody)
                         .build();
 
 
@@ -557,14 +556,17 @@ public class ConnexionBD extends Thread{
 
                     JsonNode json = mapper.readTree(responseBody.string());
                     String reponse = json.get("reponse").asText();
+                    String codeRes = json.get("code").asText();
 
                     verifLog.setReponse(reponse);
+                    verifLog.setCode(Integer.parseInt(codeRes));
 
 
-                } catch (Exception e) {
-                    Log.e("TAG", "Error calling API: " + e.getMessage());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
 
+                currentThread().interrupt();
             }
         };
 
@@ -614,7 +616,6 @@ public class ConnexionBD extends Thread{
 
                     ResponseBody responseBody = response.body();
                     ObjectMapper mapper = new ObjectMapper();
-
 
                     JsonNode json = mapper.readTree(responseBody.string());
                     String reponse = json.get("reponse").asText();

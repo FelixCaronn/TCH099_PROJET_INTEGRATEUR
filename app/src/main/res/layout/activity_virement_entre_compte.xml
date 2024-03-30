@@ -52,35 +52,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.395"
-                    tools:ignore="TextSizeCheck">
-
-                    <RadioButton
-                        android:id="@+id/chq_re"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="@string/compte_ch_que"
-                        android:textColor="@color/black"/>
-
-                    <RadioButton
-                        android:id="@+id/epar_re"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="@string/compte_pargne"
-                        android:textColor="@color/black"/>
-
-                    <RadioButton
-                        android:id="@+id/requi_re"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:minHeight="48dp"
-                        android:text="@string/carte_requin"
-                        android:textColor="@color/black"
-                        tools:ignore="TouchTargetSizeCheck" />
-
-                </RadioGroup>
+                    tools:ignore="TextSizeCheck"/>
 
                 <EditText
                     android:id="@+id/montant_transfert"
@@ -155,28 +127,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.326"
-                    tools:ignore="TextSizeCheck">
-
-                    <RadioButton
-                        android:id="@+id/chq_en"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:minHeight="48dp"
-                        android:text="@string/compte_ch_que"
-                        android:textColor="@color/black"
-                        tools:ignore="DuplicateSpeakableTextCheck" />
-
-                    <RadioButton
-                        android:id="@+id/epar_en"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="@string/compte_pargne"
-                        android:textColor="@color/black"
-                        tools:ignore="DuplicateSpeakableTextCheck" />
-
-                </RadioGroup>
+                    tools:ignore="TextSizeCheck"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
