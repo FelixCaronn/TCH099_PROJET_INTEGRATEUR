@@ -3,6 +3,7 @@ package com.example.tch099_projet_integrateur;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.tch099_projet_integrateur.enumerations.typeCompte;
@@ -38,9 +40,9 @@ public class paiementFacture extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
-    public static Utilisateur user = new Utilisateur();
     private List<CompteBancaire> lesComptes;
     RadioButton chq_en, epar_en;
+    RadioGroup radioGroup;
     EditText etablissement, num_ref, montant_facture;
     Button btnTrans;
 
@@ -123,12 +125,38 @@ public class paiementFacture extends AppCompatActivity {
 
         chq_en = findViewById(R.id.chq_en);
         epar_en = findViewById(R.id.epar_en);
+        radioGroup = findViewById(R.id.radioGroup_re);
 
         etablissement = findViewById(R.id.etablissement);
         num_ref = findViewById(R.id.num_ref);
         montant_facture = findViewById(R.id.montant_facture);
-
         btnTrans = findViewById(R.id.btnTrans);
+
+
+        lesComptes = PagePrincipale.user.getListeComptes();
+
+        //Afficher les comptes dans le radio group
+        for (CompteBancaire compte : lesComptes) {
+            //Créer un bouton radio et mettre l'ID de compte comme ID
+            RadioButton btnRadio = new RadioButton(getApplicationContext());
+            btnRadio.setId(compte.getNumCompte());
+            btnRadio.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.montserrat_bold));
+
+            //Mettre le texte du compte selon le titre
+            typeCompte type = compte.getTypeCompte();
+
+            if (type == typeCompte.CHEQUE)
+                btnRadio.setText("Chèque");
+            else if (type == typeCompte.EPARGNE)
+                btnRadio.setText("Épargne");
+            else if (type == typeCompte.CARTE_CREDIT)
+                btnRadio.setText("Carte requin");
+            else
+                btnRadio.setText("Investissement");
+
+
+            radioGroup.addView(btnRadio);
+        }
 
         btnTrans.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,29 +172,32 @@ public class paiementFacture extends AppCompatActivity {
                 }
                 else
                 {
-                    lesComptes = user.getListeComptes();
                     int _id_compte = 0;
 
-                    for (CompteBancaire compte : lesComptes)
-                    {
-                        if (chq_en.isChecked() && compte.getTypeCompte() == typeCompte.CHEQUE)
-                        {
-                            _id_compte = compte.getNumCompte();
+                    Log.e("TAG", lesComptes.get(0).toString());
+
+
+                    //Itérer les boutons radio pour voir lequel a été cliqué
+                    for (int i = 0; i < radioGroup.getChildCount(); i++) {
+                        RadioButton button = (RadioButton) radioGroup.getChildAt(i);
+
+                        if (button.isChecked()) {
+                            //Si le bouton est cliqué, on prend l'ID du compte en question
+                            _id_compte = lesComptes.get(i).getNumCompte();
+
                             break;
                         }
-                        else if (epar_en.isChecked() && compte.getTypeCompte() == typeCompte.EPARGNE)
-                        {
-                            _id_compte = compte.getNumCompte();
-                            break;
-                        }
-                        else
-                        {
-                            Toast.makeText(paiementFacture.this, "Aucun compte n'a été selectionné", Toast.LENGTH_SHORT).show();
-                        }
+                    }
+
+
+                    if (_id_compte == 0){
+                        Toast.makeText(paiementFacture.this, "Aucun compte n'a été selectionné", Toast.LENGTH_SHORT).show();
+                        return;
                     }
 
                     RecuLogin recu = null;
 
+                    //On appelle l'API pour tester
                     try
                     {
                         recu = ConnexionBD.effectuerPaiement(PagePrincipale.user.getId(), String.valueOf(_id_compte), _etab, _num, _montant);
@@ -178,8 +209,7 @@ public class paiementFacture extends AppCompatActivity {
 
                     if (recu.getCode() == 201)
                     {
-                        Toast.makeText(paiementFacture.this, "Paiement effectué", Toast.LENGTH_SHORT).show();
-                        PagePrincipale.redirectActivity(paiementFacture.this, PagePrincipale.class);
+                        Toast.makeText(paiementFacture.this, "Succès! Paiement effectué.", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {

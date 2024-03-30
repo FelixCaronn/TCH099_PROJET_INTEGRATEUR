@@ -49,6 +49,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/montant"
                     android:textSize="16sp"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.049"
@@ -63,7 +64,8 @@
                     android:layout_height="48dp"
                     android:autofillHints=""
                     android:ems="10"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.326"
@@ -79,6 +81,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/compte"
                     android:textStyle="bold"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.058"
@@ -93,6 +96,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/destinataire"
                     android:textStyle="bold"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.735"
@@ -102,8 +106,8 @@
 
                 <RadioGroup
                     android:id="@+id/radioGroup_re"
-                    android:layout_width="176dp"
-                    android:layout_height="106dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -112,23 +116,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.326"
                     tools:ignore="TextSizeCheck">
-
-                    <RadioButton
-                        android:id="@+id/chq_en"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:minHeight="48dp"
-                        android:text="@string/compte_ch_que"
-                        tools:ignore="DuplicateSpeakableTextCheck" />
-
-                    <RadioButton
-                        android:id="@+id/epar_en"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="@string/compte_pargne"
-                        tools:ignore="DuplicateSpeakableTextCheck" />
 
                 </RadioGroup>
 
@@ -139,8 +126,9 @@
                     android:ems="10"
                     android:fontFamily="@font/montserrat_bold"
                     android:inputType="text"
-                    android:text="@string/tablissement"
+                    android:hint="@string/tablissement"
                     android:textSize="14sp"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.899"
@@ -157,8 +145,9 @@
                     android:ems="10"
                     android:fontFamily="@font/montserrat_bold"
                     android:inputType="text"
-                    android:text="@string/num_ro_de_r_f_rence"
+                    android:hint="@string/num_ro_de_r_f_rence"
                     android:textSize="14sp"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.894"
@@ -240,11 +229,12 @@
 
                 <TextView
                     android:id="@+id/textView10"
-                    android:layout_width="283dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="44dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/paiement_de_facture"
                     android:textSize="24sp"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.504"
