@@ -200,7 +200,7 @@ public class paiementFacture extends AppCompatActivity {
                     //On appelle l'API pour tester
                     try
                     {
-                        recu = ConnexionBD.effectuerPaiement(PagePrincipale.user.getId(), String.valueOf(_id_compte), _etab, _num, _montant);
+                        recu = ConnexionBD.effectuerPaiement(PagePrincipale.user.getId(), _id_compte, _etab, _num, Double.parseDouble(_montant));
                     }
                     catch (Exception e)
                     {
@@ -209,11 +209,13 @@ public class paiementFacture extends AppCompatActivity {
 
                     if (recu.getCode() == 201)
                     {
-                        Toast.makeText(paiementFacture.this, "Succès! Paiement effectué.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Succès! Paiement effectué.", Toast.LENGTH_SHORT).show();
+                        finish();
+                        redirectActivity(paiementFacture.this, PagePrincipale.class);
                     }
                     else
                     {
-                        Toast.makeText(paiementFacture.this, "Erreur lors du paiement", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Erreur lors du paiement. Code: " + recu.getCode(), Toast.LENGTH_SHORT).show();
                         recreate();
                     }
                 }

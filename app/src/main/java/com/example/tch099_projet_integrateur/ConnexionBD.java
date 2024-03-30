@@ -574,7 +574,7 @@ public class ConnexionBD extends Thread{
         return verifLog;
     }
 
-    public static RecuLogin effectuerPaiement ( int idUtilisateur, String id_compte, String etab, String num, String montant) throws InterruptedException {
+    public static RecuLogin effectuerPaiement ( int idUtilisateur, int id_compte, String etab, String num, double montant) throws InterruptedException {
 
         RecuLogin recu = new RecuLogin();
 
@@ -611,6 +611,18 @@ public class ConnexionBD extends Thread{
                 try (Response response = client.newCall(put).execute()) {
                     if (!response.isSuccessful())
                         throw new IOException("Unexpected code " + response);
+
+                    ResponseBody responseBody = response.body();
+                    ObjectMapper mapper = new ObjectMapper();
+
+
+                    JsonNode json = mapper.readTree(responseBody.string());
+                    String reponse = json.get("reponse").asText();
+                    String codeRes = json.get("code").asText();
+
+                    recu.setReponse(reponse);
+                    recu.setCode(Integer.parseInt(codeRes));
+
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
