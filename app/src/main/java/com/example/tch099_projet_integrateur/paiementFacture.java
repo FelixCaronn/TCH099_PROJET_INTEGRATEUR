@@ -215,7 +215,7 @@ public class paiementFacture extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "Erreur lors du paiement. Code: " + recu.getCode(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), recu.getReponse(), Toast.LENGTH_SHORT).show();
                         recreate();
                     }
                 }

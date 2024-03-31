@@ -94,7 +94,7 @@
     <string name="bonjour_user">Bonjour [USER]</string>
     <string name="numero_de_compte">Numero de compte :</string>
     <string name="historique_des_transactions">Historique des transactions</string>
-    <string name="compte">[COMPTE]</string>
+    <string name="compte">De:</string>
     <string name="envoyer">Envoyer</string>
     <string name="message">Message</string>
     <string name="titre">Titre</string>

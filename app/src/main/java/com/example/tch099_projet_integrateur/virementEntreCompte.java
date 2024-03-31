@@ -85,8 +85,12 @@ public class virementEntreCompte extends AppCompatActivity {
 
             if (type == typeCompte.CHEQUE)
                 btnRadio.setText("Chèque");
-            else
+            else if (type == typeCompte.EPARGNE)
                 btnRadio.setText("Épargne");
+            else if (type == typeCompte.CARTE_CREDIT)
+                btnRadio.setText("Carte requin");
+            else
+                btnRadio.setText("Investissement");
 
             radioGroup_de.addView(btnRadio);
         }
@@ -105,8 +109,10 @@ public class virementEntreCompte extends AppCompatActivity {
                 btnRadio.setText("Chèque");
             else if (type == typeCompte.EPARGNE)
                 btnRadio.setText("Épargne");
-            else
+            else if (type == typeCompte.CARTE_CREDIT)
                 btnRadio.setText("Carte requin");
+            else
+                btnRadio.setText("Investissement");
 
             radioGroup_vers.addView(btnRadio);
         }
@@ -183,7 +189,7 @@ public class virementEntreCompte extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "Erreur lors du transfert. Code: " + recu.getCode(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), recu.getReponse(), Toast.LENGTH_SHORT).show();
                         recreate();
                     }
                 }

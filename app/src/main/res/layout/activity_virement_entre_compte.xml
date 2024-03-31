@@ -58,17 +58,17 @@
                     android:id="@+id/montant_transfert"
                     android:layout_width="157dp"
                     android:layout_height="49dp"
+                    android:autofillHints=""
                     android:ems="10"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.414"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/textView4"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.866"
-                    tools:ignore="LabelFor,SpeakableTextPresentCheck"
-                    android:autofillHints="" />
+                    app:layout_constraintVertical_bias="0.941"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -76,14 +76,14 @@
                     android:layout_height="27dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/montant"
-                    android:textSize="16sp"
                     android:textColor="@color/black"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.077"
+                    app:layout_constraintHorizontal_bias="0.075"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.87"
+                    app:layout_constraintVertical_bias="0.909"
                     tools:ignore="TextSizeCheck" />
 
                 <TextView
