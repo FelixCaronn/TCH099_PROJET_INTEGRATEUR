@@ -272,7 +272,7 @@ public class ConnexionBD extends Thread{
                             case "Compte investissement":
                                 type = typeCompte.INVESTISSEMENT;
                                 break;
-                            case "Carte Requin":
+                            case "Carte requin":
                                 type = typeCompte.CARTE_CREDIT;
                                 break;
                             case "Compte épargne":
@@ -450,11 +450,13 @@ public class ConnexionBD extends Thread{
                             //Si l'ID de notre compte est le même que le compte provenant dans la transaction, le transfert sort de ce compte
                             if(id_compte == tmp.getInt("idCompteBancaireProvenant")) {
                                 transactionTemp.setMontant(-1 * tmp.getDouble("montant"));
+                                transactionTemp.setIdCompteRecevant(tmp.getInt("idCompteBancaireRecevant"));
                             }
 
                             //Sinon, c'est de l'argent rentrant
                             else {
                                 transactionTemp.setMontant(tmp.getDouble("montant"));
+                                transactionTemp.setCompteProvenance(tmp.getInt("idCompteBancaireProvenant"));
                             }
                         }
 
@@ -470,15 +472,14 @@ public class ConnexionBD extends Thread{
                             transactionTemp.setMontant(-1*tmp.getDouble("montant"));
                         }
 
-                        //Virement
-                        else
+                        //Virement entre personnes
+                        else if (type == typeTransaction.VIREMENT)
                         {
                             if(id_compte == tmp.getInt("idCompteBancaireProvenant"))
                             {
                                 transactionTemp = new TransactionBancaire(type, tmp.getString("nomEtablissement"));
                                 transactionTemp.setMontant(-1*tmp.getDouble("montant"));
                                 transactionTemp.setDateDeTransaction(tmp.getString("dateTransaction"));
-                                transactionTemp.setIdCompteRecevant(tmp.getInt("idCompteBancaireRecevant"));
                             }
                             else
                             {
@@ -486,8 +487,15 @@ public class ConnexionBD extends Thread{
                                 transactionTemp.setMontant(tmp.getDouble("montant"));
                                 transactionTemp.setProvenance(tmp.getString("courrielProvenant"));
                                 transactionTemp.setDateDeTransaction(tmp.getString("dateTransaction"));
-                                transactionTemp.setCompteProvenance(tmp.getInt("idCompteBancaireProvenant"));
                             }
+                        }
+
+                        //Virement refusé
+                        else {
+                            transactionTemp = new TransactionBancaire(type, tmp.getString("nomEtablissement"));
+                            transactionTemp.setMontant(tmp.getDouble("montant"));
+                            transactionTemp.setProvenance(tmp.getString("nomEtablissement"));
+                            transactionTemp.setDateDeTransaction(tmp.getString("dateTransaction"));
                         }
 
                         cpt.addTransaction(transactionTemp);

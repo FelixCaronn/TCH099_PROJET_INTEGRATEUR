@@ -83,6 +83,8 @@ public class historiqueAdapter extends ArrayAdapter<TransactionBancaire> {
                 case DEPOT:
                     descriptionHistorique.setText("Dépôt mobile");
                     break;
+                case VIREMENT_REFUSE:
+                    descriptionHistorique.setText("Virement refusé / " + transaction.getNomEtablissement());
                 default:
                     descriptionHistorique.setText("Autre");
                     break;
