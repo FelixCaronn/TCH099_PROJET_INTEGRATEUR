@@ -108,43 +108,21 @@
                 <RadioGroup
                     android:id="@+id/radioGroup_re"
                     android:layout_width="176dp"
-                    android:layout_height="106dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.272"
-                    tools:ignore="TextSizeCheck">
-
-                    <RadioButton
-                        android:id="@+id/chq_en"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:minHeight="48dp"
-                        android:text="@string/compte_ch_que"
-                        android:textColor="@color/black"
-                        tools:ignore="DuplicateSpeakableTextCheck" />
-
-                    <RadioButton
-                        android:id="@+id/epar_en"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="@string/compte_pargne"
-                        android:textColor="@color/black"
-                        tools:ignore="DuplicateSpeakableTextCheck" />
-
-                </RadioGroup>
+                    app:layout_constraintVertical_bias="0.348"
+                    tools:ignore="TextSizeCheck" />
 
                 <EditText
                     android:id="@+id/Question"
                     android:layout_width="170dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="28dp"
-                    android:layout_marginTop="56dp"
                     android:autofillHints=""
                     android:ems="10"
                     android:fontFamily="@font/montserrat_bold"
@@ -161,7 +139,7 @@
                     tools:ignore="LabelFor" />
 
                 <EditText
-                    android:id="@+id/Réponse"
+                    android:id="@+id/reponse"
                     android:layout_width="170dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="18dp"
@@ -178,7 +156,28 @@
                     app:layout_constraintStart_toEndOf="@+id/montant_virement"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/Question"
-                    app:layout_constraintVertical_bias="0.526"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:ignore="LabelFor" />
+
+                <EditText
+                    android:id="@+id/confReponse"
+                    android:layout_width="170dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="18dp"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:hint="@string/r_ponse"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/montant_virement"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Question"
+                    app:layout_constraintVertical_bias="0.585"
                     tools:ignore="LabelFor" />
 
                 <EditText

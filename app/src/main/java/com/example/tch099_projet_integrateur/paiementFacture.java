@@ -41,7 +41,6 @@ public class paiementFacture extends AppCompatActivity {
     ImageView menu;
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
     private List<CompteBancaire> lesComptes;
-    RadioButton chq_en, epar_en;
     RadioGroup radioGroup;
     EditText etablissement, num_ref, montant_facture;
     Button btnTrans;
@@ -53,8 +52,8 @@ public class paiementFacture extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawerLayout);
 
-        menu = findViewById(R.id.menu);
 
+        menu = findViewById(R.id.menu);
         home = findViewById(R.id.home);
         depot = findViewById(R.id.depot);
         facture = findViewById(R.id.facture);
@@ -123,8 +122,6 @@ public class paiementFacture extends AppCompatActivity {
             }
         });
 
-        chq_en = findViewById(R.id.chq_en);
-        epar_en = findViewById(R.id.epar_en);
         radioGroup = findViewById(R.id.radioGroup_re);
 
         etablissement = findViewById(R.id.etablissement);

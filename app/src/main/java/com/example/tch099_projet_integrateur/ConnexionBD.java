@@ -65,6 +65,7 @@ public class ConnexionBD extends Thread{
     private static final String apiPathDepotMobile = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
     private static final String apiPathListeTransaction = "http://35.233.243.199/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
     private static final String apiPathTransfertComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/compte";
+    private static final String apiPathVirementPersonnes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
     private static final String apiPathPayerFacture = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
@@ -449,13 +450,11 @@ public class ConnexionBD extends Thread{
                             //Si l'ID de notre compte est le même que le compte provenant dans la transaction, le transfert sort de ce compte
                             if(id_compte == tmp.getInt("idCompteBancaireProvenant")) {
                                 transactionTemp.setMontant(-1 * tmp.getDouble("montant"));
-                                transactionTemp.setIdCompteRecevant(tmp.getInt("idCompteBancaireRecevant"));
                             }
 
                             //Sinon, c'est de l'argent rentrant
                             else {
                                 transactionTemp.setMontant(tmp.getDouble("montant"));
-                                transactionTemp.setCompteProvenance(tmp.getInt("idCompteBancaireProvenant"));
                             }
                         }
 
@@ -575,6 +574,76 @@ public class ConnexionBD extends Thread{
 
         return verifLog;
     }
+
+
+    public static RecuLogin virementEntrePersonnes(int idUtilisateur, int idCompteBancaireProvenant, double montant, String courrielDest, String question, String reponse, String confReponse) throws InterruptedException {
+
+        RecuLogin verifLog = new RecuLogin();
+
+        Thread p = new Thread() {
+
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+
+                JSONObject putData = new JSONObject();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        putData.append("idUtilisateur", idUtilisateur);
+                        putData.append("idCompteBancaireProvenant", idCompteBancaireProvenant);
+                        putData.append("montant", montant);
+                        putData.append("courrielDest", courrielDest);
+                        putData.append("question", question);
+                        putData.append("reponse", reponse);
+                        putData.append("confReponse", confReponse);
+
+
+                    } catch (JSONException e) {
+
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody putBody = RequestBody.create(JSON, putData.toString());
+                Request post = new Request.Builder()
+                        .url(apiPathVirementPersonnes)
+                        .put(putBody)
+                        .build();
+
+
+                try (Response response = client.newCall(post).execute()) {
+
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
+
+                    ResponseBody responseBody = response.body();
+                    ObjectMapper mapper = new ObjectMapper();
+
+
+                    JsonNode json = mapper.readTree(responseBody.string());
+                    String reponse = json.get("reponse").asText();
+                    String codeRes = json.get("code").asText();
+
+                    verifLog.setReponse(reponse);
+                    verifLog.setCode(Integer.parseInt(codeRes));
+
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                currentThread().interrupt();
+            }
+        };
+
+        p.start();
+        p.join();
+
+        return verifLog;
+    }
+
 
     public static RecuLogin effectuerPaiement ( int idUtilisateur, int id_compte, String etab, String num, double montant) throws InterruptedException {
 
