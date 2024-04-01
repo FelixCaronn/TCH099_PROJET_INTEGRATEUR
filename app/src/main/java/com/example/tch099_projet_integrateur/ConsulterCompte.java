@@ -68,12 +68,14 @@ public class ConsulterCompte extends AppCompatActivity {
         support = findViewById(R.id.support);
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDrawer(drawerLayout);
             }
         });
+
         btnCheque = findViewById(R.id.btnDeposerCheque);
         btnCheque.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +83,7 @@ public class ConsulterCompte extends AppCompatActivity {
                 redirectActivity(ConsulterCompte.this, DepotCheque.class);
             }
         });
+
         btnFacture = findViewById(R.id.btnPayerFacture);
         btnFacture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +91,7 @@ public class ConsulterCompte extends AppCompatActivity {
                 redirectActivity(ConsulterCompte.this, paiementFacture.class);
             }
         });
+
         btnTransfert = findViewById(R.id.btnTransfert);
         btnTransfert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +99,7 @@ public class ConsulterCompte extends AppCompatActivity {
                 redirectActivity(ConsulterCompte.this, virementEntreCompte.class);
             }
         });
+
         btnVirement = findViewById(R.id.btnEnvoyer);
         btnVirement.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,28 +107,19 @@ public class ConsulterCompte extends AppCompatActivity {
                 redirectActivity(ConsulterCompte.this, virementEntreUtilisateurs.class);
             }
         });
+
         listeHisto = findViewById(R.id.listeHistorique);
         typeCompte = findViewById(R.id.typeCompte);
         typeCompte.setText(typeDuCompte.toString());
         numCompte = findViewById(R.id.txtnumeroCompte);
         numCompte.setText(Integer.toString(numeroCompte));
         soldeCompte = findViewById(R.id.txtMontantCompte);
-        soldeCompte.setText(Double.toString(solde) + "$");
-//        historique = new ArrayList<TransactionBancaire>();
-        //test pour le scrollview, a remplacer par le vrai historique
-//        TransactionBancaire transact;
-//        for (int i = 0; i < 10; i++) {
-//            transact = new TransactionBancaire(1,"2024/03/11",
-//                    100,typeTransaction.PAIEMENTFACTURE,"allo");
-//            historique.add(transact);
-//        }
+        soldeCompte.setText(String.format("%.2f", solde) + "$");
+
+
         historiqueAdapter adapter = new historiqueAdapter(this,R.layout.historique_layout,historique);
         listeHisto.setAdapter(adapter);
         ////
-
-
-
-
 
 
         btnRetour = findViewById(R.id.btnRetour);

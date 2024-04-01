@@ -92,7 +92,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="bonjour_user">Bonjour [USER]</string>
-    <string name="numero_de_compte">Numero de compte :</string>
+    <string name="numero_de_compte"># de compte :</string>
     <string name="historique_des_transactions">Historique des transactions</string>
     <string name="compte">De:</string>
     <string name="envoyer">Envoyer</string>

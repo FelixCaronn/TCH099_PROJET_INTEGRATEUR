@@ -491,12 +491,13 @@ public class ConnexionBD extends Thread{
                         }
 
                         //Virement refusé
-                        else {
+                        else  {
                             transactionTemp = new TransactionBancaire(type, tmp.getString("nomEtablissement"));
                             transactionTemp.setMontant(tmp.getDouble("montant"));
                             transactionTemp.setProvenance(tmp.getString("nomEtablissement"));
                             transactionTemp.setDateDeTransaction(tmp.getString("dateTransaction"));
                         }
+
 
                         cpt.addTransaction(transactionTemp);
                     }

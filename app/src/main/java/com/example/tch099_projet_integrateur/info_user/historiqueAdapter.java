@@ -3,6 +3,8 @@ package com.example.tch099_projet_integrateur.info_user;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.nfc.Tag;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +45,10 @@ public class historiqueAdapter extends ArrayAdapter<TransactionBancaire> {
             view = layoutInflater.inflate(this.viewResourceId,parent,false);
         }
         final TransactionBancaire transaction = this.historique.get(position);
+
         if (transaction!=null){
             final TextView montantTransaction = (TextView) view.findViewById(R.id.montantTransaction);
-            montantTransaction.setText(Double.toString(transaction.getMontant()));
+            montantTransaction.setText(String.format("%.2f", transaction.getMontant()));
 
             //Mettre la couleur selon le virement sortant ou entrant
             if(transaction.getMontant() < 0)
@@ -56,6 +59,7 @@ public class historiqueAdapter extends ArrayAdapter<TransactionBancaire> {
             final TextView descriptionHistorique = (TextView) view.findViewById(R.id.descriptionHistorique);
             ////a changer si on veux plus de detail pour la transaction
             typeTransaction type = transaction.getType();
+
             switch (type){
                 case PAIEMENTFACTURE:
                     descriptionHistorique.setText("Paiement de facture / " + transaction.getNomEtablissement());
@@ -85,8 +89,9 @@ public class historiqueAdapter extends ArrayAdapter<TransactionBancaire> {
                     break;
                 case VIREMENT_REFUSE:
                     descriptionHistorique.setText("Virement refusé / " + transaction.getNomEtablissement());
+                    break;
                 default:
-                    descriptionHistorique.setText("Autre");
+                    descriptionHistorique.setText("Autre type");
                     break;
             }
             final TextView date = (TextView) view.findViewById(R.id.date);

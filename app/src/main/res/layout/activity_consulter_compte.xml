@@ -47,8 +47,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/compte"
-                    android:textSize="16sp"
                     android:textColor="@color/black"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.057"
@@ -75,15 +75,16 @@
                     android:id="@+id/txtnumeroCompte"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="#8E8E8E"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.066"
+                    app:layout_constraintHorizontal_bias="0.044"
                     app:layout_constraintStart_toEndOf="@+id/numCompte"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.717" />
+                    app:layout_constraintTop_toBottomOf="@+id/typeCompte"
+                    app:layout_constraintVertical_bias="0.05" />
 
                 <TextView
                     android:id="@+id/txtMontantCompte"

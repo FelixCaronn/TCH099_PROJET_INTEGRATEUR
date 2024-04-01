@@ -53,12 +53,13 @@
             android:layout_height="wrap_content"
             android:textColor="#8E8E8E"
             android:textSize="16sp"
+            android:fontFamily="@font/montserrat_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.117"
+            app:layout_constraintHorizontal_bias="0.034"
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.576" />
+            app:layout_constraintVertical_bias="0.589" />
 
         <TextView
             android:id="@+id/item_MontantCompte"
