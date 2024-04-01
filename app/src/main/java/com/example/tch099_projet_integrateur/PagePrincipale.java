@@ -109,12 +109,12 @@ public class PagePrincipale extends AppCompatActivity {
             }
         });
 
-//        notification.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(PagePrincipale.this, Notification.class);
+            }
+        });
 
         support.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,10 +143,12 @@ public class PagePrincipale extends AppCompatActivity {
         lvComptes = findViewById(R.id.lvComptes);
         btnNautico = findViewById(R.id.btnNautico);
 
+        //Afficher les comptes
         lesComptes = user.getListeComptes();
         adaptateur = new CompteAdapter(this, R.layout.layout_compte, lesComptes);
         lvComptes.setAdapter(adaptateur);
 
+        //Ajouter écouteur d'événement sur chaque compte pour afficher leurs détails
         lvComptes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

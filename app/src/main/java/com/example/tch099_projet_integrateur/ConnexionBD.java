@@ -41,23 +41,6 @@ import okhttp3.ResponseBody;
 
 public class ConnexionBD extends Thread{
 
-    private ProgressDialog processDialog;
-
-
-
-
-    private JSONArray resultJson;
-    private int success=0;
-
-    private ListView listView;
-
-
-
-
-
-    
-
-
     //Adresses des API du site web qu'on utilise pour get/post nos données
     private static final String apiPathVerifLogin = "http://35.233.243.199/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
     private static final String apiPathCreationCompte = "http://35.233.243.199/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
@@ -65,12 +48,12 @@ public class ConnexionBD extends Thread{
     private static final String apiPathDepotMobile = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
     private static final String apiPathListeTransaction = "http://35.233.243.199/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
     private static final String apiPathTransfertComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/compte";
-    private static final String apiPathVirementPersonnes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
     private static final String apiPathPayerFacture = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
+    private static final String apiPathVirementPersonnes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
+    private static final String apiPathVirementPersonnesReception = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
+    private static final String aipPathGetNotifications = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
-
-
         RecuLogin verifLog = new RecuLogin();
 
         Thread p = new Thread()
@@ -78,11 +61,7 @@ public class ConnexionBD extends Thread{
 
             @Override
             public void run() {
-
-
-
                 OkHttpClient client = new OkHttpClient();
-
 
                 JSONObject postData = new JSONObject();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -94,9 +73,9 @@ public class ConnexionBD extends Thread{
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
-
                 }
 
+                //Faire la requête pour vérifier les données du login
                 final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
                 RequestBody postBody = RequestBody.create(JSON, postData.toString());
                 Request post = new Request.Builder()
@@ -112,30 +91,31 @@ public class ConnexionBD extends Thread{
                     ResponseBody responseBody = response.body();
                     ObjectMapper mapper = new ObjectMapper();
 
-
+                    //Chercher la réponse et le code retourné par l'API
                     JsonNode json = mapper.readTree(responseBody.string());
                     String reponse = json.get("reponse").asText();
                     String codeRes = json.get("code").asText();
+
+                    //Si le code est 200 ou 201, le login est correct
                     if(codeRes.equals("200") || codeRes.equals("201"))
                     {
+                        //Stocker l'ID et le nom de l'utilisateur connecté
                         String userNom = json.get("nom").asText();
                         int userId = json.get("id").asInt();
                         verifLog.setId(userId);
                         verifLog.setNom(userNom);
                     }
 
+                    //Mettre le code et la réponse dans le login
                     int code = Integer.parseInt(codeRes);
                     verifLog.setCode(code);
                     verifLog.setReponse(reponse);
-
-
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
 
                 currentThread().interrupt();
-
             }
         };
 
@@ -143,7 +123,6 @@ public class ConnexionBD extends Thread{
         p.join();
 
         return verifLog;
-
     }
 
     //***************************** REQUÊTE CRÉER COMPTE UTILISATEUR *******************************//
@@ -162,6 +141,7 @@ public class ConnexionBD extends Thread{
                 JSONObject postData = new JSONObject();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     try {
+                        //Ajouter les données d'informations sur le client qu'on veut créer
                         postData.append("nom", nom);
                         postData.append("prenom", prenom);
                         postData.append("courriel", courriel);
@@ -174,7 +154,7 @@ public class ConnexionBD extends Thread{
 
                 }
 
-
+                //Envoyer la requête avec les données
                 final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
                 RequestBody postBody = RequestBody.create(JSON, postData.toString());
                 Request post = new Request.Builder()
@@ -189,20 +169,19 @@ public class ConnexionBD extends Thread{
                     ResponseBody responseBody = response.body();
                     ObjectMapper mapper = new ObjectMapper();
 
-                    //Recuperer resultat requete API
+                    //Récupérer le résultat que retourne l'API
                     JsonNode json = mapper.readTree(responseBody.string());
                     String reponse = json.get("reponse").asText();
                     String codeRes = json.get("code").asText();
+
+                    //Stocker le résultat de l'API et le retourner à la fin
                     int code = Integer.parseInt(codeRes);
                     recu.setCode(code);
                     recu.setReponse(reponse);
 
-
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     Log.e("TAG", "Error calling API code : 404");
                 }
-
             }
         };
 
@@ -222,11 +201,9 @@ public class ConnexionBD extends Thread{
 
             @Override
             public void run() {
-
+                //Créer le client de la requête et l'objet JSON que l'on va envoyer
                 OkHttpClient client = new OkHttpClient();
-
                 JSONObject getData = new JSONObject();
-
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
                     try{
@@ -239,6 +216,7 @@ public class ConnexionBD extends Thread{
                     }
                 }
 
+                //Faire la requête
                 final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
                 RequestBody getBody = RequestBody.create(JSON, getData.toString());
                 Request get = new Request.Builder()
@@ -246,6 +224,7 @@ public class ConnexionBD extends Thread{
                         .post(getBody)
                         .build();
 
+                //Exécuter la requête et prendre la réponse de l'API
                 try(Response response = client.newCall(get).execute())
                 {
 
@@ -253,17 +232,18 @@ public class ConnexionBD extends Thread{
 
                     final ObjectMapper mapper = new ObjectMapper();
 
+                    //Chercher le tableau de comptes
                     JSONObject obj = new JSONObject(response.body().string());
-
                     JSONArray jsonArray = obj.getJSONArray("comptes");
 
-
-
-
+                    //Itérer les comptes de l'utilisateur
                     for(int i = 0; i < jsonArray.length(); i++)
                     {
+                        //Créer un objet JSON pour chaque compte
                         JSONObject tmp = jsonArray.getJSONObject(i);
-                        typeCompte type=null;
+                        typeCompte type = null;
+
+                        //Assigner le type de compte pour chaque compte selon la réponse de l'API
                         switch(tmp.getString("typeCompte"))
                         {
                             case "Compte chèque":
@@ -282,27 +262,24 @@ public class ConnexionBD extends Thread{
                                 type = null;
                                 break;
                         }
+
+                        //Créer un compte bancaire et l'ajouter à la liste des comptes de l'utilisateur
                         CompteBancaire tmp1 = new CompteBancaire(tmp.getInt("id"), tmp.getDouble("solde"), type);
                         u.addCompte(tmp1);
-                        //Log.e("TAG", "Num:"+tmp1.getNumCompte()
-                        //+"\n"+"Solde :"+tmp1.getSolde() + "\n" + "Type: " + tmp1.getTypeCompte());
-
-
                     }
 
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 currentThread().interrupt();
-
             }
         };
 
         p.start();
         p.join();
 
+        //Retourner la liste des comptes de l'utilisateur
         return u.getListeComptes();
     }
 
@@ -318,7 +295,6 @@ public class ConnexionBD extends Thread{
             public void run() {
 
                 OkHttpClient client = new OkHttpClient();
-                Log.e("ID ET MONTANT DANS LA FCT", String.valueOf(idUtilisateur + montant));
 
                 //Ajouter les données pour le dépôt
                 JSONObject postData = new JSONObject();
@@ -347,10 +323,12 @@ public class ConnexionBD extends Thread{
                     ResponseBody responseBody = response.body();
                     ObjectMapper mapper = new ObjectMapper();
 
-                    //Recuperer resultat requete API
+                    //Récupérer résultat de l'API
                     JsonNode json = mapper.readTree(responseBody.string());
                     String reponse = json.get("reponse").asText();
                     String codeRes = json.get("code").asText();
+
+                    //Set les valeurs reçues de l'API dans la variable reçu, qu'on va retourner
                     int code = Integer.parseInt(codeRes);
                     recu.setCode(code);
                     recu.setReponse(reponse);
@@ -358,15 +336,13 @@ public class ConnexionBD extends Thread{
                 
                 catch (Exception e) {
                     Log.e("TAG", e.getMessage());
-                    Log.e("TAG", "Error calling API code : 404");
-
                 }
-
             }
         };
 
         p.start();
         p.join();
+
         return recu;
     }
 
@@ -381,21 +357,18 @@ public class ConnexionBD extends Thread{
             public void run() {
 
                 OkHttpClient client = new OkHttpClient();
-
                 JSONObject getData = new JSONObject();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
                     try{
-
+                        //Envoyer l'ID du compte à l'API pour nous retourner la liste des transactions de ce compte
                         getData.append("compteId", id_compte);
-
-                    }catch(Exception e)
-                    {
+                    } catch(Exception e) {
                         System.out.println(e.getMessage());
                     }
                 }
 
-
+                //Faire la requête à l'API
                 final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
                 RequestBody getBody = RequestBody.create(JSON, getData.toString());
                 Request get = new Request.Builder()
@@ -405,23 +378,20 @@ public class ConnexionBD extends Thread{
 
                 try(Response response = client.newCall(get).execute())
                 {
-
                     if(!response.isSuccessful()) throw new IOException("Erreur inattendue code: " + response.code());
 
                     final ObjectMapper mapper = new ObjectMapper();
 
-
                     JSONObject obj = new JSONObject(response.body().string());
-
                     JSONArray jsonArray = obj.getJSONArray("transactions");
 
-
-
+                    //Itérer les transactions (à l'envers pour les avoir dans l'ordre chronologique décroissant
                     for(int i = jsonArray.length()-1; i >= 0; i--)
                     {
                         JSONObject tmp = jsonArray.getJSONObject(i);
                         typeTransaction type=null;
 
+                        //Set le type de la transaction selon le type renvoyé par l'API
                         switch (tmp.getString("typeTransaction"))
                         {
                             case "Transfert":
@@ -441,8 +411,10 @@ public class ConnexionBD extends Thread{
                                 break;
                         }
 
+
                         TransactionBancaire transactionTemp;
 
+                        //Créer les transaction et set leurs valeurs selon le type de transaction
                         if(type == typeTransaction.TRANSFERT)
                         {
                             transactionTemp = new TransactionBancaire(type, tmp.getString("idCompteBancaireProvenant"), tmp.getString("dateTransaction"), tmp.getDouble("montant"));
@@ -460,14 +432,13 @@ public class ConnexionBD extends Thread{
                             }
                         }
 
-                        else if(type == typeTransaction.DEPOT)
-                        {
+                        else if(type == typeTransaction.DEPOT) {
                             transactionTemp = new TransactionBancaire(type, tmp.getString("dateTransaction"), tmp.getDouble("montant"));
                         }
 
 
-                        else if(type == typeTransaction.PAIEMENTFACTURE)
-                        {
+                        else if(type == typeTransaction.PAIEMENTFACTURE) {
+                            //C'est de l'argent sortant, on set donc un montant négatif, la date et le nom de l'établissement
                             transactionTemp = new TransactionBancaire(type, tmp.getString("nomEtablissement"), tmp.getString("dateTransaction"), tmp.getDouble("montant"));
                             transactionTemp.setMontant(-1*tmp.getDouble("montant"));
                         }
@@ -498,15 +469,13 @@ public class ConnexionBD extends Thread{
                             transactionTemp.setDateDeTransaction(tmp.getString("dateTransaction"));
                         }
 
-
+                        //Ajouter la transaction à la liste des transaction de ce compte
                         cpt.addTransaction(transactionTemp);
                     }
 
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                Log.e("TAG", cpt.getListeTransactions().size() + "");
 
                 currentThread().interrupt();
             }
@@ -516,6 +485,7 @@ public class ConnexionBD extends Thread{
         p.start();
         p.join();
 
+        //retourner la liste des transactions
         return cpt.getListeTransactions();
     }
 
@@ -534,17 +504,18 @@ public class ConnexionBD extends Thread{
                 JSONObject putData = new JSONObject();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     try {
+                        //Envoyer l'ID de l'utilisateur, l'ID des 2 comptes bancaires et le montant transféré
                         putData.append("idUtilisateur", idUtilisateur);
                         putData.append("idCompteBancaireProvenant", id_comptes_envoie);
                         putData.append("idCompteBancaireRecevant", id_compte_reception);
                         putData.append("montant", montant);
 
                     } catch (JSONException e) {
-
                         throw new RuntimeException(e);
                     }
                 }
 
+                //Faire la requête
                 final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
                 RequestBody putBody = RequestBody.create(JSON, putData.toString());
                 Request post = new Request.Builder()
@@ -561,14 +532,14 @@ public class ConnexionBD extends Thread{
                     ResponseBody responseBody = response.body();
                     ObjectMapper mapper = new ObjectMapper();
 
-
+                    //Lire la réponse de l'API
                     JsonNode json = mapper.readTree(responseBody.string());
                     String reponse = json.get("reponse").asText();
                     String codeRes = json.get("code").asText();
 
+                    //Stocker le code et la réponse de l'API, et renvoyer ça
                     verifLog.setReponse(reponse);
                     verifLog.setCode(Integer.parseInt(codeRes));
-
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -581,6 +552,7 @@ public class ConnexionBD extends Thread{
         p.start();
         p.join();
 
+        //On retourne la réponse de l'API
         return verifLog;
     }
 
@@ -599,6 +571,7 @@ public class ConnexionBD extends Thread{
                 JSONObject putData = new JSONObject();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     try {
+                        //Envoyer toutes les données du virement
                         putData.append("idUtilisateur", idUtilisateur);
                         putData.append("idCompteBancaireProvenant", idCompteBancaireProvenant);
                         putData.append("montant", montant);
@@ -614,6 +587,7 @@ public class ConnexionBD extends Thread{
                     }
                 }
 
+                //Faire la requête
                 final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
                 RequestBody putBody = RequestBody.create(JSON, putData.toString());
                 Request post = new Request.Builder()
@@ -630,7 +604,7 @@ public class ConnexionBD extends Thread{
                     ResponseBody responseBody = response.body();
                     ObjectMapper mapper = new ObjectMapper();
 
-
+                    //Stocker la réponse de l'API
                     JsonNode json = mapper.readTree(responseBody.string());
                     String reponse = json.get("reponse").asText();
                     String codeRes = json.get("code").asText();
@@ -668,6 +642,7 @@ public class ConnexionBD extends Thread{
                 JSONObject paiementData = new JSONObject();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     try {
+                        //Envoyer toutes les données du paiement de facture
                         paiementData.append("idUtilisateur", idUtilisateur);
                         paiementData.append("idCompteBancaireProvenant", id_compte);
                         paiementData.append("nomEtablissement", etab);
@@ -675,18 +650,17 @@ public class ConnexionBD extends Thread{
                         paiementData.append("montant", montant);
 
                     } catch (JSONException e) {
-
                         throw new RuntimeException(e);
                     }
                 }
 
+                //Faire la requête
                 final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
                 RequestBody putBody = RequestBody.create(JSON, paiementData.toString());
                 Request put = new Request.Builder()
                         .url(apiPathPayerFacture)
                         .put(putBody)
                         .build();
-
 
                 try (Response response = client.newCall(put).execute()) {
                     if (!response.isSuccessful())
@@ -695,13 +669,14 @@ public class ConnexionBD extends Thread{
                     ResponseBody responseBody = response.body();
                     ObjectMapper mapper = new ObjectMapper();
 
+                    //Récupérer la réponse de l'API
                     JsonNode json = mapper.readTree(responseBody.string());
                     String reponse = json.get("reponse").asText();
                     String codeRes = json.get("code").asText();
 
+                    //Stocker la réponse
                     recu.setReponse(reponse);
                     recu.setCode(Integer.parseInt(codeRes));
-
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);

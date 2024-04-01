@@ -48,11 +48,11 @@
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.891"
+                    app:layout_constraintHorizontal_bias="0.927"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.395"
-                    tools:ignore="TextSizeCheck"/>
+                    app:layout_constraintVertical_bias="0.317"
+                    tools:ignore="TextSizeCheck" />
 
                 <EditText
                     android:id="@+id/montant_transfert"
@@ -92,14 +92,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/de"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.058"
+                    app:layout_constraintHorizontal_bias="0.043"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.103" />
+                    app:layout_constraintVertical_bias="0.11" />
 
                 <TextView
                     android:id="@+id/textView9"
@@ -119,7 +119,7 @@
                 <RadioGroup
                     android:id="@+id/radioGroup_re"
                     android:layout_width="176dp"
-                    android:layout_height="106dp"
+                    android:layout_height="137dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

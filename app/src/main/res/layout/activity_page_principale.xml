@@ -18,9 +18,9 @@
         <TextView
             android:id="@+id/bonjourUser"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:textColor="@color/black"
             android:textSize="40dp"
             android:textStyle="bold" />
@@ -29,15 +29,17 @@
             android:id="@+id/lvComptes"
             android:layout_width="match_parent"
             android:paddingHorizontal="10dp"
-            android:layout_height="wrap_content"
+            android:layout_height="450dp"
             android:textColor="@color/black" />
 
         <Button
             android:id="@+id/btnNautico"
-            android:layout_width="250dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/black"
             android:backgroundTint="#ff4747"
             android:text="Assistance Nautico"
             android:textSize="20dp" />
