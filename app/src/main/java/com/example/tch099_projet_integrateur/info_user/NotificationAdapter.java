@@ -2,18 +2,18 @@ package com.example.tch099_projet_integrateur.info_user;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.tch099_projet_integrateur.R;
-import com.example.tch099_projet_integrateur.enumerations.typeTransaction;
 
 import java.util.List;
 
@@ -45,7 +45,25 @@ public class NotificationAdapter extends ArrayAdapter<Notifications> {
         final Notifications noti = this.notifications.get(position);
 
         if (noti!=null){
-        //     = view.findViewById(R.id.);
+            Button supp;
+            TextView date, titre, message;
+            date = (TextView)view.findViewById(R.id.dateNoti);
+            titre = (TextView)view.findViewById(R.id.titre);
+            message = (TextView)view.findViewById(R.id.messageNoti);
+            supp = (Button) view.findViewById(R.id.supprimer);
+            
+            date.setText(noti.getDateRecu());
+            titre.setText(noti.getTitre());
+            message.setText(noti.getContenu());
+
+            //delete de la liste et de la base de donnes
+            supp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            //quoi faire si c'est un virement et qu'il faut afficher la question et demander la reponse? un popup?
         }
         return view;
     }

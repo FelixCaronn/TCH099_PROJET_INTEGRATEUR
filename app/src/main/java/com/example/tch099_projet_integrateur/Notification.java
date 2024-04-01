@@ -37,12 +37,23 @@ public class Notification extends AppCompatActivity {
         arrayNoti = new ArrayList<Notifications>();
 
 
-
-
-
+        //test creer des notiifcations aleatoires
+        for (int i = 0; i < 5; i++) {
+            arrayNoti.add(new Notifications(i,i,i,"titre" + Integer.toString(i),"contenu" + Integer.toString(i), "2024/04/01",false,(i%2==0)));
+        }
 
         NotificationAdapter adapter = new NotificationAdapter(this,R.layout.notification_layout,arrayNoti);
         listViewNoti.setAdapter(adapter);
+
+        //delete toute les notifications qui ne sont pas pour un virement pas encore accepte
+        toutEffacer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
 
         //ÉLÉMENTS DU MENU
         drawerLayout = findViewById(R.id.drawerLayout);

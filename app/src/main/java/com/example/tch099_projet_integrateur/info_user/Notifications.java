@@ -3,8 +3,8 @@ package com.example.tch099_projet_integrateur.info_user;
 public class Notifications {
     private int id, compteId, transactionId;
     private String titre, dateRecu, contenu;
-    private boolean lu;
-    public Notifications(int id, int compteId, int transactionId, String titre, String contenu, String dateRecu, boolean lu){
+    private boolean lu,doitRepondreQuestion;
+    public Notifications(int id, int compteId, int transactionId, String titre, String contenu, String dateRecu, boolean lu, boolean doitRepondreQuestion){
         this.lu = lu;
         this.compteId = compteId;
         this.contenu = contenu;
@@ -12,8 +12,9 @@ public class Notifications {
         this.titre = titre;
         this.id = id;
         this.transactionId = transactionId;
+        this.doitRepondreQuestion = doitRepondreQuestion;
     }
-    
+
     public void setLu(boolean lu) {
         this.lu = lu;
     }
