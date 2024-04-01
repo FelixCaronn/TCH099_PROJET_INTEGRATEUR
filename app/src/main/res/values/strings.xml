@@ -44,6 +44,8 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="bonjour">Bonjour !</string>
+    <string name="toutEffacer">Tout effacer</string>
+    <string name="noti">Notifications</string>
     <string name="vous_n_avez_pas_de_compte">Vous n\'avez pas de compte ?</string>
     <string name="connectez_vous">Connectez-vous</string>
     <string name="cr_er_un_compte">Créer un compte</string>
