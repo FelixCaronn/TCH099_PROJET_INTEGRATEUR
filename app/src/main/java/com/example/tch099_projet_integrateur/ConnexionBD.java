@@ -51,7 +51,7 @@ public class ConnexionBD extends Thread{
     private static final String apiPathPayerFacture = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
     private static final String apiPathVirementPersonnes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
     private static final String apiPathVirementPersonnesReception = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
-    private static final String aipPathGetNotifications = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
+    private static final String apiPathGetNotifications = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
         RecuLogin verifLog = new RecuLogin();
@@ -690,5 +690,125 @@ public class ConnexionBD extends Thread{
         p.join();
 
         return recu;
+    }
+
+
+
+
+
+
+
+
+    public static ArrayList<Notifications> getNotifications (int idUtilisateur) throws InterruptedException {
+
+        //Créer une arrayList de notifications, qu'on va retourner à la fin
+        ArrayList<Notifications> listeNotifications = new ArrayList<Notifications>();
+
+        Thread p = new Thread() {
+
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+
+                JSONObject notificationData = new JSONObject();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        //Chercher les notifications de l'utilisateur en envoyant son ID
+                        notificationData.append("idUtilisateur", idUtilisateur);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                //Faire la requête
+                final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                RequestBody postBody = RequestBody.create(JSON, notificationData.toString());
+                Request postRequest = new Request.Builder()
+                        .url(apiPathGetNotifications)
+                        .post(postBody)
+                        .build();
+
+                try (Response response = client.newCall(postRequest).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
+
+                    ResponseBody responseBody = response.body();
+                    ObjectMapper mapper = new ObjectMapper();
+
+                    //Récupérer la réponse de l'API
+                    JSONObject obj = new JSONObject(response.body().string());
+                    JSONArray jsonArray = obj.getJSONArray("notificationsEtTransactions");
+
+                    //Itérer chaque notification pour les instancier en tant qu'objet Notification
+                    for(int i = 0; i < jsonArray.length(); i++)
+                    {
+                        //Créer un objet JSON pour chaque notification
+                        JSONObject notifJSON = jsonArray.getJSONObject(i);
+
+                        //Chercher toutes les données
+                        int idNotif = (Integer) notifJSON.get("id_notif");
+                        int idTransaction = (Integer) notifJSON.get("idTransaction");
+                        int CompteId = (Integer) notifJSON.get("CompteId");
+                        String titre = (String) notifJSON.get("titre");
+                        String contenu = (String) notifJSON.get("contenu");
+                        int lu = (Integer) notifJSON.get("lu");
+                        String dateRecu = (String) notifJSON.get("dateRecu");
+                        int idCompteBancaireProvenant = (Integer) notifJSON.get("idCompteBancaireProvenant");
+                        String dateTransaction = (String) notifJSON.get("dateTransaction");
+                        String montant = (String) notifJSON.get("montant");
+                        String typeTransaction = (String) notifJSON.get("typeTransaction");
+                        int enAttente = (Integer) notifJSON.get("enAttente");
+
+                        Notifications notification;
+
+                        //Si c'est un virement, on crée une notif avec la question et la réponse
+                        if(typeTransaction.equals("Virement")) {
+                            String question = (String) notifJSON.get("question");
+                            String reponse = (String) notifJSON.get("reponse");
+
+                            //Créer la notification et l'ajouter à la liste
+                            notification = new Notifications(idNotif, CompteId, idTransaction, titre, contenu, dateRecu, lu, enAttente, question, reponse);
+                        }
+
+                        else {
+                            //Créer la notification et l'ajouter à la liste
+                            notification = new Notifications(idNotif, CompteId, idTransaction, titre, contenu, dateRecu, lu, enAttente);
+                        }
+
+                        //Ajouter la notification à la liste
+                        listeNotifications.add(notification);
+
+                        //TESTS
+                        Log.e("TAG", "ID NOTIF: " + notifJSON.get("id_notif"));
+                        Log.e("TAG", "CompteId NOTIF: " + notifJSON.get("CompteId"));
+                        Log.e("TAG", "idTransaction NOTIF: " + notifJSON.get("idTransaction"));
+                        Log.e("TAG", "titre NOTIF: " + notifJSON.get("titre"));
+                        Log.e("TAG", "contenu NOTIF: " + notifJSON.get("contenu"));
+                        Log.e("TAG", "dateRecu NOTIF: " + notifJSON.get("dateRecu"));
+                        Log.e("TAG", "lu NOTIF: " + notifJSON.get("lu"));
+                        Log.e("TAG", "enAttente NOTIF: " + notifJSON.get("enAttente"));
+                        Log.e("TAG", "question NOTIF: " + notifJSON.get("question"));
+                        Log.e("TAG", "reponse NOTIF: " + notifJSON.get("reponse"));
+                    }
+
+                    //Stocker la réponse
+                    //recu.setReponse(reponse);
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+                currentThread().interrupt();
+            }
+        };
+
+        p.start();
+        p.join();
+
+        return listeNotifications;
     }
 }

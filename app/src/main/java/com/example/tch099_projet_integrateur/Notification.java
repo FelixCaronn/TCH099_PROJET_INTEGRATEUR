@@ -6,7 +6,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +17,7 @@ import android.widget.ListView;
 
 import com.example.tch099_projet_integrateur.info_user.NotificationAdapter;
 import com.example.tch099_projet_integrateur.info_user.Notifications;
+import com.example.tch099_projet_integrateur.info_user.RecuLogin;
 import com.example.tch099_projet_integrateur.info_user.historiqueAdapter;
 
 import java.util.ArrayList;
@@ -28,19 +31,31 @@ public class Notification extends AppCompatActivity {
     ListView listViewNoti;
     List<Notifications> arrayNoti;
     Button toutEffacer;
+    RecuLogin recuLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+
+        //Contenus de la page
         listViewNoti = findViewById(R.id.listNoti);
         toutEffacer = findViewById(R.id.toutEffacer);
         arrayNoti = new ArrayList<Notifications>();
 
+        //Chercher les notifications avec l'API
+        try {
+            arrayNoti = ConnexionBD.getNotifications(PagePrincipale.user.getId());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
 
         //test creer des notiifcations aleatoires
-        for (int i = 0; i < 5; i++) {
-            arrayNoti.add(new Notifications(i,i,i,"titre" + Integer.toString(i),"contenu" + Integer.toString(i), "2024/04/01",false,(i%2==0)));
-        }
+        //for (int i = 0; i < 5; i++) {
+            //arrayNoti.add(new Notifications(i,i,i,"titre" + Integer.toString(i),"contenu" + Integer.toString(i), "2024/04/01",false,(i%2==0)));
+        //}
 
         NotificationAdapter adapter = new NotificationAdapter(this,R.layout.notification_layout,arrayNoti);
         listViewNoti.setAdapter(adapter);
