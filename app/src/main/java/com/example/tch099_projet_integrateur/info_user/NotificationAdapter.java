@@ -67,20 +67,21 @@ public class NotificationAdapter extends ArrayAdapter<Notifications> {
             supp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("TAG", "NOTIF À EFFACER: " + noti.getId());
 
                     //Essayer d'effacer la notif
                     try {
-                        ConnexionBD.deleteNotif(PagePrincipale.user.getId(), noti.getId(), "");
+                        int idNotifEffacee = ConnexionBD.deleteNotif(PagePrincipale.user.getId(), noti.getId(), "");
 
+                        Log.e("TAG:", "ID NOTIF EFFACÉE: " + idNotifEffacee);
+                        Log.e("TAG:", "ID NOTIF: " + noti.getId());
 
-                        //À FAIRE: seulement effacer si la BD retourne l'ID de la notif
+                        //Seulement effacer si la BD retourne l'ID de la notif
+                        if (noti.getId() == idNotifEffacee) {
+                            //Effacer la notif dynamiquement dans l'adaptateur
+                            notifications.remove(position);
+                            notifyDataSetChanged();
+                        }
 
-
-
-                        //Effacer la notif dynamiquement dans l'adaptateur
-                        notifications.remove(position);
-                        notifyDataSetChanged();
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
