@@ -30,6 +30,7 @@ public class Notification extends AppCompatActivity {
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
     ListView listViewNoti;
     List<Notifications> arrayNoti;
+    static NotificationAdapter adapter;
     Button toutEffacer;
     RecuLogin recuLogin;
 
@@ -57,14 +58,24 @@ public class Notification extends AppCompatActivity {
             //arrayNoti.add(new Notifications(i,i,i,"titre" + Integer.toString(i),"contenu" + Integer.toString(i), "2024/04/01",false,(i%2==0)));
         //}
 
-        NotificationAdapter adapter = new NotificationAdapter(this,R.layout.notification_layout,arrayNoti);
+        adapter = new NotificationAdapter(this,R.layout.notification_layout,arrayNoti);
         listViewNoti.setAdapter(adapter);
 
         //delete toute les notifications qui ne sont pas pour un virement pas encore accepte
         toutEffacer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Faire une requête pour effacer toutes les notifs avec la route "deleteAll"
+                try {
+                    ConnexionBD.deleteNotif(PagePrincipale.user.getId(), -1, "/deleteAll");
 
+                    arrayNoti.clear(); // Clear existing data
+                    arrayNoti.addAll(ConnexionBD.getNotifications(PagePrincipale.user.getId())); // Update with new data
+                    adapter.notifyDataSetChanged();
+
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -102,6 +113,13 @@ public class Notification extends AppCompatActivity {
             }
         });
 
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recreate();
+            }
+        });
+
         facture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +137,7 @@ public class Notification extends AppCompatActivity {
         transfertClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recreate();
+                redirectActivity(Notification.this, virementEntreUtilisateurs.class);
             }
         });
 

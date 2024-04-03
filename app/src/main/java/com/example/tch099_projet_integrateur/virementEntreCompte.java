@@ -237,6 +237,13 @@ public class virementEntreCompte extends AppCompatActivity {
             }
         });
 
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(virementEntreCompte.this, Notification.class);
+            }
+        });
+
         transfertClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

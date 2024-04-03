@@ -93,6 +93,13 @@ public class DepotCheque extends AppCompatActivity {
             }
         });
 
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(DepotCheque.this, Notification.class);
+            }
+        });
+
 
         depot.setOnClickListener(new View.OnClickListener() {
             @Override

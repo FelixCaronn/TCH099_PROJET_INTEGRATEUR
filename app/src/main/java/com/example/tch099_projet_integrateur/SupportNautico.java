@@ -65,6 +65,13 @@ public class SupportNautico extends AppCompatActivity {
             }
         });
 
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PagePrincipale.redirectActivity(SupportNautico.this, Notification.class);
+            }
+        });
+
         support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

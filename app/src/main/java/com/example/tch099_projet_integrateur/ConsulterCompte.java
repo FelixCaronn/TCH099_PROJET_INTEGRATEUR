@@ -108,6 +108,13 @@ public class ConsulterCompte extends AppCompatActivity {
             }
         });
 
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(ConsulterCompte.this, Notification.class);
+            }
+        });
+
         listeHisto = findViewById(R.id.listeHistorique);
         typeCompte = findViewById(R.id.typeCompte);
         typeCompte.setText(typeDuCompte.toString());

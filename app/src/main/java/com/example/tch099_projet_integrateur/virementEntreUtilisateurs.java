@@ -86,6 +86,13 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
             }
         });
 
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(virementEntreUtilisateurs.this, Notification.class);
+            }
+        });
+
         transfertClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

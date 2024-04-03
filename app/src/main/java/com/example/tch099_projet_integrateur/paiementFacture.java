@@ -89,6 +89,13 @@ public class paiementFacture extends AppCompatActivity {
             }
         });
 
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(paiementFacture.this, Notification.class);
+            }
+        });
+
 
         facture.setOnClickListener(new View.OnClickListener() {
 

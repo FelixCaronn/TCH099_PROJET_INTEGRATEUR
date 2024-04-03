@@ -1,7 +1,11 @@
 package com.example.tch099_projet_integrateur.info_user;
 
+import static androidx.core.app.ActivityCompat.recreate;
+
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.pdf.PdfDocument;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.tch099_projet_integrateur.ConnexionBD;
+import com.example.tch099_projet_integrateur.PagePrincipale;
 import com.example.tch099_projet_integrateur.R;
 
 import java.util.List;
@@ -51,6 +57,7 @@ public class NotificationAdapter extends ArrayAdapter<Notifications> {
             titre = (TextView)view.findViewById(R.id.titre);
             message = (TextView)view.findViewById(R.id.messageNoti);
             supp = (Button) view.findViewById(R.id.supprimer);
+
             
             date.setText(noti.getDateRecu());
             titre.setText(noti.getTitre());
@@ -60,10 +67,25 @@ public class NotificationAdapter extends ArrayAdapter<Notifications> {
             supp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.e("TAG", "NOTIF À EFFACER: " + noti.getId());
 
+                    //Essayer d'effacer la notif
+                    try {
+                        ConnexionBD.deleteNotif(PagePrincipale.user.getId(), noti.getId(), "");
+
+
+                        //À FAIRE: seulement effacer si la BD retourne l'ID de la notif
+
+
+
+                        //Effacer la notif dynamiquement dans l'adaptateur
+                        notifications.remove(position);
+                        notifyDataSetChanged();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
-            //quoi faire si c'est un virement et qu'il faut afficher la question et demander la reponse? un popup?
         }
         return view;
     }
