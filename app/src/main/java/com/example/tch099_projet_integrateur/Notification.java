@@ -5,23 +5,29 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.pdf.PdfDocument;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tch099_projet_integrateur.info_user.NotificationAdapter;
 import com.example.tch099_projet_integrateur.info_user.Notifications;
 import com.example.tch099_projet_integrateur.info_user.RecuLogin;
-import com.example.tch099_projet_integrateur.info_user.historiqueAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Notification extends AppCompatActivity {
 
@@ -32,6 +38,8 @@ public class Notification extends AppCompatActivity {
     List<Notifications> arrayNoti;
     Button toutEffacer;
     RecuLogin recuLogin;
+
+    private static  String response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,40 @@ public class Notification extends AppCompatActivity {
 
         NotificationAdapter adapter = new NotificationAdapter(this,R.layout.notification_layout,arrayNoti);
         listViewNoti.setAdapter(adapter);
+
+
+
+
+        listViewNoti.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //Prendre notification concernée
+                Notifications notifSelectionnee = (Notifications) parent.getAdapter().getItem(position);
+                if(!notifSelectionnee.getQuestion().isEmpty())
+                {
+                    Boolean rep = false;
+                    try {
+                        rep = showDialog(notifSelectionnee.getQuestion());
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    try {
+                        while(rep = false){
+                            Notification.this.wait();
+                        }
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+                else
+                {
+                    Toast.makeText(Notification.this,"Ceci n'est pas un virement", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
         //delete toute les notifications qui ne sont pas pour un virement pas encore accepte
         toutEffacer.setOnClickListener(new View.OnClickListener() {
@@ -152,5 +194,59 @@ public class Notification extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         closeDrawer(drawerLayout);
+    }
+
+    //Pop-up notification transfert
+    private void showDialog(String question) throws InterruptedException {
+
+        boolean clicked = false;
+
+        Dialog dialog = new Dialog(this, R.style.popUpStyle);
+        dialog.setContentView(R.layout.layout_notif_virement);
+
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.popup_background_transparent);
+
+        TextView txtViewQuestion = dialog.findViewById(R.id.userQuestion);
+
+        txtViewQuestion.setText(question);
+
+        EditText txtReponse = dialog.findViewById(R.id.editTextUserReponse);
+        Button btnSoumettre = dialog.findViewById(R.id.btnSoumettreReponse);
+        ImageView quitter = dialog.findViewById(R.id.btnQuitter);
+
+        quitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnSoumettre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(txtReponse.getText().toString().isEmpty())
+                {
+                    Toast.makeText(dialog.getContext(),"Champ de reponse vide", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    response = txtReponse.getText().toString();
+                    //Call au API
+
+                }
+
+
+            }
+        });
+
+        dialog.show();
+
+        //Toast is call fonctionne pas
+
+        //Si call fonctionne fermer dialog, et toast success
+
+
+
     }
 }

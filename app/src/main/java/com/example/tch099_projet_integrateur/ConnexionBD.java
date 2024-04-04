@@ -696,8 +696,7 @@ public class ConnexionBD extends Thread{
 
 
 
-
-
+    /********************************************* GET NOTIFICATIONS ******************************************/
 
     public static ArrayList<Notifications> getNotifications (int idUtilisateur) throws InterruptedException {
 
@@ -755,9 +754,6 @@ public class ConnexionBD extends Thread{
                         String contenu = (String) notifJSON.get("contenu");
                         int lu = (Integer) notifJSON.get("lu");
                         String dateRecu = (String) notifJSON.get("dateRecu");
-                        int idCompteBancaireProvenant = (Integer) notifJSON.get("idCompteBancaireProvenant");
-                        String dateTransaction = (String) notifJSON.get("dateTransaction");
-                        String montant = (String) notifJSON.get("montant");
                         String typeTransaction = (String) notifJSON.get("typeTransaction");
                         int enAttente = (Integer) notifJSON.get("enAttente");
 
@@ -781,24 +777,22 @@ public class ConnexionBD extends Thread{
                         listeNotifications.add(notification);
 
                         //TESTS
-                        Log.e("TAG", "ID NOTIF: " + notifJSON.get("id_notif"));
-                        Log.e("TAG", "CompteId NOTIF: " + notifJSON.get("CompteId"));
-                        Log.e("TAG", "idTransaction NOTIF: " + notifJSON.get("idTransaction"));
-                        Log.e("TAG", "titre NOTIF: " + notifJSON.get("titre"));
-                        Log.e("TAG", "contenu NOTIF: " + notifJSON.get("contenu"));
-                        Log.e("TAG", "dateRecu NOTIF: " + notifJSON.get("dateRecu"));
-                        Log.e("TAG", "lu NOTIF: " + notifJSON.get("lu"));
-                        Log.e("TAG", "enAttente NOTIF: " + notifJSON.get("enAttente"));
-                        Log.e("TAG", "question NOTIF: " + notifJSON.get("question"));
-                        Log.e("TAG", "reponse NOTIF: " + notifJSON.get("reponse"));
+                        Log.e("testNotif", "ID NOTIF: " + notifJSON.get("id_notif"));
+                        Log.e("testNotif", "CompteId NOTIF: " + notifJSON.get("CompteId"));
+                        Log.e("testNotif", "idTransaction NOTIF: " + notifJSON.get("idTransaction"));
+                        Log.e("testNotif", "titre NOTIF: " + notifJSON.get("titre"));
+                        Log.e("testNotif", "contenu NOTIF: " + notifJSON.get("contenu"));
+                        Log.e("testNotif", "dateRecu NOTIF: " + notifJSON.get("dateRecu"));
+                        Log.e("testNotif", "lu NOTIF: " + notifJSON.get("lu"));
+                        Log.e("testNotif", "enAttente NOTIF: " + notifJSON.get("enAttente"));
+                        Log.e("testNotif", "question NOTIF: " + notifJSON.get("question"));
+                        Log.e("testNotif", "reponse NOTIF: " + notifJSON.get("reponse"));
                     }
 
                     //Stocker la réponse
                     //recu.setReponse(reponse);
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (JSONException e) {
+                } catch (IOException | JSONException e) {
                     throw new RuntimeException(e);
                 }
 
@@ -810,5 +804,60 @@ public class ConnexionBD extends Thread{
         p.join();
 
         return listeNotifications;
+    }
+
+
+    /************************************* RECEPTION NOTIFICATION UTILISATEUR *************************/
+
+    public static void receptionTransfertEntreUtilisateur(String decision, String inputReponse, int idTransaction) throws InterruptedException {
+
+        Thread p = new Thread(){
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+
+                JSONObject virement = new JSONObject();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        //Envoyer toutes les données
+                        virement.append("decision",decision);
+                        virement.append("inputReponse", inputReponse);
+                        virement.append("idTransaction", idTransaction);
+                        virement.append("mobile", true);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                //Faire la requête
+                final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                RequestBody putBody = RequestBody.create(JSON, virement.toString());
+                Request put = new Request.Builder()
+                        .url(apiPathPayerFacture)
+                        .put(putBody)
+                        .build();
+
+                try(Response response = client.newCall(put).execute())
+                {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
+
+                    ResponseBody responseBody = response.body();
+                    ObjectMapper mapper = new ObjectMapper();
+
+
+
+                }catch (IOException | JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        };
+
+        p.start();
+        p.join();
+
     }
 }

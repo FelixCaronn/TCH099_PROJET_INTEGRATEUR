@@ -31,10 +31,16 @@ public class Notifications {
         this.id = id;
         this.transactionId = transactionId;
         this.enAttente = enAttente;
-        this.question = question;
-        this.reponse = reponse;
 
         //this.doitRepondreQuestion = doitRepondreQuestion;
+    }
+
+    public String getReponse() {
+        return reponse;
+    }
+
+    public String getQuestion() {
+        return question;
     }
 
     public void setLu(int lu) {
