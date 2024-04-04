@@ -737,7 +737,7 @@ public class ConnexionBD extends Thread{
                     JSONArray jsonArray = obj.getJSONArray("notificationsEtTransactions");
 
                     //Itérer chaque notification pour les instancier en tant qu'objet Notification
-                    for(int i = 0; i < jsonArray.length(); i++)
+                    for(int i = jsonArray.length() - 1; i >= 0; i--)
                     {
                         //Créer un objet JSON pour chaque notification
                         JSONObject notifJSON = jsonArray.getJSONObject(i);
@@ -750,9 +750,6 @@ public class ConnexionBD extends Thread{
                         String contenu = (String) notifJSON.get("contenu");
                         int lu = (Integer) notifJSON.get("lu");
                         String dateRecu = (String) notifJSON.get("dateRecu");
-                        int idCompteBancaireProvenant = (Integer) notifJSON.get("idCompteBancaireProvenant");
-                        String dateTransaction = (String) notifJSON.get("dateTransaction");
-                        String montant = (String) notifJSON.get("montant");
                         String typeTransaction = (String) notifJSON.get("typeTransaction");
                         int enAttente = (Integer) notifJSON.get("enAttente");
 
