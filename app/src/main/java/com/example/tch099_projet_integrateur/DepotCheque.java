@@ -188,7 +188,7 @@ public class DepotCheque extends AppCompatActivity {
                                                     RecuLogin resultat;
 
                                                     try {
-                                                        resultat = ConnexionBD.depotMobile(user.getId(), montant);
+                                                        resultat = ConnexionBD.depotMobile(PagePrincipale.user.getId(), montant);
                                                     } catch (InterruptedException e) {
                                                         throw new RuntimeException(e);
                                                     }
@@ -197,6 +197,7 @@ public class DepotCheque extends AppCompatActivity {
                                                     if(resultat.getCode() == 201)
                                                     {
                                                         Toast.makeText(getApplicationContext(), resultat.getReponse(), Toast.LENGTH_SHORT).show();
+                                                        PagePrincipale.redirectActivity(DepotCheque.this, PagePrincipale.class);
                                                     }
                                                     else
                                                     {
