@@ -347,6 +347,62 @@ public class ConnexionBD extends Thread{
         return recu;
     }
 
+    //---------Méthode qui retourne le solde du compte en paramètre---------
+
+    public static double getCompte(int idCompte) throws InterruptedException {
+        final double[] solde = new double[1];
+
+        Thread p = new Thread(){
+
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+                JSONObject getData = new JSONObject();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+                    try{
+                        //Envoyer l'ID du compte à l'API pour nous retourner les infos du compte
+                        getData.append("compteId", idCompte);
+                    } catch(Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+
+                //Faire la requête à l'API
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody getBody = RequestBody.create(JSON, getData.toString());
+                Request get = new Request.Builder()
+                        .url(apiPathListeTransaction)
+                        .post(getBody)
+                        .build();
+
+                try(Response response = client.newCall(get).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Erreur inattendue code: " + response.code());
+
+                    JSONObject obj = new JSONObject(response.body().string());
+                    JSONObject infosCompte = obj.getJSONObject("compte");
+
+                    solde[0] = Double.parseDouble(infosCompte.getString("solde"));
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                currentThread().interrupt();
+            }
+
+        };
+
+        p.start();
+        p.join();
+
+        Log.e("SOLDE À LA FIN DE LA FCT:", "SOLDE À LA FIN DE LA FCT: " + solde[0] );
+        //Retourner le solde
+        return solde[0];
+
+    }
+
 
 
     public static ArrayList<TransactionBancaire> getTransaction(int id_compte) throws InterruptedException {
