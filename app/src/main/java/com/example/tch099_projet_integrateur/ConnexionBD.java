@@ -39,6 +39,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+/**
+ * Classe qui permet de se connecter a l'api de notre site web afin de faire les interactions avec la base de données
+ *
+ * */
 public class ConnexionBD extends Thread{
 
     //Adresses des API du site web qu'on utilise pour get/post nos données
@@ -54,6 +58,13 @@ public class ConnexionBD extends Thread{
     private static final String apiPathGetNotifications = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
 
 
+    /**
+     * Fonction qui verifie et  effectue la connexion de l'utilisateur.
+     * @param username Le nom d'utilisateur à vérifier.
+     * @param mdp Le mot de passe de l'utilisateur à vérifier.
+     * @return Un objet RecuLogin contenant le résultat de la vérification.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
         RecuLogin verifLog = new RecuLogin();
 
@@ -126,8 +137,18 @@ public class ConnexionBD extends Thread{
         return verifLog;
     }
 
-    //***************************** REQUÊTE CRÉER COMPTE UTILISATEUR *******************************//
 
+    //***************************** REQUÊTE CRÉER COMPTE UTILISATEUR *******************************//
+    /**
+     * Crée un compte utilisateur.
+     * @param nom Le nom de l'utilisateur.
+     * @param prenom Le prénom de l'utilisateur.
+     * @param courriel L'adresse e-mail de l'utilisateur.
+     * @param mdp Le mot de passe de l'utilisateur.
+     * @param confirmationMdp La confirmation du mot de passe de l'utilisateur.
+     * @return Un objet RecuLogin contenant le résultat de la création du compte.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static RecuLogin creationCompte(String nom, String prenom, String courriel,String mdp, String confirmationMdp) throws InterruptedException {
 
         RecuLogin recu = new RecuLogin();
@@ -193,7 +214,12 @@ public class ConnexionBD extends Thread{
     }
 
 //******************************** REQUÊTE GET COMPTES ***********************************//
-
+    /**
+     * Récupère la liste des comptes bancaires d'un utilisateur.
+     * @param id L'identifiant de l'utilisateur.
+     * @return Une liste d'objets CompteBancaire contenant les comptes de l'utilisateur.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static ArrayList<CompteBancaire> getComptes(int id) throws InterruptedException {
 
         Utilisateur u = new Utilisateur();
@@ -286,6 +312,13 @@ public class ConnexionBD extends Thread{
 
 //******************************** REQUÊTE DÉPÔT MOBILE ***********************************//
 
+    /**
+     * Effectue un dépôt d'argent sur le compte bancaire de l'utilisateur.
+     * @param idUtilisateur L'identifiant de l'utilisateur.
+     * @param montant Le montant à déposer.
+     * @return Un objet RecuLogin contenant le résultat de l'opération.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static RecuLogin depotMobile(int idUtilisateur, double montant) throws InterruptedException {
 
         RecuLogin recu = new RecuLogin();
@@ -348,7 +381,12 @@ public class ConnexionBD extends Thread{
     }
 
     //---------Méthode qui retourne le solde du compte en paramètre---------
-
+    /**
+     * Récupère le solde du compte bancaire spécifié par son identifiant.
+     * @param idCompte L'identifiant du compte bancaire.
+     * @return Le solde du compte bancaire.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static double getCompte(int idCompte) throws InterruptedException {
         final double[] solde = new double[1];
 
@@ -404,7 +442,12 @@ public class ConnexionBD extends Thread{
     }
 
 
-
+    /**
+     * Récupère la liste des transactions associées au compte bancaire spécifié par son identifiant.
+     * @param id_compte L'identifiant du compte bancaire.
+     * @return La liste des transactions du compte bancaire.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static ArrayList<TransactionBancaire> getTransaction(int id_compte) throws InterruptedException {
         CompteBancaire cpt = new CompteBancaire();
 
@@ -546,7 +589,15 @@ public class ConnexionBD extends Thread{
         return cpt.getListeTransactions();
     }
 
-
+    /**
+     * Effectue un transfert entre deux comptes bancaires.
+     * @param idUtilisateur L'identifiant de l'utilisateur effectuant le transfert.
+     * @param id_comptes_envoie L'identifiant du compte bancaire à partir duquel le montant est envoyé.
+     * @param id_compte_reception L'identifiant du compte bancaire qui reçoit le montant.
+     * @param montant Le montant à transférer.
+     * @return Le résultat du transfert (succès ou échec).
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static RecuLogin transfertEntreComptes(int idUtilisateur, int id_comptes_envoie, int id_compte_reception, double montant) throws InterruptedException {
 
         RecuLogin verifLog = new RecuLogin();
@@ -613,7 +664,18 @@ public class ConnexionBD extends Thread{
         return verifLog;
     }
 
-
+    /**
+     * Effectue un virement entre comptes bancaires appartenant à différentes personnes.
+     * @param idUtilisateur L'identifiant de l'utilisateur effectuant le virement.
+     * @param idCompteBancaireProvenant L'identifiant du compte bancaire à partir duquel le montant est envoyé.
+     * @param montant Le montant à transférer.
+     * @param courrielDest Le courriel de la personne recevant le virement.
+     * @param question La question de sécurité pour le virement.
+     * @param reponse La réponse à la question de sécurité pour le virement.
+     * @param confReponse La confirmation de la réponse à la question de sécurité pour le virement.
+     * @return Le résultat du virement (succès ou échec).
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static RecuLogin virementEntrePersonnes(int idUtilisateur, int idCompteBancaireProvenant, double montant, String courrielDest, String question, String reponse, String confReponse) throws InterruptedException {
 
         RecuLogin verifLog = new RecuLogin();
@@ -684,7 +746,16 @@ public class ConnexionBD extends Thread{
         return verifLog;
     }
 
-
+    /**
+     * Effectue un paiement de facture depuis un compte bancaire.
+     * @param idUtilisateur L'identifiant de l'utilisateur effectuant le paiement.
+     * @param id_compte L'identifiant du compte bancaire à partir duquel le paiement est effectué.
+     * @param etab Le nom de l'établissement ou de la facture à payer.
+     * @param num Le numéro ou la raison de la facture à payer.
+     * @param montant Le montant à payer.
+     * @return Le résultat du paiement (succès ou échec).
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static RecuLogin effectuerPaiement ( int idUtilisateur, int id_compte, String etab, String num, double montant) throws InterruptedException {
 
         RecuLogin recu = new RecuLogin();
@@ -749,7 +820,12 @@ public class ConnexionBD extends Thread{
         return recu;
     }
 
-
+    /**
+     * Récupère les notifications pour un utilisateur donné.
+     * @param idUtilisateur L'identifiant de l'utilisateur dont on souhaite récupérer les notifications.
+     * @return La liste des notifications de l'utilisateur.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static ArrayList<Notifications> getNotifications (int idUtilisateur) throws InterruptedException {
 
         //Créer une arrayList de notifications, qu'on va retourner à la fin
@@ -861,7 +937,14 @@ public class ConnexionBD extends Thread{
     }
 
 
-
+    /**
+     * Supprime une notification pour un utilisateur donné.
+     * @param idUtilisateur L'identifiant de l'utilisateur dont on souhaite supprimer la notification.
+     * @param idNotif L'identifiant de la notification à supprimer.
+     * @param finURL La partie finale de l'URL de l'API pour la suppression des notifications.
+     * @return L'identifiant de la notification supprimée, ou -1 s'il n'y a aucune notification supprimée.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static int deleteNotif (int idUtilisateur, int idNotif, String finURL) throws InterruptedException {
         //Si on efface une notification unique, on va retourner son ID
         final int[] idNotifAEffacer = {-1};
