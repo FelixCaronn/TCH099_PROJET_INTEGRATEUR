@@ -945,4 +945,63 @@ public class ConnexionBD extends Thread{
         return receptionResultat;
 
     }
+
+    public static void deleteNotif (int idUtilisateur, int idNotif, String finURL) throws InterruptedException {
+        Thread p = new Thread() {
+
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+                JSONObject notifDeleteJSON = new JSONObject();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        //Envoyer l'ID de la notif de l'utilisateur à effacter
+                        notifDeleteJSON.append("idUtilisateur", idUtilisateur);
+                        notifDeleteJSON.append("idNotif", idNotif);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                //Faire la requête
+                final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                RequestBody deleteBody = RequestBody.create(JSON, notifDeleteJSON.toString());
+                Request deleteRequest = new Request.Builder()
+                        .url(apiPathGetNotifications + finURL)
+                        .delete(deleteBody)
+                        .build();
+
+                try (Response response = client.newCall(deleteRequest).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
+
+                    ResponseBody responseBody = response.body();
+                    ObjectMapper mapper = new ObjectMapper();
+
+                    //Récupérer la réponse de l'API
+                    JSONObject obj = new JSONObject(response.body().string());
+                    JSONArray arrayNotifsEffacees = obj.getJSONArray("resultat");
+
+                    //Itérer chaque notification pour les instancier en tant qu'objet Notification
+                    for(int i = 0; i < arrayNotifsEffacees.length(); i++) {
+                        //Créer un objet JSON pour chaque notification
+                        JSONObject notifJSON = arrayNotifsEffacees.getJSONObject(i);
+
+                        //Get l'ID de la notif effacée
+                        int idNotif = (Integer) notifJSON.get("id");
+                    }
+
+                } catch (IOException | JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+                currentThread().interrupt();
+            }
+        };
+
+        p.start();
+        p.join();
+    }
 }
