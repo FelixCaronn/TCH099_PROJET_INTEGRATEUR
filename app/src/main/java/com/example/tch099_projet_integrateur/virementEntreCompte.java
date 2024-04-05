@@ -46,6 +46,10 @@ public class virementEntreCompte extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_virement_entre_compte);
+
+        //Vérifier que la session n'est pas expirée
+        PagePrincipale.verifSession(this);
+
         drawerLayout = findViewById(R.id.drawerLayout);
 
         menu = findViewById(R.id.menu);

@@ -33,6 +33,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -78,6 +79,11 @@ public class PageConnection extends AppCompatActivity implements View.OnClickLis
             PagePrincipale.user.setNom(resultat.getNom());
             PagePrincipale.user.setId(resultat.getId());
             PagePrincipale.redirectActivity(this, PagePrincipale.class);
+
+            //Ajuster la date de fin de la session
+            PagePrincipale.calendrier.getTime();
+            PagePrincipale.calendrier.add(Calendar.SECOND, 100);
+            PagePrincipale.endTime = PagePrincipale.calendrier.getTime();
 
         }
         else

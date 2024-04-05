@@ -34,6 +34,9 @@ public class SupportNautico extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_support_nautico);
 
+        //Vérifier que la session n'est pas expirée
+        PagePrincipale.verifSession(this);
+
         drawerLayout = findViewById(R.id.drawerLayout);
 
         menu = findViewById(R.id.menu);

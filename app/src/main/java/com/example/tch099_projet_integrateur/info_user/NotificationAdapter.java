@@ -87,6 +87,10 @@ public class NotificationAdapter extends ArrayAdapter<Notifications> {
             titre.setText(noti.getTitre());
             message.setText(noti.getContenu());
 
+            if (noti.getEnAttente() == 1) {
+                message.setText(noti.getContenu() + ". Cliquez sur la notification pour accepter/rejeter le virement.");
+            }
+
             // Supprimer de la liste et de la base de données
             supp.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -98,6 +102,7 @@ public class NotificationAdapter extends ArrayAdapter<Notifications> {
 
                         Log.e("TAG:", "ID NOTIF EFFACÉE: " + idNotifEffacee);
                         Log.e("TAG:", "ID NOTIF: " + noti.getId());
+
 
                         // Seulement effacer si la BD retourne l'ID de la notification
                         if (noti.getId() == idNotifEffacee) {

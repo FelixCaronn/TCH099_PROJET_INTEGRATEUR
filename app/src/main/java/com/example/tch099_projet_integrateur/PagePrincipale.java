@@ -57,9 +57,9 @@ public class PagePrincipale extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        //Ajuster la date de fin de la session
-        calendrier.add(Calendar.SECOND, 3);
-        endTime = calendrier.getTime();
+
+        //Vérifier que la session n'est pas expirée
+        verifSession(this);
 
 
 //        Intent intention = getIntent();
@@ -157,7 +157,14 @@ public class PagePrincipale extends AppCompatActivity {
         btnDeconnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(PagePrincipale.this, PageConnection.class);
+                //Finir l'activité
+                finishAffinity();
+
+                //Renvoyer l'utilisateur vers la page de connexion
+                Intent intent = new Intent(getApplicationContext(), PageConnection.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Vous avez bien été déconnecté(e)", Toast.LENGTH_SHORT).show();
             }
         });
 

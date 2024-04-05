@@ -40,6 +40,9 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_virement_entre_utilisateurs);
 
+        //Vérifier que la session n'est pas expirée
+        PagePrincipale.verifSession(this);
+
         //ÉLÉMENTS DU MENU
         drawerLayout = findViewById(R.id.drawerLayout);
         menu = findViewById(R.id.menu);

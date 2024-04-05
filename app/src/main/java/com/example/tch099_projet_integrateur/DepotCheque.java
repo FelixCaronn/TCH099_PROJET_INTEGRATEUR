@@ -71,6 +71,10 @@ public class DepotCheque extends AppCompatActivity {
         recto = findViewById(R.id.imgRecto);
         verso = findViewById(R.id.imgVerso);
         deposer = findViewById(R.id.buttonDepot);
+
+        //Vérifier que la session n'est pas expirée
+        PagePrincipale.verifSession(this);
+
         recto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

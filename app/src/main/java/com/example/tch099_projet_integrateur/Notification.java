@@ -45,6 +45,9 @@ public class Notification extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
+        //Vérifier que la session n'est pas expirée
+        PagePrincipale.verifSession(this);
+
         //Contenus de la page
         listViewNoti = findViewById(R.id.listNoti);
         toutEffacer = findViewById(R.id.toutEffacer);

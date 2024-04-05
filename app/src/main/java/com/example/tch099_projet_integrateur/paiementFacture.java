@@ -50,6 +50,9 @@ public class paiementFacture extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paiement_facture);
 
+        //Vérifier que la session n'est pas expirée
+        PagePrincipale.verifSession(this);
+
         drawerLayout = findViewById(R.id.drawerLayout);
 
 
@@ -61,6 +64,8 @@ public class paiementFacture extends AppCompatActivity {
         support = findViewById(R.id.support);
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
+
+
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
