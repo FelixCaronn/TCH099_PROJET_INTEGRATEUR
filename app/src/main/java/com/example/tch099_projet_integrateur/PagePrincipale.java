@@ -258,7 +258,7 @@ public class PagePrincipale extends AppCompatActivity {
 
         //Sinon, on actualise le end time
         else {
-            PagePrincipale.calendrier.add(Calendar.SECOND, 3);
+            PagePrincipale.calendrier.add(Calendar.SECOND, 300);
             PagePrincipale.endTime = PagePrincipale.calendrier.getTime();
         }
     }

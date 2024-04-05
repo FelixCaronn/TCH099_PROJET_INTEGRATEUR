@@ -82,9 +82,8 @@ public class PageConnection extends AppCompatActivity implements View.OnClickLis
 
             //Ajuster la date de fin de la session
             PagePrincipale.calendrier.getTime();
-            PagePrincipale.calendrier.add(Calendar.SECOND, 100);
+            PagePrincipale.calendrier.add(Calendar.SECOND, 300);
             PagePrincipale.endTime = PagePrincipale.calendrier.getTime();
-
         }
         else
         {
