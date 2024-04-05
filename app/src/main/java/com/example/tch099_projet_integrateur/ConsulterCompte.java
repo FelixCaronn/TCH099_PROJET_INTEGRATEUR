@@ -32,6 +32,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Activité permettant de consulter un compte bancaire.
+ */
 public class ConsulterCompte extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
@@ -45,7 +48,6 @@ public class ConsulterCompte extends AppCompatActivity {
     typeCompte typeDuCompte;
     List<TransactionBancaire> historique;
 
-
     private TextView txtNum, txtSolde, txtType;
     private Button btnRetour;
 
@@ -56,6 +58,28 @@ public class ConsulterCompte extends AppCompatActivity {
 
         PagePrincipale.verifSession(this);
 
+        //Chercher le temps présentement
+        Date dateCurrent = Calendar.getInstance().getTime();
+
+        //Si la date est avant la dernière activité, on déconnecte la personne
+        if (!dateCurrent.before(PagePrincipale.endTime)) {
+            //On finit toutes les activités
+            finishAffinity();
+
+            //On redirige l'utilisateur vers la 1ère activité
+            Intent intent = new Intent(getApplicationContext(), PageConnection.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+
+            Toast.makeText(getApplicationContext(), "Votre session a expiré!", Toast.LENGTH_SHORT).show();
+        }
+
+        //Sinon, on actualise le end time
+        else {
+            PagePrincipale.calendrier.add(Calendar.SECOND, 3);
+            PagePrincipale.endTime = PagePrincipale.calendrier.getTime();
+        }
+        
         //Chercher les infos du compte
         Intent intent = this.getIntent();
         numeroCompte = intent.getIntExtra("NUM_COMPTE",0);
