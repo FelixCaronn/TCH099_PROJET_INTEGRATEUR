@@ -828,11 +828,6 @@ public class ConnexionBD extends Thread{
      * @return La liste des notifications de l'utilisateur.
      * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
      */
-
-
-
-
-
     /********************************************* GET NOTIFICATIONS ******************************************/
 
 
@@ -945,8 +940,6 @@ public class ConnexionBD extends Thread{
         return listeNotifications;
     }
 
-
-
     /************************************* RECEPTION NOTIFICATION UTILISATEUR *************************/
 
     public static ArrayList<String> receptionTransfertEntreUtilisateur(String decision, String inputReponse, int idTransaction, int idUser) throws InterruptedException {
@@ -1024,7 +1017,6 @@ public class ConnexionBD extends Thread{
         return receptionResultat;
 
     }
-
     /**
      * Supprime une notification pour un utilisateur donné.
      * @param idUtilisateur L'identifiant de l'utilisateur dont on souhaite supprimer la notification.
@@ -1033,6 +1025,7 @@ public class ConnexionBD extends Thread{
      * @return L'identifiant de la notification supprimée, ou -1 s'il n'y a aucune notification supprimée.
      * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
      */
+
     public static void deleteNotif (int idUtilisateur, int idNotif, String finURL) throws InterruptedException {
         Thread p = new Thread() {
 
