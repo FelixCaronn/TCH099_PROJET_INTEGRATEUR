@@ -23,6 +23,9 @@ import com.example.tch099_projet_integrateur.R;
 
 import java.util.List;
 
+/**
+ * Adaptateur pour afficher les notifications dans une liste.
+ */
 public class NotificationAdapter extends ArrayAdapter<Notifications> {
 
     private List<Notifications> notifications;
@@ -30,6 +33,13 @@ public class NotificationAdapter extends ArrayAdapter<Notifications> {
     private int viewResourceId;
     private Resources ressources;
 
+    /**
+     * Constructeur de la classe NotificationAdapter.
+     *
+     * @param contexte Le contexte de l'application.
+     * @param viewResourceId L'identifiant de la ressource de la vue de l'élément de la liste.
+     * @param notifications La liste des notifications à afficher.
+     */
     public NotificationAdapter(@NonNull Context contexte, int viewResourceId, @NonNull List<Notifications> notifications){
         super(contexte,viewResourceId,notifications);
         this.contexte = contexte;
@@ -37,11 +47,25 @@ public class NotificationAdapter extends ArrayAdapter<Notifications> {
         this.notifications = notifications;
         this.ressources = contexte.getResources();
     }
+
+    /**
+     * Obtient le nombre total d'éléments dans la liste de notifications.
+     *
+     * @return Le nombre total d'éléments dans la liste de notifications.
+     */
     @Override
     public int getCount(){
         return this.notifications.size();
     }
 
+    /**
+     * Obtient une vue qui affiche les données à la position spécifiée dans l'ensemble de données.
+     *
+     * @param position La position de l'élément dans l'ensemble de données de l'adaptateur.
+     * @param convertView La vue réutilisée, si elle existe.
+     * @param parent Le parent auquel cette vue sera éventuellement attachée.
+     * @return Une vue correspondant aux données à la position spécifiée.
+     */
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
         View view = convertView;
         if (view == null){
@@ -58,26 +82,26 @@ public class NotificationAdapter extends ArrayAdapter<Notifications> {
             message = (TextView)view.findViewById(R.id.messageNoti);
             supp = (Button) view.findViewById(R.id.supprimer);
 
-            
+
             date.setText(noti.getDateRecu());
             titre.setText(noti.getTitre());
             message.setText(noti.getContenu());
 
-            //delete de la liste et de la base de donnes
+            // Supprimer de la liste et de la base de données
             supp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    //Essayer d'effacer la notif
+                    // Essayer d'effacer la notification
                     try {
                         int idNotifEffacee = ConnexionBD.deleteNotif(PagePrincipale.user.getId(), noti.getId(), "");
 
                         Log.e("TAG:", "ID NOTIF EFFACÉE: " + idNotifEffacee);
                         Log.e("TAG:", "ID NOTIF: " + noti.getId());
 
-                        //Seulement effacer si la BD retourne l'ID de la notif
+                        // Seulement effacer si la BD retourne l'ID de la notification
                         if (noti.getId() == idNotifEffacee) {
-                            //Effacer la notif dynamiquement dans l'adaptateur
+                            // Effacer la notification dynamiquement dans l'adaptateur
                             notifications.remove(position);
                             notifyDataSetChanged();
                         }

@@ -120,6 +120,38 @@ public class ConsulterCompte extends AppCompatActivity {
             }
         });
 
+        depot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(ConsulterCompte.this, DepotCheque.class);
+            }
+        });
+
+        support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(ConsulterCompte.this, SupportNautico.class);
+            }
+        });
+
+        transfertClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                redirectActivity(ConsulterCompte.this, virementEntreUtilisateurs.class);
+
+            }
+        });
+
+        transfertCompte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                redirectActivity(ConsulterCompte.this, virementEntreCompte.class);
+
+            }
+        });
+
         btnCheque = findViewById(R.id.btnDeposerCheque);
         btnCheque.setOnClickListener(new View.OnClickListener() {
             @Override

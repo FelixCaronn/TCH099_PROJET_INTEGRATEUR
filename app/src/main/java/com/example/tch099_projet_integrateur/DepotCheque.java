@@ -2,6 +2,7 @@ package com.example.tch099_projet_integrateur;
 import com.example.tch099_projet_integrateur.enumerations.*;
 
 import static com.example.tch099_projet_integrateur.PagePrincipale.openDrawer;
+import static com.example.tch099_projet_integrateur.PagePrincipale.redirectActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -119,6 +120,29 @@ public class DepotCheque extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PagePrincipale.redirectActivity(DepotCheque.this, SupportNautico.class);
+            }
+        });
+
+        facture.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                redirectActivity(DepotCheque.this, paiementFacture.class);
+            }
+        });
+
+        transfertCompte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(DepotCheque.this, virementEntreCompte.class);
+            }
+        });
+
+        transfertClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(DepotCheque.this, virementEntreUtilisateurs.class);
+
             }
         });
         montantDepot.setOnFocusChangeListener(new View.OnFocusChangeListener() {

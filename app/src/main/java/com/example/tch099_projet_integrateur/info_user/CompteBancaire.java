@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 
+/**
+ * Représente un compte bancaire d'un utilisateur.
+ */
 public class CompteBancaire {
     private int num_compte;
     private double solde;
@@ -12,53 +15,88 @@ public class CompteBancaire {
 
     private ArrayList<TransactionBancaire> listeTransactions;
 
+    /**
+     * Constructeur par défaut de la classe CompteBancaire.
+     * Initialise la liste des transactions.
+     */
     public CompteBancaire() {
-
         this.listeTransactions = new ArrayList<>();
-
     }
-    public CompteBancaire(int _num_compte, double _solde, typeCompte _typeCompte)
-    {
+
+    /**
+     * Constructeur de la classe CompteBancaire.
+     *
+     * @param _num_compte Le numéro du compte bancaire.
+     * @param _solde Le solde du compte bancaire.
+     * @param _typeCompte Le type de compte bancaire (ex: CHEQUE, EPARGNE, etc.).
+     */
+    public CompteBancaire(int _num_compte, double _solde, typeCompte _typeCompte) {
         this.num_compte = _num_compte;
         this.solde = _solde;
         this.typeCompte = _typeCompte;
     }
 
+    /**
+     * @return La liste des transactions associées à ce compte bancaire.
+     */
     public ArrayList<TransactionBancaire> getListeTransactions() {
         return listeTransactions;
     }
 
+    /**
+     * Définit la liste des transactions associées à ce compte bancaire.
+     *
+     * @param listeTransactions La liste des transactions associées à ce compte bancaire.
+     */
     public void setListeTransactions(ArrayList<TransactionBancaire> listeTransactions) {
         this.listeTransactions = listeTransactions;
     }
 
-    public void addTransaction(TransactionBancaire transaction)
-    {
+    /**
+     * Ajoute une transaction à la liste des transactions de ce compte bancaire.
+     *
+     * @param transaction La transaction à ajouter.
+     */
+    public void addTransaction(TransactionBancaire transaction) {
         this.listeTransactions.add(transaction);
     }
 
-    public void setNumCompte(int n)
-    {
+    /**
+     * Définit le numéro du compte bancaire.
+     *
+     * @param n Le numéro du compte bancaire.
+     */
+    public void setNumCompte(int n) {
         this.num_compte = n;
     }
 
-    public int getNumCompte()
-    {
+    /**
+     * @return Le numéro du compte bancaire.
+     */
+    public int getNumCompte() {
         return num_compte;
     }
 
-    public void setSolde(double s)
-    {
+    /**
+     * Définit le solde du compte bancaire.
+     *
+     * @param s Le solde du compte bancaire.
+     */
+    public void setSolde(double s) {
         this.solde = s;
     }
 
-    public double getSolde()
-    {
+    /**
+     * @return Le solde du compte bancaire.
+     */
+    public double getSolde() {
         return solde;
     }
 
-    public typeCompte getTypeCompte()
-    {
+    /**
+     * @return Le type de compte bancaire.
+     */
+    public typeCompte getTypeCompte() {
         return typeCompte;
     }
 }
