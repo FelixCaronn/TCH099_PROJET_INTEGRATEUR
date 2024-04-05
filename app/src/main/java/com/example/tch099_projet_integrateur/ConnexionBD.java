@@ -505,12 +505,19 @@ public class ConnexionBD extends Thread{
                             case "Virement refusé":
                                 type = typeTransaction.VIREMENT_REFUSE;
                                 break;
+                            case "Virement Accepté":
+                                type = typeTransaction.VIREMENT_ACCEPTE;
+                                break;
                             case "Paiement de facture":
                                 type = typeTransaction.PAIEMENTFACTURE;
                                 break;
                             case "Dépôt mobile":
                                 type = typeTransaction.DEPOT;
                                 break;
+                            case "Intérêts":
+                                type = typeTransaction.INTERET;
+                                break;
+
                         }
 
 
@@ -546,7 +553,7 @@ public class ConnexionBD extends Thread{
                         }
 
                         //Virement entre personnes
-                        else if (type == typeTransaction.VIREMENT)
+                        else if (type == typeTransaction.VIREMENT || type == typeTransaction.VIREMENT_ACCEPTE)
                         {
                             if(id_compte == tmp.getInt("idCompteBancaireProvenant"))
                             {

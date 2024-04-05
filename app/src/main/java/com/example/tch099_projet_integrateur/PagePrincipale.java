@@ -247,7 +247,7 @@ public class PagePrincipale extends AppCompatActivity {
         }
         // Sinon, actualiser la fin de la session
         else {
-            PagePrincipale.calendrier.add(Calendar.SECOND, 3);
+            PagePrincipale.calendrier.add(Calendar.SECOND, 300);
             PagePrincipale.endTime = PagePrincipale.calendrier.getTime();
         }
     }
