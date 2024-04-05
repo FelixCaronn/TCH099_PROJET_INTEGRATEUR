@@ -42,16 +42,16 @@ import okhttp3.ResponseBody;
 public class ConnexionBD extends Thread{
 
     //Adresses des API du site web qu'on utilise pour get/post nos données
-    private static final String apiPathVerifLogin = "http://35.233.243.199/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
-    private static final String apiPathCreationCompte = "http://35.233.243.199/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
-    private static final String apiPathListeComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
-    private static final String apiPathDepotMobile = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
-    private static final String apiPathListeTransaction = "http://35.233.243.199/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
-    private static final String apiPathTransfertComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/compte";
-    private static final String apiPathPayerFacture = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
-    private static final String apiPathVirementPersonnes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
-    private static final String apiPathVirementPersonnesReception = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
-    private static final String apiPathGetNotifications = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
+    private static final String apiPathVerifLogin = "http://34.105.112.98/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
+    private static final String apiPathCreationCompte = "http://34.105.112.98/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
+    private static final String apiPathListeComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
+    private static final String apiPathDepotMobile = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
+    private static final String apiPathListeTransaction = "http://34.105.112.98/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
+    private static final String apiPathTransfertComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/compte";
+    private static final String apiPathPayerFacture = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
+    private static final String apiPathVirementPersonnes = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
+    private static final String apiPathVirementPersonnesReception = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
+    private static final String apiPathGetNotifications = "http://34.105.112.98/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
         RecuLogin verifLog = new RecuLogin();
@@ -737,6 +737,7 @@ public class ConnexionBD extends Thread{
                     ObjectMapper mapper = new ObjectMapper();
 
                     //Récupérer la réponse de l'API
+                    assert response.body() != null;
                     JSONObject obj = new JSONObject(response.body().string());
                     JSONArray jsonArray = obj.getJSONArray("notificationsEtTransactions");
 
@@ -809,7 +810,9 @@ public class ConnexionBD extends Thread{
 
     /************************************* RECEPTION NOTIFICATION UTILISATEUR *************************/
 
-    public static void receptionTransfertEntreUtilisateur(String decision, String inputReponse, int idTransaction) throws InterruptedException {
+    public static ArrayList<String> receptionTransfertEntreUtilisateur(String decision, String inputReponse, int idTransaction, int idUser) throws InterruptedException {
+
+        ArrayList<String> receptionResultat = new ArrayList<>();
 
         Thread p = new Thread(){
             @Override
@@ -825,7 +828,7 @@ public class ConnexionBD extends Thread{
                         virement.append("decision",decision);
                         virement.append("inputReponse", inputReponse);
                         virement.append("idTransaction", idTransaction);
-                        virement.append("mobile", true);
+                        virement.append("idUser", idUser);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -835,7 +838,7 @@ public class ConnexionBD extends Thread{
                 final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
                 RequestBody putBody = RequestBody.create(JSON, virement.toString());
                 Request put = new Request.Builder()
-                        .url(apiPathPayerFacture)
+                        .url(apiPathVirementPersonnesReception)
                         .put(putBody)
                         .build();
 
@@ -846,6 +849,26 @@ public class ConnexionBD extends Thread{
 
                     ResponseBody responseBody = response.body();
                     ObjectMapper mapper = new ObjectMapper();
+
+                    //Récupérer la réponse de l'API
+                    assert response.body() != null;
+                    JSONObject obj = new JSONObject(response.body().string());
+
+                    if(obj.getInt("code") != 201)
+                    {
+                        JSONArray reception = obj.getJSONArray("erreur");
+                        for(int i = 0; i < reception.length(); i++)
+                        {
+                            String temp = reception.get(i).toString();
+                            receptionResultat.add(temp);
+                        }
+                    }
+                    else
+                    {
+                        receptionResultat.add(obj.get("msgSucces").toString());
+                    }
+
+
 
 
 
@@ -858,6 +881,8 @@ public class ConnexionBD extends Thread{
 
         p.start();
         p.join();
+
+        return receptionResultat;
 
     }
 }

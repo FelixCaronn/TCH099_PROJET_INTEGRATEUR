@@ -7,11 +7,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +24,6 @@ import com.example.tch099_projet_integrateur.info_user.RecuLogin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Notification extends AppCompatActivity {
 
@@ -39,7 +35,9 @@ public class Notification extends AppCompatActivity {
     Button toutEffacer;
     RecuLogin recuLogin;
 
-    private static  String response;
+    private static String response;
+    
+    private static  ArrayList<String> responseAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,21 +75,16 @@ public class Notification extends AppCompatActivity {
 
                 //Prendre notification concernée
                 Notifications notifSelectionnee = (Notifications) parent.getAdapter().getItem(position);
-                if(!notifSelectionnee.getQuestion().isEmpty())
+                if(notifSelectionnee.getEnAttente() == 1)
                 {
-                    Boolean rep = false;
+
                     try {
-                        rep = showDialog(notifSelectionnee.getQuestion());
+                        showDialog(notifSelectionnee.getQuestion(), notifSelectionnee.getTransactionId(),
+                                notifSelectionnee.getCompteId());
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    try {
-                        while(rep = false){
-                            Notification.this.wait();
-                        }
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+
 
                 }
                 else
@@ -197,7 +190,7 @@ public class Notification extends AppCompatActivity {
     }
 
     //Pop-up notification transfert
-    private void showDialog(String question) throws InterruptedException {
+    private void showDialog(String question, int idTransaction, int idUser) throws InterruptedException {
 
         boolean clicked = false;
 
@@ -211,7 +204,8 @@ public class Notification extends AppCompatActivity {
         txtViewQuestion.setText(question);
 
         EditText txtReponse = dialog.findViewById(R.id.editTextUserReponse);
-        Button btnSoumettre = dialog.findViewById(R.id.btnSoumettreReponse);
+        Button btnAccepter = dialog.findViewById(R.id.btnAccepterVirement);
+        Button btnRefuser = dialog.findViewById(R.id.btnRefuserVirement);
         ImageView quitter = dialog.findViewById(R.id.btnQuitter);
 
         quitter.setOnClickListener(new View.OnClickListener() {
@@ -221,7 +215,9 @@ public class Notification extends AppCompatActivity {
             }
         });
 
-        btnSoumettre.setOnClickListener(new View.OnClickListener() {
+
+        //Call API reception accepter virement
+        btnAccepter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -233,12 +229,65 @@ public class Notification extends AppCompatActivity {
                 {
                     response = txtReponse.getText().toString();
                     //Call au API
+                    try {
+                        responseAPI = ConnexionBD.receptionTransfertEntreUtilisateur("accepter", response,
+                                                                                    idTransaction, idUser);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
 
+                    //transformer arraylist en String
+                    String afficherText = null;
+                    for(int i = 0; i < responseAPI.size(); i++)
+                    {
+                        afficherText = responseAPI.get(i) + "\n";
+                    }
+
+                    if(afficherText != null)
+                    {
+                        Toast.makeText(Notification.this, afficherText + "", Toast.LENGTH_LONG).show();
+                    }
+
+                    redirectActivity(Notification.this, Notification.class);
                 }
 
 
             }
         });
+
+        //Call API reception virement refuser
+        btnRefuser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                response = txtReponse.getText().toString();
+                //Call au API
+                try {
+                    responseAPI = ConnexionBD.receptionTransfertEntreUtilisateur("refus", response,
+                            idTransaction, idUser);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                //transformer arraylist en String
+                String afficherText = null;
+                for(int i = 0; i < responseAPI.size(); i++)
+                {
+                    afficherText = responseAPI.get(i) + "\n";
+                }
+
+                if(afficherText != null)
+                {
+                    Toast.makeText(Notification.this, afficherText + "", Toast.LENGTH_LONG).show();
+                }
+
+                recreate();
+                }
+
+
+        });
+
+
 
         dialog.show();
 

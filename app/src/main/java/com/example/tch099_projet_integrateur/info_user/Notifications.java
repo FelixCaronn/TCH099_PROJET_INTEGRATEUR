@@ -74,6 +74,7 @@ public class Notifications {
         return compteId;
     }
 
-
-
+    public int getEnAttente() {
+        return enAttente;
+    }
 }

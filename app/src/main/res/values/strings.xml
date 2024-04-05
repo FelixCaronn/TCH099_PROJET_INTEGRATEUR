@@ -128,6 +128,9 @@
     <string name="montantInv">Les montants ne correspondent pas</string>
     <string name="depotSucces">Depot approuve!</string>
     <string name="soumettre">Soumettre</string>
+    <string name="refuser">Refuser</string>
+    <string name="reponse">Reponse</string>
+    <string name="accepter">Accepter</string>
 
 
 </resources>
