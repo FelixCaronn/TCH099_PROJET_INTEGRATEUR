@@ -1,4 +1,5 @@
 package com.example.tch099_projet_integrateur;
+
 import com.example.tch099_projet_integrateur.enumerations.*;
 import com.example.tch099_projet_integrateur.info_user.TransactionBancaire;
 import com.example.tch099_projet_integrateur.info_user.CompteBancaire;
@@ -51,6 +52,10 @@ public class ConsulterCompte extends AppCompatActivity {
     private TextView txtNum, txtSolde, txtType;
     private Button btnRetour;
 
+    /**
+     * Méthode exécutée lors de la création de l'activité.
+     * @param savedInstanceState État enregistré de l'activité.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +65,7 @@ public class ConsulterCompte extends AppCompatActivity {
 
         //Vérifier que la session n'est pas expirée
         PagePrincipale.verifSession(this);
-        
+
         //Chercher les infos du compte
         Intent intent = this.getIntent();
         numeroCompte = intent.getIntExtra("NUM_COMPTE",0);

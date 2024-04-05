@@ -22,34 +22,42 @@ import com.example.tch099_projet_integrateur.info_user.CompteAdapter;
 import com.example.tch099_projet_integrateur.info_user.CompteBancaire;
 import com.example.tch099_projet_integrateur.info_user.Utilisateur;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Cette activité représente la page principale de l'application où l'utilisateur peut consulter ses comptes bancaires.
+ */
 public class PagePrincipale extends AppCompatActivity {
 
-    public static Utilisateur user = new Utilisateur();
-    private List<CompteBancaire> lesComptes;
-    private TextView bjrTxt;
-    private ListView lvComptes;
-    private Button btnNautico;
-    private CompteAdapter adaptateur;
+    // Déclaration des éléments de l'interface utilisateur
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte, btnDeconnexion;
+    TextView bjrTxt;
+    ListView lvComptes;
+    Button btnNautico;
 
+    // Utilisateur actuellement connecté
+    public static Utilisateur user = new Utilisateur();
+
+    // Liste des comptes bancaires de l'utilisateur
+    private List<CompteBancaire> lesComptes;
+
+    // Adaptateur pour afficher les comptes bancaires dans la ListView
+    private CompteAdapter adaptateur;
+
+    // Calendrier pour gérer la session de l'utilisateur
     static Calendar calendrier = Calendar.getInstance();
     static Date endTime;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Récupération des comptes de l'utilisateur depuis la base de données
         try {
             ArrayList<CompteBancaire> liste = ConnexionBD.getComptes(user.getId());
             user.setListeComptes(liste);
@@ -57,27 +65,13 @@ public class PagePrincipale extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-
-        //Vérifier que la session n'est pas expirée
+        // Vérification de la session de l'utilisateur
         verifSession(this);
 
-
-//        Intent intention = getIntent();
-//        user.setNom(intention.getStringExtra("nom"));
-//        user.setId(intention.getIntExtra("id", -1));
-//
-//        bjrTxt = findViewById(R.id.bonjourUser);
-//
-//        String bjr = "Bonjour " + user.getNom();
-//        bjrTxt.setText(bjr);
-
+        // Configuration de l'interface utilisateur
         setContentView(R.layout.activity_page_principale);
-
         drawerLayout = findViewById(R.id.drawerLayout);
-
         menu = findViewById(R.id.menu);
-
-        //Boutons de la barre de menu
         home = findViewById(R.id.home);
         depot = findViewById(R.id.depot);
         facture = findViewById(R.id.facture);
@@ -86,11 +80,10 @@ public class PagePrincipale extends AppCompatActivity {
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
         btnDeconnexion = findViewById(R.id.btnDeconnexion);
+        lvComptes = findViewById(R.id.lvComptes);
+        btnNautico = findViewById(R.id.btnNautico);
 
-
-
-
-
+        // Gestion des événements sur les éléments de l'interface utilisateur
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,13 +91,7 @@ public class PagePrincipale extends AppCompatActivity {
             }
         });
 
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recreate();
-            }
-        });
-
+        // Redirection vers la page de dépôt de chèque
         depot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +100,7 @@ public class PagePrincipale extends AppCompatActivity {
             }
         });
 
+        // Redirection vers la page de transfert entre comptes
         transfertCompte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,12 +108,14 @@ public class PagePrincipale extends AppCompatActivity {
             }
         });
 
+        // Redirection vers la page de paiement de facture
         facture.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 redirectActivity(PagePrincipale.this, paiementFacture.class);
             }
         });
 
+        // Redirection vers la page de notification
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,6 +123,7 @@ public class PagePrincipale extends AppCompatActivity {
             }
         });
 
+        // Redirection vers la page de support
         support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +131,7 @@ public class PagePrincipale extends AppCompatActivity {
             }
         });
 
+        // Redirection vers la page de transfert entre utilisateurs
         transfertClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,20 +139,14 @@ public class PagePrincipale extends AppCompatActivity {
             }
         });
 
-          transfertCompte.setOnClickListener(new View.OnClickListener() {
-            @Override
-              public void onClick(View v) {
-                redirectActivity(PagePrincipale.this, virementEntreCompte.class);
-             }
-          });
-
+        // Déconnexion de l'utilisateur
         btnDeconnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Finir l'activité
+                // Arrêt de toutes les activités de l'application
                 finishAffinity();
 
-                //Renvoyer l'utilisateur vers la page de connexion
+                // Redirection vers la page de connexion
                 Intent intent = new Intent(getApplicationContext(), PageConnection.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -168,16 +154,12 @@ public class PagePrincipale extends AppCompatActivity {
             }
         });
 
-
-        lvComptes = findViewById(R.id.lvComptes);
-        btnNautico = findViewById(R.id.btnNautico);
-
-        //Afficher les comptes
+        // Affichage des comptes bancaires de l'utilisateur
         lesComptes = user.getListeComptes();
         adaptateur = new CompteAdapter(this, R.layout.layout_compte, lesComptes);
         lvComptes.setAdapter(adaptateur);
 
-        //Ajouter écouteur d'événement sur chaque compte pour afficher leurs détails
+        // Gestion des événements de clic sur les comptes pour afficher leurs détails
         lvComptes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -193,6 +175,7 @@ public class PagePrincipale extends AppCompatActivity {
             }
         });
 
+        // Gestion du clic sur le bouton d'assistance
         btnNautico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,21 +185,27 @@ public class PagePrincipale extends AppCompatActivity {
         });
     }
 
-    public static void openDrawer(DrawerLayout drawerLayout){
+    // Ouvrir le tiroir de navigation
+    public static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
-    public static void closeDrawer(DrawerLayout drawerLayout){
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+
+    // Fermer le tiroir de navigation
+    public static void closeDrawer(DrawerLayout drawerLayout) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
     }
-    public static void redirectActivity(Activity activity, Class secondActivity){
+
+    // Rediriger vers une autre activité
+    public static void redirectActivity(Activity activity, Class secondActivity) {
         Intent intent = new Intent(activity, secondActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
         activity.finish();
     }
 
+    // Vérifier la session de l'utilisateur
     public void onClick(View v) {
         if (v == btnNautico) {
             Intent intention = new Intent(this, SupportNautico.class);
@@ -230,6 +219,7 @@ public class PagePrincipale extends AppCompatActivity {
         closeDrawer(drawerLayout);
     }
 
+    // Mettre à jour la liste des comptes bancaires lors de la reprise de l'activité
     @Override
     protected void onResume() {
         super.onResume();
@@ -238,25 +228,24 @@ public class PagePrincipale extends AppCompatActivity {
         lvComptes.setAdapter(adaptateur);
     }
 
-    //Fonction pour vérifier la session à chaque page
+    // Vérifier la session de l'utilisateur
     public static void verifSession(Activity activity) {
-        //Chercher le temps présentement
+        // Récupérer la date actuelle
         Date dateCurrent = Calendar.getInstance().getTime();
 
-        //Si la date est avant la dernière activité, on déconnecte la personne
+        // Si la date est postérieure à la fin de la session, déconnecter l'utilisateur
         if (!dateCurrent.before(PagePrincipale.endTime)) {
-            //On finit toutes les activités
+            // Arrêter toutes les activités
             activity.finishAffinity();
 
-            //On redirige l'utilisateur vers la 1ère activité
+            // Rediriger l'utilisateur vers la page de connexion
             Intent intent = new Intent(activity.getApplicationContext(), PageConnection.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             activity.startActivity(intent);
 
             Toast.makeText(activity.getApplicationContext(), "Votre session a expiré!", Toast.LENGTH_SHORT).show();
         }
-
-        //Sinon, on actualise le end time
+        // Sinon, actualiser la fin de la session
         else {
             PagePrincipale.calendrier.add(Calendar.SECOND, 3);
             PagePrincipale.endTime = PagePrincipale.calendrier.getTime();

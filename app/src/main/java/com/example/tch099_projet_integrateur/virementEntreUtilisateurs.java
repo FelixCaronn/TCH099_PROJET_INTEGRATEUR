@@ -54,6 +54,7 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
 
+        // Click listener pour ouvrir le menu
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +62,7 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
             }
         });
 
+        // Redirection vers différentes activités
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +98,7 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
             }
         });
 
+        // Click listener pour rafraîchir la page de transfert entre utilisateurs
         transfertClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +106,7 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
             }
         });
 
+        // Redirection vers l'activité de transfert entre comptes
         transfertCompte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +114,7 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
             }
         });
 
-        //CHERCHER LES DONNÉES DU VIREMENT
+        // Récupération des données du virement
         email = findViewById(R.id.email);
         Question = findViewById(R.id.Question);
         reponse = findViewById(R.id.reponse);
@@ -121,46 +125,44 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
         radioGroup_de = findViewById(R.id.radioGroup_re);
         btnTrans = findViewById(R.id.btnTrans);
 
-        //Afficher les comptes d'envoie dans le radio group
+        // Afficher les comptes d'envoi dans le radio group
         for (CompteBancaire compte : lesComptes) {
-            //Créer un bouton radio et mettre l'ID de compte comme ID
             RadioButton btnRadio = new RadioButton(getApplicationContext());
             btnRadio.setId(compte.getNumCompte());
             btnRadio.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.montserrat_bold));
 
-            //Mettre le texte du compte selon le titre
             typeCompte type = compte.getTypeCompte();
-
-            if (type == typeCompte.CHEQUE)
-                btnRadio.setText("Chèque");
-            else if (type == typeCompte.EPARGNE)
-                btnRadio.setText("Épargne");
-            else if (type == typeCompte.CARTE_CREDIT)
-                btnRadio.setText("Carte requin");
-            else
-                btnRadio.setText("Investissement");
+            // Ajouter le texte du compte selon le type
+            switch (type) {
+                case CHEQUE:
+                    btnRadio.setText("Chèque");
+                    break;
+                case EPARGNE:
+                    btnRadio.setText("Épargne");
+                    break;
+                case CARTE_CREDIT:
+                    btnRadio.setText("Carte requin");
+                    break;
+                default:
+                    btnRadio.setText("Investissement");
+                    break;
+            }
 
             radioGroup_de.addView(btnRadio);
         }
 
+        // Click listener pour effectuer le virement entre utilisateurs
         btnTrans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String _montant = montant.getText().toString();
 
-                if (_montant.isEmpty())
-                {
+                if (_montant.isEmpty()) {
                     Toast.makeText(virementEntreUtilisateurs.this, "Veuillez inscrire un montant", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     int idCompteBancaireProvenant = 0;
 
-                    Log.e("TAG", lesComptes.get(0).toString());
-
-
-                    //Itérer les boutons radio des comptes d'envoie pour voir lequel a été cliqué
+                    //Itérer les boutons radio des comptes d'envoi pour voir lequel a été cliqué
                     for (int i = 0; i < radioGroup_de.getChildCount(); i++) {
                         RadioButton button = (RadioButton) radioGroup_de.getChildAt(i);
 
@@ -172,14 +174,10 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
                         }
                     }
 
-
                     if (idCompteBancaireProvenant == 0){
                         Toast.makeText(virementEntreUtilisateurs.this, "Veuillez sélectionner un compte", Toast.LENGTH_SHORT).show();
                         return;
                     }
-
-                    //Chercher le reste des infos
-
 
                     //ON APPELLE L'API
                     RecuLogin recu = null;
@@ -206,11 +204,11 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
                         recreate();
                     }
                 }
-
             }
         });
     }
 
+    // Méthodes utilitaires pour le menu
     public static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
