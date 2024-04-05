@@ -89,7 +89,6 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/connectez"
         android:textColor="#FFFFFF"
@@ -97,10 +96,10 @@
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
-        app:layout_constraintStart_toEndOf="@+id/poulpe"
+        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.462" />
+        app:layout_constraintVertical_bias="0.445" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativeLayout"
@@ -122,9 +121,9 @@
             android:layout_height="37dp"
             android:background="@drawable/input"
             android:backgroundTint="#FFFFFF"
-            android:textColor="@color/black"
             android:inputType="textPassword"
             android:paddingStart="5dp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
@@ -139,9 +138,9 @@
             android:layout_height="37dp"
             android:background="@drawable/input"
             android:backgroundTint="#FFFFFF"
-            android:textColor="@color/black"
             android:inputType="textEmailAddress"
             android:paddingStart="5dp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
@@ -160,11 +159,11 @@
             android:textColor="#8A8787"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.094"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/editTextCourriel"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/editTextCourriel"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.133" />
+            app:layout_constraintVertical_bias="0.15" />
 
         <TextView
             android:id="@+id/labelMdp"
@@ -175,23 +174,24 @@
             android:textColor="#8A8787"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/editTextMdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.112"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/editTextMdp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/editTextMdp"
             app:layout_constraintTop_toBottomOf="@+id/editTextCourriel"
-            app:layout_constraintVertical_bias="0.692" />
+            app:layout_constraintVertical_bias="0.681" />
 
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="178dp"
             android:layout_height="53dp"
+            android:layout_marginBottom="4dp"
             android:fontFamily="@font/montserrat_bold"
             android:text="@string/rester_connect"
             android:textColor="#8A8787"
             app:layout_constraintBottom_toTopOf="@+id/btnLogin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.128"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btnLogin"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/btnLogin"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
             app:layout_constraintVertical_bias="0.54" />
 
@@ -218,11 +218,11 @@
             android:text="@string/oubli_votre_mot_de_passe"
             android:textColor="#8A8787"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.311"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btnLogin"
+            app:layout_constraintHorizontal_bias="0.132"
+            app:layout_constraintStart_toStartOf="@+id/btnLogin"
             app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-            app:layout_constraintVertical_bias="0.292" />
+            app:layout_constraintVertical_bias="0.285" />
 
         <TextView
             android:id="@+id/textView8"
