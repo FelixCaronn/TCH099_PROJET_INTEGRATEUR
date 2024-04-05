@@ -49,7 +49,7 @@
     <string name="vous_n_avez_pas_de_compte">Vous n\'avez pas de compte ?</string>
     <string name="connectez_vous">Connectez-vous</string>
     <string name="cr_er_un_compte">Créer un compte</string>
-    <string name="courriel">Courriel</string>
+    <string name="courriel">Courriel :</string>
     <string name="connectez">Connectez-vous !</string>
     <string name="mail">Courriel :</string>
     <string name="fleche">←</string>
@@ -133,7 +133,7 @@
     <string name="accepter">Accepter</string>
     <string name="se_d_connecter">Se déconnecter</string>
     <string name="d_connexion">Déconnexion</string>
-
+    <string name="f_licitation_vous_tes_a_2_coups_de_nageoires_de_rejoindre_le_banc_poissons">Félicitation, vous êtes à 2 coups de nageoires de rejoindre le banc poissons</string>
 
 
 </resources>

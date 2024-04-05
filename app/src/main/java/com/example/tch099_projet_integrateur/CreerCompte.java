@@ -20,6 +20,8 @@ public class CreerCompte extends AppCompatActivity implements View.OnClickListen
     EditText confirmationMdp;
     Button btnCreer;
 
+    Button btnRetour;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,9 @@ public class CreerCompte extends AppCompatActivity implements View.OnClickListen
         mdp = findViewById(R.id.editTextMdpCreer);
         confirmationMdp = findViewById(R.id.editTextMdpConfirmation);
         btnCreer = findViewById(R.id.btnCreationCompte);
+        btnRetour = findViewById(R.id.btnRetourCreation);
+
+        btnRetour.setOnClickListener(this);
 
         btnCreer.setOnClickListener(this);
 
@@ -41,29 +46,38 @@ public class CreerCompte extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
 
-        String _nom = nom.getText().toString();
-        String _prenom = prenom.getText().toString();
-        String _courriel = courriel.getText().toString();
-        String _mdp = mdp.getText().toString();
-        String confirmation = confirmationMdp.getText().toString();
-
-        RecuLogin resultat;
-        try {
-            resultat = ConnexionBD.creationCompte(_nom, _prenom, _courriel, _mdp, confirmation);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        if(resultat.getCode() == 201)
+        if(v != btnRetour)
         {
-            Toast.makeText(this, resultat.getReponse(), Toast.LENGTH_SHORT).show();
-            PagePrincipale.redirectActivity(this, PageConnection.class);
+            String _nom = nom.getText().toString();
+            String _prenom = prenom.getText().toString();
+            String _courriel = courriel.getText().toString();
+            String _mdp = mdp.getText().toString();
+            String confirmation = confirmationMdp.getText().toString();
+
+            RecuLogin resultat;
+            try {
+                resultat = ConnexionBD.creationCompte(_nom, _prenom, _courriel, _mdp, confirmation);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            if(resultat.getCode() == 201)
+            {
+                Toast.makeText(this, resultat.getReponse(), Toast.LENGTH_SHORT).show();
+                PagePrincipale.redirectActivity(this, PageConnection.class);
+            }
+            else
+            {
+                Toast.makeText(this, resultat.getReponse(), Toast.LENGTH_SHORT).show();
+                recreate();
+            }
         }
         else
         {
-            Toast.makeText(this, resultat.getReponse(), Toast.LENGTH_SHORT).show();
-            recreate();
+            PagePrincipale.redirectActivity(this, PageAcceuil.class);
         }
+
+
 
     }
 }

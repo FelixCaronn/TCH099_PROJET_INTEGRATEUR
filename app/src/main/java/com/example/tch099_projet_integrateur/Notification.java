@@ -79,9 +79,8 @@ public class Notification extends AppCompatActivity {
 
                 //Prendre notification concernée
                 Notifications notifSelectionnee = (Notifications) parent.getAdapter().getItem(position);
-                if(notifSelectionnee.getEnAttente() == 1)
+                if(notifSelectionnee.getQuestion() != null)
                 {
-
                     try {
                         showDialog(notifSelectionnee.getQuestion(), notifSelectionnee.getTransactionId(),
                                 notifSelectionnee.getCompteId());
@@ -89,11 +88,6 @@ public class Notification extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
 
-
-                }
-                else
-                {
-                    Toast.makeText(Notification.this,"Ceci n'est pas un virement", Toast.LENGTH_SHORT).show();
                 }
 
             }

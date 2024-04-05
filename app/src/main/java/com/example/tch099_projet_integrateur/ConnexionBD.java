@@ -895,6 +895,7 @@ public class ConnexionBD extends Thread{
 
                         //Si c'est un virement, on crée une notif avec la question et la réponse
                         if(typeTransaction.equals("Virement")) {
+
                             String question = (String) notifJSON.get("question");
                             String reponse = (String) notifJSON.get("reponse");
 
