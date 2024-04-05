@@ -42,16 +42,16 @@ import okhttp3.ResponseBody;
 public class ConnexionBD extends Thread{
 
     //Adresses des API du site web qu'on utilise pour get/post nos données
-    private static final String apiPathVerifLogin = "http://35.233.243.199/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
-    private static final String apiPathCreationCompte = "http://35.233.243.199/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
-    private static final String apiPathListeComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
-    private static final String apiPathDepotMobile = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
-    private static final String apiPathListeTransaction = "http://35.233.243.199/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
-    private static final String apiPathTransfertComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/compte";
-    private static final String apiPathPayerFacture = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
-    private static final String apiPathVirementPersonnes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
-    private static final String apiPathVirementPersonnesReception = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
-    private static final String apiPathGetNotifications = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
+    private static final String apiPathVerifLogin = "http://34.105.112.98/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
+    private static final String apiPathCreationCompte = "http://34.105.112.98/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
+    private static final String apiPathListeComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
+    private static final String apiPathDepotMobile = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
+    private static final String apiPathListeTransaction = "http://34.105.112.98/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
+    private static final String apiPathTransfertComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/compte";
+    private static final String apiPathPayerFacture = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
+    private static final String apiPathVirementPersonnes = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
+    private static final String apiPathVirementPersonnesReception = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
+    private static final String apiPathGetNotifications = "http://34.105.112.98/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
 
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
@@ -750,6 +750,13 @@ public class ConnexionBD extends Thread{
     }
 
 
+
+
+
+
+    /********************************************* GET NOTIFICATIONS ******************************************/
+
+
     public static ArrayList<Notifications> getNotifications (int idUtilisateur) throws InterruptedException {
 
         //Créer une arrayList de notifications, qu'on va retourner à la fin
@@ -789,6 +796,7 @@ public class ConnexionBD extends Thread{
                     ObjectMapper mapper = new ObjectMapper();
 
                     //Récupérer la réponse de l'API
+                    assert response.body() != null;
                     JSONObject obj = new JSONObject(response.body().string());
                     JSONArray jsonArray = obj.getJSONArray("notificationsEtTransactions");
 
@@ -829,24 +837,22 @@ public class ConnexionBD extends Thread{
                         listeNotifications.add(notification);
 
                         //TESTS
-                        Log.e("TAG", "ID NOTIF: " + notifJSON.get("id_notif"));
-                        Log.e("TAG", "CompteId NOTIF: " + notifJSON.get("CompteId"));
-                        Log.e("TAG", "idTransaction NOTIF: " + notifJSON.get("idTransaction"));
-                        Log.e("TAG", "titre NOTIF: " + notifJSON.get("titre"));
-                        Log.e("TAG", "contenu NOTIF: " + notifJSON.get("contenu"));
-                        Log.e("TAG", "dateRecu NOTIF: " + notifJSON.get("dateRecu"));
-                        Log.e("TAG", "lu NOTIF: " + notifJSON.get("lu"));
-                        Log.e("TAG", "enAttente NOTIF: " + notifJSON.get("enAttente"));
-                        Log.e("TAG", "question NOTIF: " + notifJSON.get("question"));
-                        Log.e("TAG", "reponse NOTIF: " + notifJSON.get("reponse"));
+                        Log.e("testNotif", "ID NOTIF: " + notifJSON.get("id_notif"));
+                        Log.e("testNotif", "CompteId NOTIF: " + notifJSON.get("CompteId"));
+                        Log.e("testNotif", "idTransaction NOTIF: " + notifJSON.get("idTransaction"));
+                        Log.e("testNotif", "titre NOTIF: " + notifJSON.get("titre"));
+                        Log.e("testNotif", "contenu NOTIF: " + notifJSON.get("contenu"));
+                        Log.e("testNotif", "dateRecu NOTIF: " + notifJSON.get("dateRecu"));
+                        Log.e("testNotif", "lu NOTIF: " + notifJSON.get("lu"));
+                        Log.e("testNotif", "enAttente NOTIF: " + notifJSON.get("enAttente"));
+                        Log.e("testNotif", "question NOTIF: " + notifJSON.get("question"));
+                        Log.e("testNotif", "reponse NOTIF: " + notifJSON.get("reponse"));
                     }
 
                     //Stocker la réponse
                     //recu.setReponse(reponse);
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (JSONException e) {
+                } catch (IOException | JSONException e) {
                     throw new RuntimeException(e);
                 }
 
@@ -862,23 +868,29 @@ public class ConnexionBD extends Thread{
 
 
 
-    public static int deleteNotif (int idUtilisateur, int idNotif, String finURL) throws InterruptedException {
-        //Si on efface une notification unique, on va retourner son ID
-        final int[] idNotifAEffacer = {-1};
+    /************************************* RECEPTION NOTIFICATION UTILISATEUR *************************/
 
-        Thread p = new Thread() {
+    public static ArrayList<String> receptionTransfertEntreUtilisateur(String decision, String inputReponse, int idTransaction, int idUser) throws InterruptedException {
+
+        ArrayList<String> receptionResultat = new ArrayList<>();
+
+        Thread p = new Thread(){
 
             @Override
             public void run() {
 
                 OkHttpClient client = new OkHttpClient();
-                JSONObject notifDeleteJSON = new JSONObject();
+
+                JSONObject virement = new JSONObject();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     try {
-                        //Envoyer l'ID de la notif de l'utilisateur à effacter
-                        notifDeleteJSON.append("idUtilisateur", idUtilisateur);
-                        notifDeleteJSON.append("idNotif", idNotif);
+                        //Envoyer toutes les données
+                        virement.append("decision",decision);
+                        virement.append("inputReponse", inputReponse);
+                        virement.append("idTransaction", idTransaction);
+                        virement.append("idUser", idUser);
+
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -886,13 +898,14 @@ public class ConnexionBD extends Thread{
 
                 //Faire la requête
                 final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-                RequestBody deleteBody = RequestBody.create(JSON, notifDeleteJSON.toString());
-                Request deleteRequest = new Request.Builder()
-                        .url(apiPathGetNotifications + finURL)
-                        .delete(deleteBody)
+                RequestBody putBody = RequestBody.create(JSON, virement.toString());
+                Request put = new Request.Builder()
+                        .url(apiPathVirementPersonnesReception)
+                        .put(putBody)
                         .build();
 
-                try (Response response = client.newCall(deleteRequest).execute()) {
+                try(Response response = client.newCall(put).execute())
+                {
                     if (!response.isSuccessful())
                         throw new IOException("Unexpected code " + response);
 
@@ -900,29 +913,36 @@ public class ConnexionBD extends Thread{
                     ObjectMapper mapper = new ObjectMapper();
 
                     //Récupérer la réponse de l'API
+                    assert response.body() != null;
                     JSONObject obj = new JSONObject(response.body().string());
-                    JSONArray arrayNotifsEffacees = obj.getJSONArray("resultat");
 
-                    //S'il y a une seule notification effacée, on retourne son ID
-                    if (arrayNotifsEffacees.length() == 1) {
-                        //Créer un objet JSON pour chaque notification
-                        JSONObject notifJSON = arrayNotifsEffacees.getJSONObject(0);
-
-                        //Get l'ID de la notif effacée
-                        idNotifAEffacer[0] = (Integer) notifJSON.get("id");
+                    if(obj.getInt("code") != 201)
+                    {
+                        JSONArray reception = obj.getJSONArray("erreur");
+                        for(int i = 0; i < reception.length(); i++)
+                        {
+                            String temp = reception.get(i).toString();
+                            receptionResultat.add(temp);
+                        }
+                    }
+                    else
+                    {
+                        receptionResultat.add(obj.get("msgSucces").toString());
                     }
 
-                } catch (IOException | JSONException e) {
+                }catch (IOException | JSONException e) {
                     throw new RuntimeException(e);
                 }
 
-                currentThread().interrupt();
+            currentThread().interrupt();
+
             }
         };
 
         p.start();
         p.join();
 
-        return idNotifAEffacer[0];
+        return receptionResultat;
+
     }
 }

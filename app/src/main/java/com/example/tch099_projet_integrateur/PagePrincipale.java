@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -48,14 +49,7 @@ public class PagePrincipale extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-//        Intent intention = getIntent();
-//        user.setNom(intention.getStringExtra("nom"));
-//        user.setId(intention.getIntExtra("id", -1));
-//
-//        bjrTxt = findViewById(R.id.bonjourUser);
-//
-//        String bjr = "Bonjour " + user.getNom();
-//        bjrTxt.setText(bjr);
+
 
         setContentView(R.layout.activity_page_principale);
 
