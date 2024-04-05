@@ -26,6 +26,7 @@ import java.io.DataInput;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,16 +43,16 @@ import okhttp3.ResponseBody;
 public class ConnexionBD extends Thread{
 
     //Adresses des API du site web qu'on utilise pour get/post nos données
-    private static final String apiPathVerifLogin = "http://35.233.243.199/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
-    private static final String apiPathCreationCompte = "http://35.233.243.199/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
-    private static final String apiPathListeComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
-    private static final String apiPathDepotMobile = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
-    private static final String apiPathListeTransaction = "http://35.233.243.199/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
-    private static final String apiPathTransfertComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/compte";
-    private static final String apiPathPayerFacture = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
-    private static final String apiPathVirementPersonnes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
-    private static final String apiPathVirementPersonnesReception = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
-    private static final String apiPathGetNotifications = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
+    private static final String apiPathVerifLogin = "http://34.105.112.98/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
+    private static final String apiPathCreationCompte = "http://34.105.112.98/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
+    private static final String apiPathListeComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
+    private static final String apiPathDepotMobile = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
+    private static final String apiPathListeTransaction = "http://34.105.112.98/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
+    private static final String apiPathTransfertComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/compte";
+    private static final String apiPathPayerFacture = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
+    private static final String apiPathVirementPersonnes = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
+    private static final String apiPathVirementPersonnesReception = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
+    private static final String apiPathGetNotifications = "http://34.105.112.98/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
 
 
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
@@ -71,6 +72,7 @@ public class ConnexionBD extends Thread{
                         postData.append("password", mdp);
                         postData.append("mobile", 1);
                         postData.append("checked",false);
+                        postData.append("time", Calendar.getInstance().getTime().toString());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }

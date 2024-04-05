@@ -3,6 +3,7 @@ import com.example.tch099_projet_integrateur.enumerations.*;
 import com.example.tch099_projet_integrateur.info_user.TransactionBancaire;
 import com.example.tch099_projet_integrateur.info_user.CompteBancaire;
 import com.example.tch099_projet_integrateur.info_user.historiqueAdapter;
+import com.google.android.material.timepicker.TimeFormat;
 
 import static com.example.tch099_projet_integrateur.PagePrincipale.openDrawer;
 import static com.example.tch099_projet_integrateur.PagePrincipale.redirectActivity;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,8 +22,14 @@ import android.widget.LinearLayout;
 
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ConsulterCompte extends AppCompatActivity {
@@ -45,6 +53,42 @@ public class ConsulterCompte extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulter_compte);
+
+        PagePrincipale.verifSession();
+
+        //Chercher le temps présentement
+        Date dateCurrent = Calendar.getInstance().getTime();
+
+        //Si la date est avant la dernière activité, on déconnecte la personne
+        if (!dateCurrent.before(PagePrincipale.endTime)) {
+            //On finit toutes les activités
+            finishAffinity();
+
+            //On redirige l'utilisateur vers la 1ère activité
+            Intent intent = new Intent(getApplicationContext(), PageConnection.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+
+            Toast.makeText(getApplicationContext(), "Votre session a expiré!", Toast.LENGTH_SHORT).show();
+        }
+
+        //Sinon, on actualise le end time
+        else {
+            PagePrincipale.calendrier.add(Calendar.SECOND, 3);
+            PagePrincipale.endTime = PagePrincipale.calendrier.getTime();
+        }
+
+
+
+
+        //Toast.makeText(getApplicationContext(), "DATE FORMATEE: " + formatted, Toast.LENGTH_LONG).show();
+
+
+
+
+
+
+            //Chercher les infos du compte
         Intent intent = this.getIntent();
         numeroCompte = intent.getIntExtra("NUM_COMPTE",0);
         //solde = intent.getDoubleExtra("SOLDE_COMPTE",0);
