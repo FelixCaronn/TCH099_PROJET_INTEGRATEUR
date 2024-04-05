@@ -26,6 +26,7 @@ import java.io.DataInput;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -71,6 +72,7 @@ public class ConnexionBD extends Thread{
                         postData.append("password", mdp);
                         postData.append("mobile", 1);
                         postData.append("checked",false);
+                        postData.append("time", Calendar.getInstance().getTime().toString());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
