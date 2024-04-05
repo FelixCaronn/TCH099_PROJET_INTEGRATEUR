@@ -828,11 +828,6 @@ public class ConnexionBD extends Thread{
      * @return La liste des notifications de l'utilisateur.
      * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
      */
-
-
-
-
-
     /********************************************* GET NOTIFICATIONS ******************************************/
 
 
@@ -945,8 +940,6 @@ public class ConnexionBD extends Thread{
         return listeNotifications;
     }
 
-
-
     /************************************* RECEPTION NOTIFICATION UTILISATEUR *************************/
 
     public static ArrayList<String> receptionTransfertEntreUtilisateur(String decision, String inputReponse, int idTransaction, int idUser) throws InterruptedException {
@@ -1024,7 +1017,6 @@ public class ConnexionBD extends Thread{
         return receptionResultat;
 
     }
-
     /**
      * Supprime une notification pour un utilisateur donné.
      * @param idUtilisateur L'identifiant de l'utilisateur dont on souhaite supprimer la notification.
@@ -1033,7 +1025,11 @@ public class ConnexionBD extends Thread{
      * @return L'identifiant de la notification supprimée, ou -1 s'il n'y a aucune notification supprimée.
      * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
      */
-    public static void deleteNotif (int idUtilisateur, int idNotif, String finURL) throws InterruptedException {
+
+    public static int deleteNotif (int idUtilisateur, int idNotif, String finURL) throws InterruptedException {
+        //Si on efface une notification unique, on va retourner son ID
+        final int[] idNotifAEffacer = {-1};
+
         Thread p = new Thread() {
 
             @Override
@@ -1071,13 +1067,13 @@ public class ConnexionBD extends Thread{
                     JSONObject obj = new JSONObject(response.body().string());
                     JSONArray arrayNotifsEffacees = obj.getJSONArray("resultat");
 
-                    //Itérer chaque notification pour les instancier en tant qu'objet Notification
-                    for(int i = 0; i < arrayNotifsEffacees.length(); i++) {
+                    //S'il y a une seule notification effacée, on retourne son ID
+                    if (arrayNotifsEffacees.length() == 1) {
                         //Créer un objet JSON pour chaque notification
-                        JSONObject notifJSON = arrayNotifsEffacees.getJSONObject(i);
+                        JSONObject notifJSON = arrayNotifsEffacees.getJSONObject(0);
 
                         //Get l'ID de la notif effacée
-                        int idNotif = (Integer) notifJSON.get("id");
+                        idNotifAEffacer[0] = (Integer) notifJSON.get("id");
                     }
 
                 } catch (IOException | JSONException e) {
@@ -1090,5 +1086,7 @@ public class ConnexionBD extends Thread{
 
         p.start();
         p.join();
+
+        return idNotifAEffacer[0];
     }
 }

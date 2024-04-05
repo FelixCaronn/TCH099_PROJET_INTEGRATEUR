@@ -32,6 +32,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Activité permettant de consulter un compte bancaire.
+ */
 public class ConsulterCompte extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
@@ -45,7 +48,6 @@ public class ConsulterCompte extends AppCompatActivity {
     typeCompte typeDuCompte;
     List<TransactionBancaire> historique;
 
-
     private TextView txtNum, txtSolde, txtType;
     private Button btnRetour;
 
@@ -54,7 +56,7 @@ public class ConsulterCompte extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulter_compte);
 
-        PagePrincipale.verifSession();
+        PagePrincipale.verifSession(this);
 
         //Chercher le temps présentement
         Date dateCurrent = Calendar.getInstance().getTime();
@@ -77,18 +79,8 @@ public class ConsulterCompte extends AppCompatActivity {
             PagePrincipale.calendrier.add(Calendar.SECOND, 3);
             PagePrincipale.endTime = PagePrincipale.calendrier.getTime();
         }
-
-
-
-
-        //Toast.makeText(getApplicationContext(), "DATE FORMATEE: " + formatted, Toast.LENGTH_LONG).show();
-
-
-
-
-
-
-            //Chercher les infos du compte
+        
+        //Chercher les infos du compte
         Intent intent = this.getIntent();
         numeroCompte = intent.getIntExtra("NUM_COMPTE",0);
         //solde = intent.getDoubleExtra("SOLDE_COMPTE",0);

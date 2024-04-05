@@ -58,7 +58,6 @@ public class PagePrincipale extends AppCompatActivity {
         }
 
         //Ajuster la date de fin de la session
-        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         calendrier.add(Calendar.SECOND, 3);
         endTime = calendrier.getTime();
 
