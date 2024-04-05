@@ -8,6 +8,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="362dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rectangle2"
@@ -55,6 +56,8 @@
             android:paddingLeft="10dp"
             android:text="titre de la notifi"
             android:textAlignment="inherit"
+            android:textSize="18dp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/supprimer"
             app:layout_constraintHorizontal_bias="0.188"
@@ -86,6 +89,8 @@
             android:gravity="center|right"
             android:paddingRight="10dp"
             android:text="TextView"
+            android:textColor="#9E9E9E"
+            android:fontFamily="@font/montserrat_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.995"

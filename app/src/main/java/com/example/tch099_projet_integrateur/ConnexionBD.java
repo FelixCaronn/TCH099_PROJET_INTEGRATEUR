@@ -53,6 +53,7 @@ public class ConnexionBD extends Thread{
     private static final String apiPathVirementPersonnesReception = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
     private static final String apiPathGetNotifications = "http://34.105.112.98/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
 
+
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
         RecuLogin verifLog = new RecuLogin();
 
@@ -344,6 +345,62 @@ public class ConnexionBD extends Thread{
         p.join();
 
         return recu;
+    }
+
+    //---------Méthode qui retourne le solde du compte en paramètre---------
+
+    public static double getCompte(int idCompte) throws InterruptedException {
+        final double[] solde = new double[1];
+
+        Thread p = new Thread(){
+
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+                JSONObject getData = new JSONObject();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+                    try{
+                        //Envoyer l'ID du compte à l'API pour nous retourner les infos du compte
+                        getData.append("compteId", idCompte);
+                    } catch(Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+
+                //Faire la requête à l'API
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody getBody = RequestBody.create(JSON, getData.toString());
+                Request get = new Request.Builder()
+                        .url(apiPathListeTransaction)
+                        .post(getBody)
+                        .build();
+
+                try(Response response = client.newCall(get).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Erreur inattendue code: " + response.code());
+
+                    JSONObject obj = new JSONObject(response.body().string());
+                    JSONObject infosCompte = obj.getJSONObject("compte");
+
+                    solde[0] = Double.parseDouble(infosCompte.getString("solde"));
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                currentThread().interrupt();
+            }
+
+        };
+
+        p.start();
+        p.join();
+
+        Log.e("SOLDE À LA FIN DE LA FCT:", "SOLDE À LA FIN DE LA FCT: " + solde[0] );
+        //Retourner le solde
+        return solde[0];
+
     }
 
 
@@ -696,7 +753,9 @@ public class ConnexionBD extends Thread{
 
 
 
+
     /********************************************* GET NOTIFICATIONS ******************************************/
+
 
     public static ArrayList<Notifications> getNotifications (int idUtilisateur) throws InterruptedException {
 
@@ -742,7 +801,7 @@ public class ConnexionBD extends Thread{
                     JSONArray jsonArray = obj.getJSONArray("notificationsEtTransactions");
 
                     //Itérer chaque notification pour les instancier en tant qu'objet Notification
-                    for(int i = 0; i < jsonArray.length(); i++)
+                    for(int i = jsonArray.length() - 1; i >= 0; i--)
                     {
                         //Créer un objet JSON pour chaque notification
                         JSONObject notifJSON = jsonArray.getJSONObject(i);
@@ -808,6 +867,7 @@ public class ConnexionBD extends Thread{
     }
 
 
+
     /************************************* RECEPTION NOTIFICATION UTILISATEUR *************************/
 
     public static ArrayList<String> receptionTransfertEntreUtilisateur(String decision, String inputReponse, int idTransaction, int idUser) throws InterruptedException {
@@ -815,6 +875,7 @@ public class ConnexionBD extends Thread{
         ArrayList<String> receptionResultat = new ArrayList<>();
 
         Thread p = new Thread(){
+
             @Override
             public void run() {
 
@@ -829,6 +890,7 @@ public class ConnexionBD extends Thread{
                         virement.append("inputReponse", inputReponse);
                         virement.append("idTransaction", idTransaction);
                         virement.append("idUser", idUser);
+
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -868,13 +930,11 @@ public class ConnexionBD extends Thread{
                         receptionResultat.add(obj.get("msgSucces").toString());
                     }
 
-
-
-
-
                 }catch (IOException | JSONException e) {
                     throw new RuntimeException(e);
                 }
+
+            currentThread().interrupt();
 
             }
         };

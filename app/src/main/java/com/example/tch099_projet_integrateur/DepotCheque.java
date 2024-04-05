@@ -2,6 +2,7 @@ package com.example.tch099_projet_integrateur;
 import com.example.tch099_projet_integrateur.enumerations.*;
 
 import static com.example.tch099_projet_integrateur.PagePrincipale.openDrawer;
+import static com.example.tch099_projet_integrateur.PagePrincipale.redirectActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -93,6 +94,13 @@ public class DepotCheque extends AppCompatActivity {
             }
         });
 
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(DepotCheque.this, Notification.class);
+            }
+        });
+
 
         depot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +120,29 @@ public class DepotCheque extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PagePrincipale.redirectActivity(DepotCheque.this, SupportNautico.class);
+            }
+        });
+
+        facture.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                redirectActivity(DepotCheque.this, paiementFacture.class);
+            }
+        });
+
+        transfertCompte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(DepotCheque.this, virementEntreCompte.class);
+            }
+        });
+
+        transfertClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(DepotCheque.this, virementEntreUtilisateurs.class);
+
             }
         });
         montantDepot.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -181,7 +212,7 @@ public class DepotCheque extends AppCompatActivity {
                                                     RecuLogin resultat;
 
                                                     try {
-                                                        resultat = ConnexionBD.depotMobile(user.getId(), montant);
+                                                        resultat = ConnexionBD.depotMobile(PagePrincipale.user.getId(), montant);
                                                     } catch (InterruptedException e) {
                                                         throw new RuntimeException(e);
                                                     }
@@ -190,6 +221,7 @@ public class DepotCheque extends AppCompatActivity {
                                                     if(resultat.getCode() == 201)
                                                     {
                                                         Toast.makeText(getApplicationContext(), resultat.getReponse(), Toast.LENGTH_SHORT).show();
+                                                        PagePrincipale.redirectActivity(DepotCheque.this, PagePrincipale.class);
                                                     }
                                                     else
                                                     {

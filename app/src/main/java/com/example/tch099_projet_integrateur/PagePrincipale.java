@@ -34,14 +34,13 @@ public class PagePrincipale extends AppCompatActivity {
     private CompteAdapter adaptateur;
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
+    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte, btnDeconnexion;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         try {
             ArrayList<CompteBancaire> liste = ConnexionBD.getComptes(user.getId());
@@ -58,6 +57,7 @@ public class PagePrincipale extends AppCompatActivity {
 
         menu = findViewById(R.id.menu);
 
+        //Boutons de la barre de menu
         home = findViewById(R.id.home);
         depot = findViewById(R.id.depot);
         facture = findViewById(R.id.facture);
@@ -65,6 +65,9 @@ public class PagePrincipale extends AppCompatActivity {
         support = findViewById(R.id.support);
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
+        btnDeconnexion = findViewById(R.id.btnDeconnexion);
+
+
 
 
 
@@ -74,6 +77,7 @@ public class PagePrincipale extends AppCompatActivity {
                 openDrawer(drawerLayout);
             }
         });
+
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,11 +130,16 @@ public class PagePrincipale extends AppCompatActivity {
           transfertCompte.setOnClickListener(new View.OnClickListener() {
             @Override
               public void onClick(View v) {
-
                 redirectActivity(PagePrincipale.this, virementEntreCompte.class);
-
              }
           });
+
+        btnDeconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(PagePrincipale.this, PageConnection.class);
+            }
+        });
 
 
         lvComptes = findViewById(R.id.lvComptes);

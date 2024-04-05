@@ -40,7 +40,6 @@ public class ConsulterCompte extends AppCompatActivity {
 
     private TextView txtNum, txtSolde, txtType;
     private Button btnRetour;
-    private CompteBancaire compte;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +47,12 @@ public class ConsulterCompte extends AppCompatActivity {
         setContentView(R.layout.activity_consulter_compte);
         Intent intent = this.getIntent();
         numeroCompte = intent.getIntExtra("NUM_COMPTE",0);
-        solde = intent.getDoubleExtra("SOLDE_COMPTE",0);
+        //solde = intent.getDoubleExtra("SOLDE_COMPTE",0);
         typeDuCompte = (typeCompte) intent.getSerializableExtra("TYPE_COMPTE");
 
         try{
-             historique = ConnexionBD.getTransaction(numeroCompte);
+            solde = ConnexionBD.getCompte(numeroCompte);
+            historique = ConnexionBD.getTransaction(numeroCompte);
         }catch (Exception e)
         {
             Log.e("TAG", "MARCHE PAS");
@@ -73,6 +73,38 @@ public class ConsulterCompte extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openDrawer(drawerLayout);
+            }
+        });
+
+        depot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(ConsulterCompte.this, DepotCheque.class);
+            }
+        });
+
+        support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(ConsulterCompte.this, SupportNautico.class);
+            }
+        });
+
+        transfertClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                redirectActivity(ConsulterCompte.this, virementEntreUtilisateurs.class);
+
+            }
+        });
+
+        transfertCompte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                redirectActivity(ConsulterCompte.this, virementEntreCompte.class);
+
             }
         });
 
@@ -108,7 +140,14 @@ public class ConsulterCompte extends AppCompatActivity {
             }
         });
 
-        listeHisto = findViewById(R.id.listeHistorique);
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(ConsulterCompte.this, Notification.class);
+            }
+        });
+
+        //Afficher les informations du compte (type, numéro et solde)
         typeCompte = findViewById(R.id.typeCompte);
         typeCompte.setText(typeDuCompte.toString());
         numCompte = findViewById(R.id.txtnumeroCompte);
@@ -116,7 +155,8 @@ public class ConsulterCompte extends AppCompatActivity {
         soldeCompte = findViewById(R.id.txtMontantCompte);
         soldeCompte.setText(String.format("%.2f", solde) + "$");
 
-
+        //Afficher l'historique des transactions dans l'adaptateur
+        listeHisto = findViewById(R.id.listeHistorique);
         historiqueAdapter adapter = new historiqueAdapter(this,R.layout.historique_layout,historique);
         listeHisto.setAdapter(adapter);
         ////
