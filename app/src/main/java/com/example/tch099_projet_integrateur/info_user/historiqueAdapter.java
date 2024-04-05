@@ -93,6 +93,16 @@ public class historiqueAdapter extends ArrayAdapter<TransactionBancaire> {
                     else
                         descriptionHistorique.setText("Virement / " + transaction.getProvenance());
                     break;
+
+                case VIREMENT_ACCEPTE:
+                    // Si le virement vient de nous, on met le nom du destinataire
+                    if (transaction.getMontant() < 0)
+                        descriptionHistorique.setText("Virement accepté/ " + transaction.getNomEtablissement());
+                        // Sinon, on met le courriel de la personne qui nous a envoyé le virement
+                    else
+                        descriptionHistorique.setText("Virement accepté/ " + transaction.getProvenance());
+                    break;
+
                 case TRANSFERT:
                     // Si le transfert vient du compte dans lequel on est maintenant
                     if (transaction.getMontant() < 0)

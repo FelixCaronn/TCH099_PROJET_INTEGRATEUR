@@ -1,7 +1,5 @@
 package com.example.tch099_projet_integrateur;
 
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
@@ -23,18 +21,12 @@ import android.widget.Toast;
 import com.example.tch099_projet_integrateur.enumerations.typeCompte;
 import com.example.tch099_projet_integrateur.info_user.CompteBancaire;
 import com.example.tch099_projet_integrateur.info_user.RecuLogin;
-import com.example.tch099_projet_integrateur.info_user.Utilisateur;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.List;
 
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-
+/**
+ * Cette activité permet à l'utilisateur d'effectuer le paiement d'une facture.
+ */
 public class paiementFacture extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
@@ -53,9 +45,8 @@ public class paiementFacture extends AppCompatActivity {
         //Vérifier que la session n'est pas expirée
         PagePrincipale.verifSession(this);
 
+        // Récupération des éléments de l'interface utilisateur
         drawerLayout = findViewById(R.id.drawerLayout);
-
-
         menu = findViewById(R.id.menu);
         home = findViewById(R.id.home);
         depot = findViewById(R.id.depot);
@@ -64,9 +55,13 @@ public class paiementFacture extends AppCompatActivity {
         support = findViewById(R.id.support);
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
+        radioGroup = findViewById(R.id.radioGroup_re);
+        etablissement = findViewById(R.id.etablissement);
+        num_ref = findViewById(R.id.num_ref);
+        montant_facture = findViewById(R.id.montant_facture);
+        btnTrans = findViewById(R.id.btnTrans);
 
-
-
+        // Gestion des clics sur les éléments de l'interface utilisateur
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,31 +74,25 @@ public class paiementFacture extends AppCompatActivity {
                 redirectActivity(paiementFacture.this, PagePrincipale.class);
             }
         });
-
         depot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 redirectActivity(paiementFacture.this, DepotCheque.class);
             }
         });
-
         transfertCompte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 redirectActivity(paiementFacture.this, virementEntreCompte.class);
             }
         });
-
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 redirectActivity(paiementFacture.this, Notification.class);
             }
         });
-
-
         facture.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 recreate();
@@ -115,43 +104,28 @@ public class paiementFacture extends AppCompatActivity {
                 redirectActivity(paiementFacture.this, SupportNautico.class);
             }
         });
-
         transfertClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 redirectActivity(paiementFacture.this, virementEntreUtilisateurs.class);
-
             }
         });
-
         transfertCompte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 redirectActivity(paiementFacture.this, virementEntreCompte.class);
-
             }
         });
 
-        radioGroup = findViewById(R.id.radioGroup_re);
-
-        etablissement = findViewById(R.id.etablissement);
-        num_ref = findViewById(R.id.num_ref);
-        montant_facture = findViewById(R.id.montant_facture);
-        btnTrans = findViewById(R.id.btnTrans);
-
-
+        // Récupération des comptes de l'utilisateur
         lesComptes = PagePrincipale.user.getListeComptes();
 
-        //Afficher les comptes dans le radio group
+        // Affichage des comptes dans le RadioGroup
         for (CompteBancaire compte : lesComptes) {
-            //Créer un bouton radio et mettre l'ID de compte comme ID
             RadioButton btnRadio = new RadioButton(getApplicationContext());
             btnRadio.setId(compte.getNumCompte());
             btnRadio.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.montserrat_bold));
 
-            //Mettre le texte du compte selon le titre
             typeCompte type = compte.getTypeCompte();
 
             if (type == typeCompte.CHEQUE)
@@ -163,67 +137,54 @@ public class paiementFacture extends AppCompatActivity {
             else
                 btnRadio.setText("Investissement");
 
-
             radioGroup.addView(btnRadio);
         }
 
+        // Gestion du clic sur le bouton de paiement de facture
         btnTrans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String _etab = etablissement.getText().toString();
                 String _num = num_ref.getText().toString();
                 String _montant = montant_facture.getText().toString();
 
-                if (_etab.isEmpty() || _num.isEmpty() || _montant.isEmpty())
-                {
+                // Vérification des champs
+                if (_etab.isEmpty() || _num.isEmpty() || _montant.isEmpty()) {
                     Toast.makeText(paiementFacture.this, "Veuillez remplir toutes les informations", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     int _id_compte = 0;
 
-                    Log.e("TAG", lesComptes.get(0).toString());
-
-
-                    //Itérer les boutons radio pour voir lequel a été cliqué
+                    // Récupération de l'ID du compte sélectionné
                     for (int i = 0; i < radioGroup.getChildCount(); i++) {
                         RadioButton button = (RadioButton) radioGroup.getChildAt(i);
 
                         if (button.isChecked()) {
-                            //Si le bouton est cliqué, on prend l'ID du compte en question
                             _id_compte = lesComptes.get(i).getNumCompte();
-
                             break;
                         }
                     }
 
-
-                    if (_id_compte == 0){
-                        Toast.makeText(paiementFacture.this, "Aucun compte n'a été selectionné", Toast.LENGTH_SHORT).show();
+                    // Vérification de la sélection du compte
+                    if (_id_compte == 0) {
+                        Toast.makeText(paiementFacture.this, "Aucun compte n'a été sélectionné", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     RecuLogin recu = null;
 
-                    //On appelle l'API pour tester
-                    try
-                    {
+                    // Appel de l'API pour effectuer le paiement
+                    try {
                         recu = ConnexionBD.effectuerPaiement(PagePrincipale.user.getId(), _id_compte, _etab, _num, Double.parseDouble(_montant));
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         Log.e("TAG", "Error calling API: " + e.getMessage());
                     }
 
-                    if (recu.getCode() == 201)
-                    {
+                    // Gestion de la réponse de l'API
+                    if (recu.getCode() == 201) {
                         Toast.makeText(getApplicationContext(), "Succès! Paiement effectué.", Toast.LENGTH_SHORT).show();
                         finish();
                         redirectActivity(paiementFacture.this, PagePrincipale.class);
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(getApplicationContext(), recu.getReponse(), Toast.LENGTH_SHORT).show();
                         recreate();
                     }
@@ -232,15 +193,17 @@ public class paiementFacture extends AppCompatActivity {
         });
     }
 
-    public static void openDrawer(DrawerLayout drawerLayout){
+    public static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
-    public static void closeDrawer(DrawerLayout drawerLayout){
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+
+    public static void closeDrawer(DrawerLayout drawerLayout) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
     }
-    public static void redirectActivity(Activity activity, Class secondActivity){
+
+    public static void redirectActivity(Activity activity, Class secondActivity) {
         Intent intent = new Intent(activity, secondActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);

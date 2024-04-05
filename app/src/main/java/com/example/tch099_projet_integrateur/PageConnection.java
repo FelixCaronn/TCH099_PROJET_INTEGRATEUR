@@ -1,4 +1,5 @@
 package com.example.tch099_projet_integrateur;
+
 import com.example.tch099_projet_integrateur.enumerations.*;
 import com.example.tch099_projet_integrateur.info_user.RecuLogin;
 
@@ -38,34 +39,35 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Cette activité gère la connexion de l'utilisateur à l'application.
+ */
 public class PageConnection extends AppCompatActivity implements View.OnClickListener {
 
+    // Déclaration des champs de saisie et du bouton de connexion
     EditText courriel;
     EditText motdepasse;
     Button btnSoumettre;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page_connection);
 
+        // Initialisation des champs de saisie et du bouton de connexion
         courriel = findViewById(R.id.editTextCourriel);
         motdepasse = findViewById(R.id.editTextMdp);
         btnSoumettre = findViewById(R.id.btnLogin);
         btnSoumettre.setOnClickListener(this);
-
-
     }
-
-
 
     @Override
     public void onClick(View v) {
-
+        // Récupération du courriel et du mot de passe saisis par l'utilisateur
         String mail = courriel.getText().toString();
         String mdp = motdepasse.getText().toString();
 
+        // Vérification des informations de connexion via la méthode ConnexionBD.verifLogin
         RecuLogin resultat;
         try {
             resultat = ConnexionBD.verifLogin(mail,mdp);
@@ -73,26 +75,27 @@ public class PageConnection extends AppCompatActivity implements View.OnClickLis
             throw new RuntimeException(e);
         }
 
-        if(resultat.getCode() == 200)
-        {
+        // Si les informations de connexion sont valides, redirection vers la page principale de l'application
+        if(resultat.getCode() == 200) {
             Toast.makeText(this, resultat.getReponse(), Toast.LENGTH_SHORT).show();
             PagePrincipale.user.setNom(resultat.getNom());
             PagePrincipale.user.setId(resultat.getId());
             PagePrincipale.redirectActivity(this, PagePrincipale.class);
 
-            //Ajuster la date de fin de la session
+            //Ajustement de la date de fin de session
             PagePrincipale.calendrier.getTime();
-            PagePrincipale.calendrier.add(Calendar.SECOND, 100);
+            PagePrincipale.calendrier.add(Calendar.SECOND, 300);
             PagePrincipale.endTime = PagePrincipale.calendrier.getTime();
+
+        
+            // Sinon, affichage d'un message d'erreur et rechargement de la page de connexion
 
         }
         else
         {
+
             Toast.makeText(this, resultat.getReponse(), Toast.LENGTH_SHORT).show();
             recreate();
         }
-
     }
-
-
 }

@@ -1,4 +1,5 @@
 package com.example.tch099_projet_integrateur;
+
 import com.example.tch099_projet_integrateur.enumerations.*;
 import com.example.tch099_projet_integrateur.info_user.RecuLogin;
 
@@ -11,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Activité permettant de créer un nouveau compte utilisateur.
+ */
 public class CreerCompte extends AppCompatActivity implements View.OnClickListener{
 
     EditText nom;
@@ -22,6 +26,10 @@ public class CreerCompte extends AppCompatActivity implements View.OnClickListen
 
     Button btnRetour;
 
+    /**
+     * Méthode exécutée lors de la création de l'activité.
+     * @param savedInstanceState État enregistré de l'activité.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +50,10 @@ public class CreerCompte extends AppCompatActivity implements View.OnClickListen
 
     }
 
-
+    /**
+     * Méthode appelée lorsqu'un bouton est cliqué.
+     *
+     */
     @Override
     public void onClick(View v) {
 

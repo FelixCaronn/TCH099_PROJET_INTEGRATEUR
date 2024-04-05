@@ -38,7 +38,9 @@ import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import java.io.FileNotFoundException;
-
+/**
+ * Activité permettant de déposer un chèque en utilisant la caméra ou en sélectionnant une image.
+ */
 public class DepotCheque extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
