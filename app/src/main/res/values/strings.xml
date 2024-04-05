@@ -127,6 +127,8 @@
     <string name="montantManquant">Montant manquant</string>
     <string name="montantInv">Les montants ne correspondent pas</string>
     <string name="depotSucces">Depot approuve!</string>
+    <string name="se_d_connecter">Se déconnecter</string>
+    <string name="d_connexion">Déconnexion</string>
 
 
 </resources>
