@@ -2,6 +2,7 @@ package com.example.tch099_projet_integrateur;
 import com.example.tch099_projet_integrateur.enumerations.*;
 
 import static com.example.tch099_projet_integrateur.PagePrincipale.openDrawer;
+import static com.example.tch099_projet_integrateur.PagePrincipale.redirectActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -58,17 +59,54 @@ public class SupportNautico extends AppCompatActivity {
             }
         });
 
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(SupportNautico.this, PagePrincipale.class);
+            }
+        });
+
         depot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PagePrincipale.redirectActivity(SupportNautico.this, DepotCheque.class);
+                redirectActivity(SupportNautico.this, DepotCheque.class);
+            }
+        });
+
+        support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recreate();
+            }
+        });
+
+        facture.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                redirectActivity(SupportNautico.this, paiementFacture.class);
+            }
+        });
+
+        transfertCompte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(SupportNautico.this, virementEntreCompte.class);
+            }
+        });
+
+        transfertClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(SupportNautico.this, virementEntreUtilisateurs.class);
+
             }
         });
 
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PagePrincipale.redirectActivity(SupportNautico.this, Notification.class);
+                redirectActivity(SupportNautico.this, Notification.class);
             }
         });
 
