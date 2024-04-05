@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -14,13 +15,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tch099_projet_integrateur.enumerations.typeCompte;
 import com.example.tch099_projet_integrateur.info_user.CompteAdapter;
 import com.example.tch099_projet_integrateur.info_user.CompteBancaire;
 import com.example.tch099_projet_integrateur.info_user.Utilisateur;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class PagePrincipale extends AppCompatActivity {
@@ -35,6 +41,9 @@ public class PagePrincipale extends AppCompatActivity {
     ImageView menu;
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte, btnDeconnexion;
 
+    static Calendar calendrier = Calendar.getInstance();
+    static Date endTime;
+
 
 
     @Override
@@ -47,6 +56,12 @@ public class PagePrincipale extends AppCompatActivity {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
+        //Ajuster la date de fin de la session
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        calendrier.add(Calendar.SECOND, 3);
+        endTime = calendrier.getTime();
+
 
 //        Intent intention = getIntent();
 //        user.setNom(intention.getStringExtra("nom"));
@@ -215,5 +230,30 @@ public class PagePrincipale extends AppCompatActivity {
         lesComptes = user.getListeComptes();
         adaptateur = new CompteAdapter(this, R.layout.layout_compte, lesComptes);
         lvComptes.setAdapter(adaptateur);
+    }
+
+    //Fonction pour vérifier la session à chaque page
+    public static void verifSession(Activity activity) {
+        //Chercher le temps présentement
+        Date dateCurrent = Calendar.getInstance().getTime();
+
+        //Si la date est avant la dernière activité, on déconnecte la personne
+        if (!dateCurrent.before(PagePrincipale.endTime)) {
+            //On finit toutes les activités
+            activity.finishAffinity();
+
+            //On redirige l'utilisateur vers la 1ère activité
+            Intent intent = new Intent(activity.getApplicationContext(), PageConnection.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            activity.startActivity(intent);
+
+            Toast.makeText(activity.getApplicationContext(), "Votre session a expiré!", Toast.LENGTH_SHORT).show();
+        }
+
+        //Sinon, on actualise le end time
+        else {
+            PagePrincipale.calendrier.add(Calendar.SECOND, 3);
+            PagePrincipale.endTime = PagePrincipale.calendrier.getTime();
+        }
     }
 }

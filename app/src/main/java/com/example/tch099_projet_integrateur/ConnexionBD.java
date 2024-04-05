@@ -26,6 +26,7 @@ import java.io.DataInput;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,21 +40,32 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+/**
+ * Classe qui permet de se connecter a l'api de notre site web afin de faire les interactions avec la base de données
+ *
+ * */
 public class ConnexionBD extends Thread{
 
     //Adresses des API du site web qu'on utilise pour get/post nos données
-    private static final String apiPathVerifLogin = "http://35.233.243.199/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
-    private static final String apiPathCreationCompte = "http://35.233.243.199/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
-    private static final String apiPathListeComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
-    private static final String apiPathDepotMobile = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
-    private static final String apiPathListeTransaction = "http://35.233.243.199/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
-    private static final String apiPathTransfertComptes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/compte";
-    private static final String apiPathPayerFacture = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
-    private static final String apiPathVirementPersonnes = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
-    private static final String apiPathVirementPersonnesReception = "http://35.233.243.199/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
-    private static final String apiPathGetNotifications = "http://35.233.243.199/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
+    private static final String apiPathVerifLogin = "http://34.105.112.98/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
+    private static final String apiPathCreationCompte = "http://34.105.112.98/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
+    private static final String apiPathListeComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
+    private static final String apiPathDepotMobile = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
+    private static final String apiPathListeTransaction = "http://34.105.112.98/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
+    private static final String apiPathTransfertComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/compte";
+    private static final String apiPathPayerFacture = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
+    private static final String apiPathVirementPersonnes = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
+    private static final String apiPathVirementPersonnesReception = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
+    private static final String apiPathGetNotifications = "http://34.105.112.98/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
 
 
+    /**
+     * Fonction qui verifie et  effectue la connexion de l'utilisateur.
+     * @param username Le nom d'utilisateur à vérifier.
+     * @param mdp Le mot de passe de l'utilisateur à vérifier.
+     * @return Un objet RecuLogin contenant le résultat de la vérification.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static RecuLogin verifLogin(String username, String mdp) throws InterruptedException {
         RecuLogin verifLog = new RecuLogin();
 
@@ -71,6 +83,7 @@ public class ConnexionBD extends Thread{
                         postData.append("password", mdp);
                         postData.append("mobile", 1);
                         postData.append("checked",false);
+                        postData.append("time", Calendar.getInstance().getTime().toString());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -126,8 +139,18 @@ public class ConnexionBD extends Thread{
         return verifLog;
     }
 
-    //***************************** REQUÊTE CRÉER COMPTE UTILISATEUR *******************************//
 
+    //***************************** REQUÊTE CRÉER COMPTE UTILISATEUR *******************************//
+    /**
+     * Crée un compte utilisateur.
+     * @param nom Le nom de l'utilisateur.
+     * @param prenom Le prénom de l'utilisateur.
+     * @param courriel L'adresse e-mail de l'utilisateur.
+     * @param mdp Le mot de passe de l'utilisateur.
+     * @param confirmationMdp La confirmation du mot de passe de l'utilisateur.
+     * @return Un objet RecuLogin contenant le résultat de la création du compte.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static RecuLogin creationCompte(String nom, String prenom, String courriel,String mdp, String confirmationMdp) throws InterruptedException {
 
         RecuLogin recu = new RecuLogin();
@@ -193,7 +216,12 @@ public class ConnexionBD extends Thread{
     }
 
 //******************************** REQUÊTE GET COMPTES ***********************************//
-
+    /**
+     * Récupère la liste des comptes bancaires d'un utilisateur.
+     * @param id L'identifiant de l'utilisateur.
+     * @return Une liste d'objets CompteBancaire contenant les comptes de l'utilisateur.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static ArrayList<CompteBancaire> getComptes(int id) throws InterruptedException {
 
         Utilisateur u = new Utilisateur();
@@ -286,6 +314,13 @@ public class ConnexionBD extends Thread{
 
 //******************************** REQUÊTE DÉPÔT MOBILE ***********************************//
 
+    /**
+     * Effectue un dépôt d'argent sur le compte bancaire de l'utilisateur.
+     * @param idUtilisateur L'identifiant de l'utilisateur.
+     * @param montant Le montant à déposer.
+     * @return Un objet RecuLogin contenant le résultat de l'opération.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static RecuLogin depotMobile(int idUtilisateur, double montant) throws InterruptedException {
 
         RecuLogin recu = new RecuLogin();
@@ -348,7 +383,12 @@ public class ConnexionBD extends Thread{
     }
 
     //---------Méthode qui retourne le solde du compte en paramètre---------
-
+    /**
+     * Récupère le solde du compte bancaire spécifié par son identifiant.
+     * @param idCompte L'identifiant du compte bancaire.
+     * @return Le solde du compte bancaire.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static double getCompte(int idCompte) throws InterruptedException {
         final double[] solde = new double[1];
 
@@ -404,7 +444,12 @@ public class ConnexionBD extends Thread{
     }
 
 
-
+    /**
+     * Récupère la liste des transactions associées au compte bancaire spécifié par son identifiant.
+     * @param id_compte L'identifiant du compte bancaire.
+     * @return La liste des transactions du compte bancaire.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static ArrayList<TransactionBancaire> getTransaction(int id_compte) throws InterruptedException {
         CompteBancaire cpt = new CompteBancaire();
 
@@ -546,7 +591,15 @@ public class ConnexionBD extends Thread{
         return cpt.getListeTransactions();
     }
 
-
+    /**
+     * Effectue un transfert entre deux comptes bancaires.
+     * @param idUtilisateur L'identifiant de l'utilisateur effectuant le transfert.
+     * @param id_comptes_envoie L'identifiant du compte bancaire à partir duquel le montant est envoyé.
+     * @param id_compte_reception L'identifiant du compte bancaire qui reçoit le montant.
+     * @param montant Le montant à transférer.
+     * @return Le résultat du transfert (succès ou échec).
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static RecuLogin transfertEntreComptes(int idUtilisateur, int id_comptes_envoie, int id_compte_reception, double montant) throws InterruptedException {
 
         RecuLogin verifLog = new RecuLogin();
@@ -613,7 +666,18 @@ public class ConnexionBD extends Thread{
         return verifLog;
     }
 
-
+    /**
+     * Effectue un virement entre comptes bancaires appartenant à différentes personnes.
+     * @param idUtilisateur L'identifiant de l'utilisateur effectuant le virement.
+     * @param idCompteBancaireProvenant L'identifiant du compte bancaire à partir duquel le montant est envoyé.
+     * @param montant Le montant à transférer.
+     * @param courrielDest Le courriel de la personne recevant le virement.
+     * @param question La question de sécurité pour le virement.
+     * @param reponse La réponse à la question de sécurité pour le virement.
+     * @param confReponse La confirmation de la réponse à la question de sécurité pour le virement.
+     * @return Le résultat du virement (succès ou échec).
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static RecuLogin virementEntrePersonnes(int idUtilisateur, int idCompteBancaireProvenant, double montant, String courrielDest, String question, String reponse, String confReponse) throws InterruptedException {
 
         RecuLogin verifLog = new RecuLogin();
@@ -684,7 +748,16 @@ public class ConnexionBD extends Thread{
         return verifLog;
     }
 
-
+    /**
+     * Effectue un paiement de facture depuis un compte bancaire.
+     * @param idUtilisateur L'identifiant de l'utilisateur effectuant le paiement.
+     * @param id_compte L'identifiant du compte bancaire à partir duquel le paiement est effectué.
+     * @param etab Le nom de l'établissement ou de la facture à payer.
+     * @param num Le numéro ou la raison de la facture à payer.
+     * @param montant Le montant à payer.
+     * @return Le résultat du paiement (succès ou échec).
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
     public static RecuLogin effectuerPaiement ( int idUtilisateur, int id_compte, String etab, String num, double montant) throws InterruptedException {
 
         RecuLogin recu = new RecuLogin();
@@ -749,6 +822,19 @@ public class ConnexionBD extends Thread{
         return recu;
     }
 
+    /**
+     * Récupère les notifications pour un utilisateur donné.
+     * @param idUtilisateur L'identifiant de l'utilisateur dont on souhaite récupérer les notifications.
+     * @return La liste des notifications de l'utilisateur.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
+
+
+
+
+
+    /********************************************* GET NOTIFICATIONS ******************************************/
+
 
     public static ArrayList<Notifications> getNotifications (int idUtilisateur) throws InterruptedException {
 
@@ -789,6 +875,7 @@ public class ConnexionBD extends Thread{
                     ObjectMapper mapper = new ObjectMapper();
 
                     //Récupérer la réponse de l'API
+                    assert response.body() != null;
                     JSONObject obj = new JSONObject(response.body().string());
                     JSONArray jsonArray = obj.getJSONArray("notificationsEtTransactions");
 
@@ -829,24 +916,22 @@ public class ConnexionBD extends Thread{
                         listeNotifications.add(notification);
 
                         //TESTS
-                        Log.e("TAG", "ID NOTIF: " + notifJSON.get("id_notif"));
-                        Log.e("TAG", "CompteId NOTIF: " + notifJSON.get("CompteId"));
-                        Log.e("TAG", "idTransaction NOTIF: " + notifJSON.get("idTransaction"));
-                        Log.e("TAG", "titre NOTIF: " + notifJSON.get("titre"));
-                        Log.e("TAG", "contenu NOTIF: " + notifJSON.get("contenu"));
-                        Log.e("TAG", "dateRecu NOTIF: " + notifJSON.get("dateRecu"));
-                        Log.e("TAG", "lu NOTIF: " + notifJSON.get("lu"));
-                        Log.e("TAG", "enAttente NOTIF: " + notifJSON.get("enAttente"));
-                        Log.e("TAG", "question NOTIF: " + notifJSON.get("question"));
-                        Log.e("TAG", "reponse NOTIF: " + notifJSON.get("reponse"));
+                        Log.e("testNotif", "ID NOTIF: " + notifJSON.get("id_notif"));
+                        Log.e("testNotif", "CompteId NOTIF: " + notifJSON.get("CompteId"));
+                        Log.e("testNotif", "idTransaction NOTIF: " + notifJSON.get("idTransaction"));
+                        Log.e("testNotif", "titre NOTIF: " + notifJSON.get("titre"));
+                        Log.e("testNotif", "contenu NOTIF: " + notifJSON.get("contenu"));
+                        Log.e("testNotif", "dateRecu NOTIF: " + notifJSON.get("dateRecu"));
+                        Log.e("testNotif", "lu NOTIF: " + notifJSON.get("lu"));
+                        Log.e("testNotif", "enAttente NOTIF: " + notifJSON.get("enAttente"));
+                        Log.e("testNotif", "question NOTIF: " + notifJSON.get("question"));
+                        Log.e("testNotif", "reponse NOTIF: " + notifJSON.get("reponse"));
                     }
 
                     //Stocker la réponse
                     //recu.setReponse(reponse);
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (JSONException e) {
+                } catch (IOException | JSONException e) {
                     throw new RuntimeException(e);
                 }
 
@@ -862,10 +947,93 @@ public class ConnexionBD extends Thread{
 
 
 
-    public static int deleteNotif (int idUtilisateur, int idNotif, String finURL) throws InterruptedException {
-        //Si on efface une notification unique, on va retourner son ID
-        final int[] idNotifAEffacer = {-1};
+    /************************************* RECEPTION NOTIFICATION UTILISATEUR *************************/
 
+    public static ArrayList<String> receptionTransfertEntreUtilisateur(String decision, String inputReponse, int idTransaction, int idUser) throws InterruptedException {
+
+        ArrayList<String> receptionResultat = new ArrayList<>();
+
+        Thread p = new Thread(){
+
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+
+                JSONObject virement = new JSONObject();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        //Envoyer toutes les données
+                        virement.append("decision",decision);
+                        virement.append("inputReponse", inputReponse);
+                        virement.append("idTransaction", idTransaction);
+                        virement.append("idUser", idUser);
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                //Faire la requête
+                final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                RequestBody putBody = RequestBody.create(JSON, virement.toString());
+                Request put = new Request.Builder()
+                        .url(apiPathVirementPersonnesReception)
+                        .put(putBody)
+                        .build();
+
+                try(Response response = client.newCall(put).execute())
+                {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
+
+                    ResponseBody responseBody = response.body();
+                    ObjectMapper mapper = new ObjectMapper();
+
+                    //Récupérer la réponse de l'API
+                    assert response.body() != null;
+                    JSONObject obj = new JSONObject(response.body().string());
+
+                    if(obj.getInt("code") != 201)
+                    {
+                        JSONArray reception = obj.getJSONArray("erreur");
+                        for(int i = 0; i < reception.length(); i++)
+                        {
+                            String temp = reception.get(i).toString();
+                            receptionResultat.add(temp);
+                        }
+                    }
+                    else
+                    {
+                        receptionResultat.add(obj.get("msgSucces").toString());
+                    }
+
+                }catch (IOException | JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+            currentThread().interrupt();
+
+            }
+        };
+
+        p.start();
+        p.join();
+
+        return receptionResultat;
+
+    }
+
+    /**
+     * Supprime une notification pour un utilisateur donné.
+     * @param idUtilisateur L'identifiant de l'utilisateur dont on souhaite supprimer la notification.
+     * @param idNotif L'identifiant de la notification à supprimer.
+     * @param finURL La partie finale de l'URL de l'API pour la suppression des notifications.
+     * @return L'identifiant de la notification supprimée, ou -1 s'il n'y a aucune notification supprimée.
+     * @throws InterruptedException Si une interruption est survenue pendant l'exécution.
+     */
+    public static void deleteNotif (int idUtilisateur, int idNotif, String finURL) throws InterruptedException {
         Thread p = new Thread() {
 
             @Override
@@ -903,13 +1071,13 @@ public class ConnexionBD extends Thread{
                     JSONObject obj = new JSONObject(response.body().string());
                     JSONArray arrayNotifsEffacees = obj.getJSONArray("resultat");
 
-                    //S'il y a une seule notification effacée, on retourne son ID
-                    if (arrayNotifsEffacees.length() == 1) {
+                    //Itérer chaque notification pour les instancier en tant qu'objet Notification
+                    for(int i = 0; i < arrayNotifsEffacees.length(); i++) {
                         //Créer un objet JSON pour chaque notification
-                        JSONObject notifJSON = arrayNotifsEffacees.getJSONObject(0);
+                        JSONObject notifJSON = arrayNotifsEffacees.getJSONObject(i);
 
                         //Get l'ID de la notif effacée
-                        idNotifAEffacer[0] = (Integer) notifJSON.get("id");
+                        int idNotif = (Integer) notifJSON.get("id");
                     }
 
                 } catch (IOException | JSONException e) {
@@ -922,7 +1090,5 @@ public class ConnexionBD extends Thread{
 
         p.start();
         p.join();
-
-        return idNotifAEffacer[0];
     }
 }
