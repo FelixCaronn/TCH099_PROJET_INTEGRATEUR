@@ -36,7 +36,7 @@ public class virementEntreCompte extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
+    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte, btnDeconnexion;
     RadioGroup radioGroup_de, radioGroup_vers;
     EditText montant;
     Button BtnTransfert;
@@ -62,6 +62,7 @@ public class virementEntreCompte extends AppCompatActivity {
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
         BtnTransfert = findViewById(R.id.btnTrans);
+        btnDeconnexion = findViewById(R.id.btnDeconnexion);
 
         try {
             ArrayList<CompteBancaire> liste = ConnexionBD.getComptes(user.getId());
@@ -243,6 +244,21 @@ public class virementEntreCompte extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 recreate();
+            }
+        });
+
+        // Déconnexion de l'utilisateur
+        btnDeconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Arrêt de toutes les activités de l'application
+                finishAffinity();
+
+                // Redirection vers la page de connexion
+                Intent intent = new Intent(getApplicationContext(), PageConnection.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Vous avez bien été déconnecté(e)", Toast.LENGTH_SHORT).show();
             }
         });
 

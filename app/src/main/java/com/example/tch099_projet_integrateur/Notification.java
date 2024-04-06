@@ -24,6 +24,7 @@ import com.example.tch099_projet_integrateur.info_user.RecuLogin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Cette activité gère l'affichage et la gestion des notifications pour l'utilisateur.
@@ -34,7 +35,7 @@ public class Notification extends AppCompatActivity {
     // Déclaration des variables membres
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
+    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte, btnDeconnexion;
     ListView listViewNoti;
     List<Notifications> arrayNoti;
     static NotificationAdapter adapter;
@@ -75,8 +76,8 @@ public class Notification extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Gérer le clic sur une notification spécifique
                 Notifications notifSelectionnee = (Notifications) parent.getAdapter().getItem(position);
-                
-                if(notifSelectionnee.getQuestion() != null)
+
+                if(notifSelectionnee.getEnAttente() == 1 && !Objects.equals(PagePrincipale.user.getCourriel(), notifSelectionnee.getCourrielProvenant()))
                 {
                     try {
                         // Afficher un dialogue pour gérer la réponse à la notification
@@ -116,6 +117,7 @@ public class Notification extends AppCompatActivity {
         support = findViewById(R.id.support);
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
+        btnDeconnexion = findViewById(R.id.btnDeconnexion);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,6 +172,21 @@ public class Notification extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 redirectActivity(Notification.this, virementEntreCompte.class);
+            }
+        });
+
+        // Déconnexion de l'utilisateur
+        btnDeconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Arrêt de toutes les activités de l'application
+                finishAffinity();
+
+                // Redirection vers la page de connexion
+                Intent intent = new Intent(getApplicationContext(), PageConnection.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Vous avez bien été déconnecté(e)", Toast.LENGTH_SHORT).show();
             }
         });
 

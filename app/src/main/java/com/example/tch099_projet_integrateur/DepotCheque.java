@@ -45,7 +45,7 @@ public class DepotCheque extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
+    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte, btnDeconnexion;
     ImageView recto, verso;
     EditText montantDepot;
     Button deposer;
@@ -70,6 +70,8 @@ public class DepotCheque extends AppCompatActivity {
         support = findViewById(R.id.support);
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
+        btnDeconnexion = findViewById(R.id.btnDeconnexion);
+
         recto = findViewById(R.id.imgRecto);
         verso = findViewById(R.id.imgVerso);
         deposer = findViewById(R.id.buttonDepot);
@@ -151,6 +153,22 @@ public class DepotCheque extends AppCompatActivity {
 
             }
         });
+
+        // Déconnexion de l'utilisateur
+        btnDeconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Arrêt de toutes les activités de l'application
+                finishAffinity();
+
+                // Redirection vers la page de connexion
+                Intent intent = new Intent(getApplicationContext(), PageConnection.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Vous avez bien été déconnecté(e)", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         montantDepot.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

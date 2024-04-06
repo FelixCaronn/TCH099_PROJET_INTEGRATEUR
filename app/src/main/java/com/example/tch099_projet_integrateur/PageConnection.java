@@ -80,6 +80,7 @@ public class PageConnection extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(this, resultat.getReponse(), Toast.LENGTH_SHORT).show();
             PagePrincipale.user.setNom(resultat.getNom());
             PagePrincipale.user.setId(resultat.getId());
+            PagePrincipale.user.setCourriel(resultat.getCourriel());
             PagePrincipale.redirectActivity(this, PagePrincipale.class);
 
             //Ajustement de la date de fin de session

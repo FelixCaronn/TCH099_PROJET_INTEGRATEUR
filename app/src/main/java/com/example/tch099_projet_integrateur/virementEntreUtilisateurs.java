@@ -29,7 +29,7 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
     RadioGroup radioGroup_de;
-    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
+    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte, btnDeconnexion;
     EditText montant, email, Question, reponse, confReponse;
     Button btnTrans;
 
@@ -53,6 +53,7 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
         support = findViewById(R.id.support);
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
+        btnDeconnexion = findViewById(R.id.btnDeconnexion);
 
         // Click listener pour ouvrir le menu
         menu.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +112,21 @@ public class virementEntreUtilisateurs extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 redirectActivity(virementEntreUtilisateurs.this, virementEntreCompte.class);
+            }
+        });
+
+        // Déconnexion de l'utilisateur
+        btnDeconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Arrêt de toutes les activités de l'application
+                finishAffinity();
+
+                // Redirection vers la page de connexion
+                Intent intent = new Intent(getApplicationContext(), PageConnection.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Vous avez bien été déconnecté(e)", Toast.LENGTH_SHORT).show();
             }
         });
 

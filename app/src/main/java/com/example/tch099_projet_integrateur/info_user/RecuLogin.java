@@ -8,6 +8,7 @@ public class RecuLogin {
     private int code;
     private String reponse;
     private String nom;
+    private String courriel;
     private int id;
 
     /**
@@ -83,4 +84,7 @@ public class RecuLogin {
     public void setReponse(String reponse) {
         this.reponse = reponse;
     }
+
+    public void setCourriel(String courriel) { this.courriel = courriel;}
+    public String getCourriel() { return this.courriel; }
 }

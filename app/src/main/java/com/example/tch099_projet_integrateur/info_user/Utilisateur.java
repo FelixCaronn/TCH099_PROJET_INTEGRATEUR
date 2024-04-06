@@ -12,6 +12,7 @@ public class Utilisateur {
 
     private String nom;
     private int id;
+    private String courriel;
 
     private ArrayList<CompteBancaire> listeComptes;
 
@@ -87,4 +88,7 @@ public class Utilisateur {
     {
         this.listeComptes.add(cpt);
     }
+
+    public void setCourriel(String courriel) { this.courriel = courriel; }
+    public String getCourriel() { return this.courriel; }
 }

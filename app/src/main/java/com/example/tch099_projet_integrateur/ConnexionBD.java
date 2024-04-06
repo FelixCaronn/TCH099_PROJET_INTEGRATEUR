@@ -115,9 +115,11 @@ public class ConnexionBD extends Thread{
                     {
                         //Stocker l'ID et le nom de l'utilisateur connecté
                         String userNom = json.get("nom").asText();
+                        String userEmail = json.get("courriel").asText();
                         int userId = json.get("id").asInt();
                         verifLog.setId(userId);
                         verifLog.setNom(userNom);
+                        verifLog.setCourriel(userEmail);
                     }
 
                     //Mettre le code et la réponse dans le login
@@ -905,9 +907,10 @@ public class ConnexionBD extends Thread{
 
                             String question = (String) notifJSON.get("question");
                             String reponse = (String) notifJSON.get("reponse");
+                            String courriel = (String) notifJSON.get("courrielProvenant");
 
                             //Créer la notification et l'ajouter à la liste
-                            notification = new Notifications(idNotif, CompteId, idTransaction, titre, contenu, dateRecu, lu, enAttente, question, reponse);
+                            notification = new Notifications(idNotif, CompteId, idTransaction, titre, contenu, dateRecu, lu, enAttente, question, reponse, courriel);
                         }
 
                         else {

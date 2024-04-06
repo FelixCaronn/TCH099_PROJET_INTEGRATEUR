@@ -31,7 +31,7 @@ public class paiementFacture extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
+    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte, btnDeconnexion;
     private List<CompteBancaire> lesComptes;
     RadioGroup radioGroup;
     EditText etablissement, num_ref, montant_facture;
@@ -55,6 +55,8 @@ public class paiementFacture extends AppCompatActivity {
         support = findViewById(R.id.support);
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
+        btnDeconnexion = findViewById(R.id.btnDeconnexion);
+
         radioGroup = findViewById(R.id.radioGroup_re);
         etablissement = findViewById(R.id.etablissement);
         num_ref = findViewById(R.id.num_ref);
@@ -114,6 +116,21 @@ public class paiementFacture extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 redirectActivity(paiementFacture.this, virementEntreCompte.class);
+            }
+        });
+
+        // Déconnexion de l'utilisateur
+        btnDeconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Arrêt de toutes les activités de l'application
+                finishAffinity();
+
+                // Redirection vers la page de connexion
+                Intent intent = new Intent(getApplicationContext(), PageConnection.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Vous avez bien été déconnecté(e)", Toast.LENGTH_SHORT).show();
             }
         });
 

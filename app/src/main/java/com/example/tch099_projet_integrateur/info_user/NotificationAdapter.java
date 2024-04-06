@@ -22,6 +22,7 @@ import com.example.tch099_projet_integrateur.PagePrincipale;
 import com.example.tch099_projet_integrateur.R;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Adaptateur pour afficher les notifications dans une liste.
@@ -75,6 +76,7 @@ public class NotificationAdapter extends ArrayAdapter<Notifications> {
         final Notifications noti = this.notifications.get(position);
 
         if (noti!=null){
+            //Chercher les composants de la notification
             Button supp;
             TextView date, titre, message;
             date = (TextView)view.findViewById(R.id.dateNoti);
@@ -82,12 +84,14 @@ public class NotificationAdapter extends ArrayAdapter<Notifications> {
             message = (TextView)view.findViewById(R.id.messageNoti);
             supp = (Button) view.findViewById(R.id.supprimer);
 
-
+            //Mettre le texte des notifications dans le layout
             date.setText(noti.getDateRecu());
             titre.setText(noti.getTitre());
             message.setText(noti.getContenu());
 
-            if (noti.getEnAttente() == 1) {
+            //Si la notification est pour la personne recevant le virement, on ajoute un message
+            // pour lui dire d'accepter/rejeter le virement
+            if (noti.getEnAttente() == 1 && !Objects.equals(PagePrincipale.user.getCourriel(), noti.getCourrielProvenant())) {
                 message.setText(noti.getContenu() + ". Cliquez sur la notification pour accepter/rejeter le virement.");
             }
 
@@ -99,10 +103,6 @@ public class NotificationAdapter extends ArrayAdapter<Notifications> {
                     // Essayer d'effacer la notification
                     try {
                         int idNotifEffacee = ConnexionBD.deleteNotif(PagePrincipale.user.getId(), noti.getId(), "");
-
-                        Log.e("TAG:", "ID NOTIF EFFACÉE: " + idNotifEffacee);
-                        Log.e("TAG:", "ID NOTIF: " + noti.getId());
-
 
                         // Seulement effacer si la BD retourne l'ID de la notification
                         if (noti.getId() == idNotifEffacee) {

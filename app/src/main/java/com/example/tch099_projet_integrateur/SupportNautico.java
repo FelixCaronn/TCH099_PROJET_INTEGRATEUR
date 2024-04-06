@@ -3,6 +3,7 @@ package com.example.tch099_projet_integrateur;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +19,7 @@ public class SupportNautico extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte;
+    LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte, btnDeconnexion;
     EditText editTextTitreSupport;
     EditText editTextTextMultiLine;
     Button btnEnvoyerSupport;
@@ -39,6 +40,8 @@ public class SupportNautico extends AppCompatActivity {
         support = findViewById(R.id.support);
         transfertClient = findViewById(R.id.transfertClient);
         transfertCompte = findViewById(R.id.transfertCompte);
+        btnDeconnexion = findViewById(R.id.btnDeconnexion);
+
         editTextTitreSupport = findViewById(R.id.editTextTitreSupport);
         editTextTextMultiLine = findViewById(R.id.editTextTextMultiLine);
         btnEnvoyerSupport = findViewById(R.id.btnEnvoyerSupport);
@@ -91,6 +94,21 @@ public class SupportNautico extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PagePrincipale.redirectActivity(SupportNautico.this, Notification.class);
+            }
+        });
+
+        // Déconnexion de l'utilisateur
+        btnDeconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Arrêt de toutes les activités de l'application
+                finishAffinity();
+
+                // Redirection vers la page de connexion
+                Intent intent = new Intent(getApplicationContext(), PageConnection.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Vous avez bien été déconnecté(e)", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -5,8 +5,7 @@ package com.example.tch099_projet_integrateur.info_user;
  */
 public class Notifications {
     private int id, compteId, transactionId, lu, enAttente;
-    private String titre, dateRecu, contenu, question, reponse;
-    private boolean doitRepondreQuestion;
+    private String titre, dateRecu, contenu, question, reponse, courrielProvenant;
 
     /**
      * Constructeur pour une notification avec question et réponse.
@@ -21,8 +20,10 @@ public class Notifications {
      * @param enAttente Indique si la notification est en attente.
      * @param question La question associée à la notification.
      * @param reponse La réponse associée à la notification.
+     * @param courrielProvenant Le courriel de la personne envoyant le virement
      */
-    public Notifications(int id, int compteId, int transactionId, String titre, String contenu, String dateRecu, int lu, int enAttente, String question, String reponse){
+    public Notifications(int id, int compteId, int transactionId, String titre, String contenu,
+                         String dateRecu, int lu, int enAttente, String question, String reponse, String courrielProvenant){
         this.lu = lu;
         this.compteId = compteId;
         this.contenu = contenu;
@@ -33,6 +34,7 @@ public class Notifications {
         this.enAttente = enAttente;
         this.question = question;
         this.reponse = reponse;
+        this.courrielProvenant = courrielProvenant;
 
         //this.doitRepondreQuestion = doitRepondreQuestion;
     }
@@ -114,5 +116,7 @@ public class Notifications {
     public int getEnAttente() {
         return enAttente;
     }
+
+    public String getCourrielProvenant() { return courrielProvenant; }
 
 }
