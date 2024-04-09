@@ -1,5 +1,7 @@
 package com.example.tch099_projet_integrateur;
 
+import static com.example.tch099_projet_integrateur.ConnexionBD.demandeAssistance;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -11,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.example.tch099_projet_integrateur.info_user.RecuLogin;
 
 /**
  * Cette activité permet à l'utilisateur d'envoyer un message de support.
@@ -123,7 +127,16 @@ public class SupportNautico extends AppCompatActivity {
                 if (!titre.isEmpty() && !message.isEmpty()) {
                     editTextTitreSupport.setText("");
                     editTextTextMultiLine.setText("");
-                    Toast.makeText(SupportNautico.this, "Message envoyé avec succès", Toast.LENGTH_SHORT).show();
+
+                    RecuLogin resultat;
+
+                    try {
+                        resultat = ConnexionBD.demandeAssistance(message);
+                        Toast.makeText(SupportNautico.this, resultat.getReponse(), Toast.LENGTH_SHORT).show();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 } else if (titre.isEmpty()) {
                     Toast.makeText(SupportNautico.this, "Veuillez saisir un titre", Toast.LENGTH_SHORT).show();
                 } else if (message.isEmpty()) {

@@ -57,7 +57,7 @@ public class ConnexionBD extends Thread{
     private static final String apiPathVirementPersonnes = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
     private static final String apiPathVirementPersonnesReception = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
     private static final String apiPathGetNotifications = "http://34.105.112.98/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
-
+    private static final String apiDemandeAssistance = "http://34.105.112.98/TCH099_FishFric/Site_web/demanderSupport/API/demandeAssistance.php";
 
     /**
      * Fonction qui verifie et  effectue la connexion de l'utilisateur.
@@ -1099,5 +1099,64 @@ public class ConnexionBD extends Thread{
         p.join();
 
         return idNotifAEffacer[0];
+    }
+
+
+    public static RecuLogin demandeAssistance(String message) throws InterruptedException {
+
+        RecuLogin recu = new RecuLogin();
+        Thread p = new Thread(){
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+
+                JSONObject postData = new JSONObject();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        //Ajouter les données d'informations sur le client qu'on veut créer
+                        postData.append("messageRecu", message);
+                        postData.append("idUtilisateur", PagePrincipale.user.getId());
+                        postData.append("mobile", true);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                //Envoyer la requête avec les données
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody postBody = RequestBody.create(JSON, postData.toString());
+                Request post = new Request.Builder()
+                        .url(apiDemandeAssistance)
+                        .post(postBody)
+                        .build();
+
+                try(Response response = client.newCall(post).execute()){
+
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+                    ResponseBody responseBody = response.body();
+                    ObjectMapper mapper = new ObjectMapper();
+
+                    //Récupérer le résultat que retourne l'API
+                    JsonNode json = mapper.readTree(responseBody.string());
+                    String reponse = json.get("reponse").asText();
+                    String codeRes = json.get("code").asText();
+
+                    //Stocker le résultat de l'API et le retourner à la fin
+                    int code = Integer.parseInt(codeRes);
+                    recu.setCode(code);
+                    recu.setReponse(reponse);
+
+                } catch (Exception e) {
+                    Log.e("TAG", "Error calling API code : 404");
+                }
+            }
+        };
+
+        p.start();
+        p.join();
+
+        return recu;
     }
 }
