@@ -4,80 +4,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4361EE"
+    android:background="@drawable/page_acceuil_background"
     tools:context=".PageAcceuil">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <Button
+            android:id="@+id/btnConnexion"
+            android:layout_width="330dp"
+            android:layout_height="48dp"
+            android:backgroundTint="#0496FF"
+            android:fontFamily="@font/montserrat_bold"
+            android:shadowColor="@color/black"
+            android:text="@string/connectez_vous"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.765" />
 
-            <Button
-                android:id="@+id/btnConnexion"
-                android:layout_width="330dp"
-                android:layout_height="48dp"
-                android:backgroundTint="#0496FF"
-                android:fontFamily="@font/montserrat_bold"
-                android:shadowColor="@color/black"
-                android:text="@string/connectez_vous"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.506"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.745" />
+        <Button
+            android:id="@+id/btnCreer"
+            android:layout_width="330dp"
+            android:layout_height="48dp"
+            android:backgroundTint="#FFBC42"
+            android:fontFamily="@font/montserrat_bold"
+            android:shadowColor="@color/black"
+            android:text="@string/cr_er_un_compte"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnConnexion"
+            app:layout_constraintVertical_bias="0.427" />
 
-            <Button
-                android:id="@+id/btnCreer"
-                android:layout_width="330dp"
-                android:layout_height="48dp"
-                android:backgroundTint="#FFBC42"
-                android:fontFamily="@font/montserrat_bold"
-                android:shadowColor="@color/black"
-                android:text="@string/cr_er_un_compte"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.506"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnConnexion"
-                app:layout_constraintVertical_bias="0.758" />
+        <TextView
+            android:id="@+id/textBonjour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/bonjour"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/btnConnexion"
+            app:layout_constraintEnd_toEndOf="@+id/btnConnexion"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/btnConnexion"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.97" />
 
-            <TextView
-                android:id="@+id/textBonjour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="@string/bonjour"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/btnConnexion"
-                app:layout_constraintEnd_toEndOf="@+id/btnConnexion"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/btnConnexion"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.943" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="@string/vous_n_avez_pas_de_compte"
-                android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/btnCreer"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/btnCreer"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.865" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/vous_n_avez_pas_de_compte"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btnCreer"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/btnCreer"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.823" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView

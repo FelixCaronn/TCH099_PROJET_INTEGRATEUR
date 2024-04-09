@@ -31,6 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="450dp"
             android:layout_weight="85"
+            android:divider="@null"
+            android:dividerHeight="-20dp"
+            android:footerDividersEnabled="true"
             android:paddingHorizontal="10dp"
             android:textColor="@color/black" />
 
@@ -38,13 +41,14 @@
             android:id="@+id/btnNautico"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_weight="15"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_marginTop="40dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/black"
+            android:layout_marginBottom="35dp"
+            android:layout_weight="15"
             android:backgroundTint="#ff4747"
+            android:fontFamily="@font/montserrat_bold"
             android:text="Assistance Nautico"
+            android:textColor="@color/black"
             android:textSize="20dp" />
 
 
