@@ -47,17 +47,17 @@ import okhttp3.ResponseBody;
 public class ConnexionBD extends Thread{
 
     //Adresses des API du site web qu'on utilise pour get/post nos données
-    private static final String apiPathVerifLogin = "http://34.105.112.98/TCH099_FishFric/Site_web/Connexion/API/apiConnexion.php";
-    private static final String apiPathCreationCompte = "http://34.105.112.98/TCH099_FishFric/Site_web/Creer_un_compte/API/apiCreerCompte.php";
-    private static final String apiPathListeComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/Liste_compte/API/afficherComptes.php";
-    private static final String apiPathDepotMobile = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/depotMobile.php";
-    private static final String apiPathListeTransaction = "http://34.105.112.98/TCH099_FishFric/Site_web/consulterCompte/API/getCompte.php";
-    private static final String apiPathTransfertComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/compte";
-    private static final String apiPathPayerFacture = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/facture";
-    private static final String apiPathVirementPersonnes = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
-    private static final String apiPathVirementPersonnesReception = "http://34.105.112.98/TCH099_FishFric/Site_web/Transfert/API/gestionTransfertmobile.php/utilisateurReception";
-    private static final String apiPathGetNotifications = "http://34.105.112.98/TCH099_FishFric/Site_web/Liste_compte/API/afficherNotificationsMobile.php";
-    private static final String apiDemandeAssistance = "http://34.105.112.98/TCH099_FishFric/Site_web/demanderSupport/API/demandeAssistance.php";
+    private static final String apiPathVerifLogin = "http://34.105.112.98/TCH099_FishFric/Site_web/pageConnexion/API/apiConnexion.php";
+    private static final String apiPathCreationCompte = "http://34.105.112.98/TCH099_FishFric/Site_web/pageCreerCompte/API/apiCreerCompte.php";
+    private static final String apiPathListeComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/pageListeCompte/API/afficherComptes.php";
+    private static final String apiPathDepotMobile = "http://34.105.112.98/TCH099_FishFric/Site_web/transfert/API/depotMobile.php";
+    private static final String apiPathListeTransaction = "http://34.105.112.98/TCH099_FishFric/Site_web/pageConsulterCompte/API/getCompte.php";
+    private static final String apiPathTransfertComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/transfert/API/gestionTransfertmobile.php/compte";
+    private static final String apiPathPayerFacture = "http://34.105.112.98/TCH099_FishFric/Site_web/transfert/API/gestionTransfertmobile.php/facture";
+    private static final String apiPathVirementPersonnes = "http://34.105.112.98/TCH099_FishFric/Site_web/transfert/API/gestionTransfertmobile.php/utilisateurEnvoi";
+    private static final String apiPathVirementPersonnesReception = "http://34.105.112.98/TCH099_FishFric/Site_web/transfert/API/gestionTransfertmobile.php/utilisateurReception";
+    private static final String apiPathGetNotifications = "http://34.105.112.98/TCH099_FishFric/Site_web/pageListeCompte/API/afficherNotificationsMobile.php";
+    private static final String apiDemandeAssistance = "http://34.105.112.98/TCH099_FishFric/Site_web/pageDemanderSupport/API/demandeAssistance.php";
 
     /**
      * Fonction qui verifie et  effectue la connexion de l'utilisateur.
