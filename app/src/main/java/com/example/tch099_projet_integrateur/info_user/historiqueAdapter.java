@@ -117,6 +117,9 @@ public class historiqueAdapter extends ArrayAdapter<TransactionBancaire> {
                 case VIREMENT_REFUSE:
                     descriptionHistorique.setText("Virement refusé / " + transaction.getNomEtablissement());
                     break;
+                case INTERET:
+                    descriptionHistorique.setText("Intérêts");
+                    break;
                 default:
                     descriptionHistorique.setText("Autre type");
                     break;
