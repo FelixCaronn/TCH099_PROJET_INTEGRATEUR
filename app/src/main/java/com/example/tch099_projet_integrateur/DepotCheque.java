@@ -210,7 +210,7 @@ public class DepotCheque extends AppCompatActivity {
                         //attention, hardcode pour la photo du cheque...
                         //Bitmap resizedBmp = Bitmap.createBitmap(bitmap,(int)(0.81315*bitmap.getWidth()),(int)(0.35389*bitmap.getHeight()),(int)(0.1050708*bitmap.getWidth()),(int)(0.07077*bitmap.getHeight()));
                         //dimension image = 2189x989
-                        if (bitmap.getWidth()>1780 && bitmap.getHeight()>350){
+                        if (bitmap.getWidth()>2010 && bitmap.getHeight()>420){
                             resizedBmp = Bitmap.createBitmap(bitmap, 1780, 350, 230, 70);
                         }
                         else{
