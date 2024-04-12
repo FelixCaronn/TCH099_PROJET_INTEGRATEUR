@@ -17,7 +17,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="63dp">
 
             <TextView
                 android:id="@+id/textView"
@@ -53,8 +53,11 @@
             android:id="@+id/listNoti"
             android:layout_width="match_parent"
 
-            android:layout_height="500dp"
-            android:focusable="true" />
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:dividerHeight="25px"
+            android:focusable="true"
+            android:footerDividersEnabled="false" />
 
 
 

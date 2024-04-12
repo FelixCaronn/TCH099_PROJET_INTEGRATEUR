@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 /**
@@ -24,7 +25,7 @@ public class CreerCompte extends AppCompatActivity implements View.OnClickListen
     EditText confirmationMdp;
     Button btnCreer;
 
-    Button btnRetour;
+    ImageButton btnRetour;
 
     /**
      * Méthode exécutée lors de la création de l'activité.

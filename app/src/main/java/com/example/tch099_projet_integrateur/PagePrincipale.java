@@ -1,11 +1,15 @@
 package com.example.tch099_projet_integrateur;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +25,15 @@ import com.example.tch099_projet_integrateur.enumerations.typeCompte;
 import com.example.tch099_projet_integrateur.info_user.CompteAdapter;
 import com.example.tch099_projet_integrateur.info_user.CompteBancaire;
 import com.example.tch099_projet_integrateur.info_user.Utilisateur;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.DataSet;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.Utils;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,7 +49,7 @@ public class PagePrincipale extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte, btnDeconnexion;
-    TextView bjrTxt;
+    TextView bjrTxt, soldeCourant;
     ListView lvComptes;
     Button btnNautico;
 
@@ -52,6 +65,10 @@ public class PagePrincipale extends AppCompatActivity {
     // Calendrier pour gérer la session de l'utilisateur
     static Calendar calendrier = Calendar.getInstance();
     static Date endTime;
+
+
+
+    private  ArrayList<Float> solde;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +99,8 @@ public class PagePrincipale extends AppCompatActivity {
         btnDeconnexion = findViewById(R.id.btnDeconnexion);
         lvComptes = findViewById(R.id.lvComptes);
         btnNautico = findViewById(R.id.btnNautico);
+        soldeCourant = findViewById(R.id.txtSoldeCourrant);
+
 
         // Gestion des événements sur les éléments de l'interface utilisateur
         menu.setOnClickListener(new View.OnClickListener() {
@@ -183,6 +202,69 @@ public class PagePrincipale extends AppCompatActivity {
                 startActivity(Assistance);
             }
         });
+
+        //Call API afin d'obtenir les sommes des 7 derniers jours
+        try {
+            solde = ConnexionBD.getSommeComptes(user.getId());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        String soldecour = solde.get(solde.size()-1).toString();
+        soldeCourant.setText(soldecour+"$");
+
+        //Prendre graphique
+        LineChart graph = (LineChart) findViewById(R.id.chart);
+
+        List<Entry> donnees = new ArrayList<Entry>();
+        for(int i = 0; i < solde.size(); i++)
+        {
+            //Ajout des donnees
+            donnees.add(new Entry(i, solde.get(i)));
+        }
+
+        //Initialiser le dataSet
+        LineDataSet data = new LineDataSet(donnees, "Solde");
+        data.setDrawValues(false);
+        data.setValueTextSize(0);
+        data.setDrawCircles(false);
+
+
+        data.setDrawFilled(true);
+        //Initialisation d'un drawable afin d'afficher le gradient sous le courbe
+        if(Utils.getSDKInt() >= 18)
+        {
+            Drawable drawable = ContextCompat.getDrawable(this,R.drawable.graphique_gradient);
+            data.setFillDrawable(drawable);
+        }
+
+        LineData lineData = new LineData(data);
+        lineData.setDrawValues(true);
+
+        //Cacher les axes du graphiques
+        graph.setData(lineData);
+        graph.getAxisLeft().setDrawLabels(false);
+        graph.getAxisRight().setDrawLabels(false);
+        graph.getAxisRight().setDrawGridLines(false);
+        graph.getAxisRight().setDrawAxisLine(false);
+        graph.getAxisLeft().setDrawGridLines(false);
+        graph.getAxisLeft().setDrawAxisLine(false);
+        graph.getXAxis().setDrawGridLines(false);
+        graph.getXAxis().setDrawLabels(false);
+        graph.getXAxis().setDrawAxisLine(false);
+        graph.setDescription(new Description());
+        graph.setDrawGridBackground(false);
+        graph.setDrawBorders(false);
+        graph.setAutoScaleMinMaxEnabled(true);
+        graph.setBorderWidth(0);
+        graph.getDescription().setEnabled(false);
+
+        // hide legend
+        Legend legend = graph.getLegend();
+        legend.setEnabled(false);
+
+
+        graph.invalidate();
+
     }
 
     // Ouvrir le tiroir de navigation

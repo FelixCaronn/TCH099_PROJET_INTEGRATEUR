@@ -33,6 +33,8 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+
 }
 
 dependencies {
@@ -64,7 +66,10 @@ dependencies {
     implementation ("com.fasterxml.jackson.core:jackson-databind:2.16.1")
 
     //OkHttp
-    implementation ("com.squareup.okhttp3:okhttp:3.12.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+
+    //Graphique
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 
 }

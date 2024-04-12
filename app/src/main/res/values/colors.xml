@@ -8,8 +8,10 @@
     <color name="colorAccent">#FF5252</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorHeader">#050856</color>
-    <color name="colorBody">#ddf0fd</color>
+    <color name="colorBody">#ECF5FB</color>
     <color name="colorSupport">#F3F2F2</color>
     <color name="jaune">#FFE491</color>
+    <color name="startGradient">#7EDBF3</color>
+    <color name="middleGradient">#91FBF3</color>
 
 </resources>

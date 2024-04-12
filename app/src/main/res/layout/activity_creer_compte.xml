@@ -1,236 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/popup_background_question"
     android:orientation="vertical"
-    android:paddingRight="10dp"
     tools:context=".CreerCompte">
 
-    <RelativeLayout
-        android:id="@+id/constraintLayout8"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="368dp"
         android:layout_height="wrap_content"
-        android:foregroundGravity="center"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_above="@+id/imageView2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="center|top"
+        android:text="@string/f_licitation_vous_tes_a_2_coups_de_nageoires_de_rejoindre_le_banc_poissons"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnRetourCreation"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="14dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:gravity="center|top"
-            android:text="@string/f_licitation_vous_tes_a_2_coups_de_nageoires_de_rejoindre_le_banc_poissons"
-            android:textColor="@color/colorWhite"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/textViewConfirmationMdp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/editTextMdpConfirmation"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="129dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/montserrat_light"
-            android:text="@string/confirmer_mot_de_passe"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/textViewMdp"
-            android:layout_width="145dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/editTextMdpCreer"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="217dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/montserrat_light"
-            android:text="@string/mot_de_passe"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/textViewCourriel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/editTextCourrielCreer"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginEnd="242dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/montserrat_light"
-            android:text="@string/courriel"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/textViewNom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/editTextNomCreer"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="266dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/montserrat_light"
-            android:text="@string/nom"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/textViewPrenom"
-            android:layout_width="95dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/editTextPrenomCreer"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="257dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/montserrat_light"
-            android:text="@string/prenom"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout8"
+        android:layout_width="match_parent"
+        android:layout_height="523dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:background="@color/colorWhite"
+        android:foregroundGravity="center">
 
         <EditText
             android:id="@+id/editTextNomCreer"
             android:layout_width="336dp"
-            android:layout_height="30dp"
-            android:layout_above="@+id/textViewPrenom"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rectangle_blanc"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:ems="10"
+            android:hint="@string/nom"
             android:inputType="text"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/editTextPrenomCreer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/editTextPrenomCreer"
             android:layout_width="336dp"
-            android:layout_height="30dp"
-            android:layout_above="@+id/textViewCourriel"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rectangle_blanc"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:ems="10"
+            android:hint="@string/prenom"
             android:inputType="text"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/editTextCourrielCreer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/editTextCourrielCreer"
             android:layout_width="336dp"
-            android:layout_height="30dp"
-            android:layout_above="@+id/textViewMdp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rectangle_blanc"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:ems="10"
+            android:hint="@string/courriel"
             android:inputType="textEmailAddress"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/editTextMdpCreer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/editTextMdpCreer"
             android:layout_width="336dp"
-            android:layout_height="30dp"
-            android:layout_above="@+id/textViewConfirmationMdp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rectangle_blanc"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:ems="10"
+            android:hint="@string/mot_de_passe"
             android:inputType="textPassword"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/editTextMdpConfirmation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/editTextMdpConfirmation"
             android:layout_width="336dp"
-            android:layout_height="30dp"
-            android:layout_above="@+id/btnCreationCompte"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/rectangle_blanc"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="33dp"
             android:ems="10"
+            android:hint="@string/confirmer_mot_de_passe"
             android:inputType="textPassword"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/btnCreationCompte"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btnCreationCompte"
             android:layout_width="238dp"
             android:layout_height="48dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="75dp"
-            android:layout_marginEnd="75dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="60dp"
             android:backgroundTint="#3E3D3D"
             android:fontFamily="@font/montserrat_light"
             android:text="@string/cr_er_compte"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="253dp"
-            android:layout_height="131dp"
-            android:layout_above="@+id/textViewNom"
-            android:layout_below="@+id/textView11"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="29dp"
-            android:layout_marginEnd="69dp"
-            android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/dophinpopup" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/btnRetourCreation"
-            android:layout_width="60dp"
-            android:layout_height="56dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:backgroundTint="#00FFFFFF"
-            android:gravity="start"
-            android:paddingRight="10dp"
-            android:text="@string/fleche"
-            android:textSize="34sp" />
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="290dp"
+        android:layout_height="231dp"
+        android:layout_above="@+id/constraintLayout8"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="-98dp"
+        app:srcCompat="@drawable/poulpe_creation" />
 
-    </RelativeLayout>
+    <ImageButton
+        android:id="@+id/btnRetourCreation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:backgroundTint="#00FFFFFF"
+        app:srcCompat="@drawable/ic_retour" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

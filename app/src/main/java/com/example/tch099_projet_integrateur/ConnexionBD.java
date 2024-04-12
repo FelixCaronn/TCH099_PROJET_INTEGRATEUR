@@ -59,6 +59,8 @@ public class ConnexionBD extends Thread{
     private static final String apiPathGetNotifications = "http://34.105.112.98/TCH099_FishFric/Site_web/pageListeCompte/API/afficherNotificationsMobile.php";
     private static final String apiDemandeAssistance = "http://34.105.112.98/TCH099_FishFric/Site_web/pageDemanderSupport/API/demandeAssistance.php";
 
+    private static final String apiSommeComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/pageListeCompte/API/sommeComptesMobile.php";
+
     /**
      * Fonction qui verifie et  effectue la connexion de l'utilisateur.
      * @param username Le nom d'utilisateur à vérifier.
@@ -1159,4 +1161,64 @@ public class ConnexionBD extends Thread{
 
         return recu;
     }
+
+    public static ArrayList<Float> getSommeComptes(int idUser) throws InterruptedException {
+        ArrayList<Float> sommeComptes = new ArrayList<>();
+        Thread p = new Thread(){
+
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+                JSONObject postData = new JSONObject();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        //Ajouter les données d'informations sur le client qu'on veut créer
+                        postData.append("idUser", idUser);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    //Envoyer la requête avec les données
+                    final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                    RequestBody postBody = RequestBody.create(JSON, postData.toString());
+                    Request post = new Request.Builder()
+                            .url(apiSommeComptes)
+                            .post(postBody)
+                            .build();
+
+                    try(Response response = client.newCall(post).execute())
+                    {
+                        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+                        ResponseBody responseBody = response.body();
+                        ObjectMapper mapper = new ObjectMapper();
+
+                        //Récupérer la réponse de l'API
+                        JSONObject obj = new JSONObject(response.body().string());
+                        JSONArray arrayNotifsEffacees = obj.getJSONArray("comptes");
+
+                        for(int i = 0; i < arrayNotifsEffacees.length(); i++)
+                        {
+                            JSONObject temp = arrayNotifsEffacees.getJSONObject(i);
+                            sommeComptes.add((float)temp.getDouble("solde"));
+                        }
+
+
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }
+
+        };
+        p.start();
+        p.join();
+
+        return sommeComptes;
+    }
+
 }
