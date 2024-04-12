@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.app.ProgressDialog;
 import android.widget.ProgressBar;
@@ -48,6 +49,7 @@ public class PageConnection extends AppCompatActivity implements View.OnClickLis
     EditText courriel;
     EditText motdepasse;
     Button btnSoumettre;
+    ImageButton btnRetour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,15 @@ public class PageConnection extends AppCompatActivity implements View.OnClickLis
         motdepasse = findViewById(R.id.editTextMdp);
         btnSoumettre = findViewById(R.id.btnLogin);
         btnSoumettre.setOnClickListener(this);
+
+        //Ajouté événement clic pour retourner à la page principale
+        btnRetour = findViewById(R.id.btnBack);
+        btnRetour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PagePrincipale.redirectActivity(PageConnection.this, PageAcceuil.class);
+            }
+        });
     }
 
     @Override
