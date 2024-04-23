@@ -99,6 +99,13 @@ public class ConsulterCompte extends AppCompatActivity {
             }
         });
 
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(ConsulterCompte.this, PagePrincipale.class);
+            }
+        });
+
         depot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

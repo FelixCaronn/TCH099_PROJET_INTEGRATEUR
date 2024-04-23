@@ -61,6 +61,8 @@ public class ConnexionBD extends Thread{
 
     private static final String apiSommeComptes = "http://34.105.112.98/TCH099_FishFric/Site_web/pageListeCompte/API/sommeComptesMobile.php";
 
+    private static final String apiUpdateSoldeJour = "http://34.105.112.98/TCH099_FishFric/Site_web/pageListeCompte/API/sommeComptesMobile.php/updateSolde";
+
     /**
      * Fonction qui verifie et  effectue la connexion de l'utilisateur.
      * @param username Le nom d'utilisateur à vérifier.
@@ -1178,7 +1180,7 @@ public class ConnexionBD extends Thread{
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
-
+                }
                     //Envoyer la requête avec les données
                     final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
                     RequestBody postBody = RequestBody.create(JSON, postData.toString());
@@ -1210,8 +1212,6 @@ public class ConnexionBD extends Thread{
                         e.printStackTrace();
                     }
 
-                }
-
             }
 
         };
@@ -1219,6 +1219,48 @@ public class ConnexionBD extends Thread{
         p.join();
 
         return sommeComptes;
+    }
+
+    public static void updateSoldeDuJour(double soldeTotal, int idUser) throws InterruptedException {
+        Thread p = new Thread(){
+            @Override
+            public void run() {
+
+                OkHttpClient client = new OkHttpClient();
+                JSONObject data = new JSONObject();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        //Ajouter les données d'informations sur le client qu'on veut créer
+                        data.append("id", idUser);
+                        data.append("solde", soldeTotal);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                //Envoyer la requête avec les données
+                final MediaType JSON = MediaType.parse("application/json, charset=utf-8");
+                RequestBody postBody = RequestBody.create(JSON, data.toString());
+                Request post = new Request.Builder()
+                        .url(apiUpdateSoldeJour)
+                        .post(postBody)
+                        .build();
+
+                try(Response response = client.newCall(post).execute())
+                {
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+                    Log.e("UpdateSolde", "Update avec succes");
+
+
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        };
+        p.start();
+        p.join();
     }
 
 }

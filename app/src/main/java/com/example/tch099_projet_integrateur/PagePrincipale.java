@@ -49,7 +49,7 @@ public class PagePrincipale extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, depot, facture, notification, support, transfertClient, transfertCompte, btnDeconnexion;
-    TextView bjrTxt, soldeCourant;
+    TextView  soldeCourant;
     ListView lvComptes;
     Button btnNautico;
 
@@ -202,6 +202,12 @@ public class PagePrincipale extends AppCompatActivity {
                 startActivity(Assistance);
             }
         });
+        //Update le solde total
+        try {
+            ConnexionBD.updateSoldeDuJour(user.getSoldeTotal(), user.getId());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         //Call API afin d'obtenir les sommes des 7 derniers jours
         try {
@@ -210,7 +216,7 @@ public class PagePrincipale extends AppCompatActivity {
             throw new RuntimeException(e);
         }
         String soldecour = solde.get(solde.size()-1).toString();
-        soldeCourant.setText(soldecour+"$");
+        soldeCourant.setText("$ "+soldecour);
 
         //Prendre graphique
         LineChart graph = (LineChart) findViewById(R.id.chart);

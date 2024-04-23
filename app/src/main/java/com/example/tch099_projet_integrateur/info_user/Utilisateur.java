@@ -91,4 +91,16 @@ public class Utilisateur {
 
     public void setCourriel(String courriel) { this.courriel = courriel; }
     public String getCourriel() { return this.courriel; }
+
+    public double getSoldeTotal()
+    {
+        double solde = 0;
+
+        for(CompteBancaire cmpt: this.listeComptes)
+        {
+            solde += cmpt.getSolde();
+        }
+
+        return solde;
+    }
 }
